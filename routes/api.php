@@ -23,7 +23,7 @@ $api->post('resend-otp', 'MobileApps\Auth\OtpController@resend');
 //$api->post('update-password', 'MobileApps\Auth\ForgotPasswordController@updatePassword');
 $api->post('fb-login', 'MobileApps\Auth\LoginController@facebookLogin');
 $api->post('gmail-login', 'MobileApps\Auth\LoginController@gmailLogin');
-//test comment
+//test comment again
 
 
 $api->get('configurations', 'MobileApps\ConfigurationController@getFilters');
