@@ -30,6 +30,7 @@ $api->get('configurations', 'MobileApps\ConfigurationController@getFilters');
 
 $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
+
     $api->get('get-options', 'MobileApps\ProfileController@getOptions');
     $api->post('basic-info', 'MobileApps\ProfileController@updateBasicInfo');
     $api->post('work-education', 'MobileApps\ProfileController@updateWorkInfo');
@@ -43,6 +44,7 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('chats', 'MobileApps\ChatCotroller@chatlist');
     $api->get('chats/{id}', 'MobileApps\ChatCotroller@chatDetails');
     $api->post('send/{id}', 'MobileApps\ChatCotroller@send');
+    //home
 
 
     $api->group(['prefix' => 'requests'], function ($api) {
@@ -54,3 +56,10 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     });
 
 });
+$api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
+$api->get('stores-list', 'MobileApps\Api\StoreController@index');
+$api->get('get-profile', 'MobileApps\Api\ProfileController@index');
+$api->post('update-profile', 'MobileApps\Api\ProfileController@update');
+$api->get('store-details/{id}', 'MobileApps\Api\StoreController@details');
+$api->get('customer-balance', 'MobileApps\Api\WalletController@userbalance');
+$api->get('wallet-history', 'MobileApps\Api\WalletController@index');
