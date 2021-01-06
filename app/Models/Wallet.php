@@ -10,9 +10,9 @@ class Wallet extends Model
 {
     protected $table='wallet';
 
-    protected $fillable=['refid','type','amount','description','iscomplete', 'order_id', 'order_id_response', 'payment_id', 'payment_id_response','user_id', 'amount_type'];
+    protected $fillable=['refid','type','amount','description','iscomplete', 'order_id', 'order_id_response', 'payment_id', 'payment_id_response','user_id', 'amount_type','created_at'];
 
-    protected $hidden=['created_at', 'updated_at', 'deleted_at','iscomplete', 'order_id_response', 'payment_id', 'payment_id_response', 'order_id'];
+    protected $hidden=[ 'updated_at', 'deleted_at','iscomplete', 'order_id_response', 'payment_id', 'payment_id_response', 'order_id'];
 
     protected $appends=['icon','date'];
 
@@ -71,7 +71,7 @@ class Wallet extends Model
     }
 
     public function getDateAttribute($value){
-        return date('D, d-M-Y H:iA', strtotime($this->updated_at));
+        return date('D, d-M-Y H:iA', strtotime($this->created_at));
     }
 
     public function customer()

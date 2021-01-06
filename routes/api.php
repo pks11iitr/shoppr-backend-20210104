@@ -63,3 +63,5 @@ $api->post('update-profile', 'MobileApps\Api\ProfileController@update');
 $api->get('store-details/{id}', 'MobileApps\Api\StoreController@details');
 $api->get('customer-balance', 'MobileApps\Api\WalletController@userbalance');
 $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
+$api->post('recharge','MobileApps\Api\WalletController@addMoney');
+$api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
