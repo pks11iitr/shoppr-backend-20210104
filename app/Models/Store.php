@@ -22,4 +22,7 @@ class Store extends Model
             return Storage::url($value);
         return null;
     }
+    public function images(){
+        return $this->hasMany('App\Models\Document', 'store_id');
+    }
 }
