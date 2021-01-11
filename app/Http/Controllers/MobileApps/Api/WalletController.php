@@ -23,30 +23,51 @@ class WalletController extends Controller
                 'message' => 'Please login to continue'
             ];
         if ($user) {
-            $history = Wallet::where('user_id', $user->id)
+            $historyobj = Wallet::where('user_id', $user->id)
                 ->where('iscomplete', true)
                 ->where('amount_type', 'CASH')
                 ->select('amount', 'created_at', 'description', 'refid', 'type')
                 ->orderBy('id', 'desc')
-                ->get()
-                ->groupBy(function($date) {
-                    return Carbon::parse($date->created_at)->format('l, M d, Y');
-                });
+                ->get();
           /*  $history = Wallet::where('user_id', $user->id)
                 ->where('iscomplete', true)
                 ->where('amount_type', 'CASH')
                 ->select('amount', 'created_at', 'description', 'refid', 'type')
                 ->orderBy('id', 'desc')->get();*/
+            $history=[];
+            foreach($historyobj as $h){
+
+                if(!isset($history[date('D, M d, Y',$h->created_at)])){
+                    $history[date('D, M d, Y',$h->created_at)]=[];
+                }
+                $history[date('D, M d, Y',$h->created_at)][]=$h;
+            }
+
+            $wallet_transactions=[];
+            foreach($history as $date=>$date_transactions){
+
+                $tlist=[];
+                foreach($date_transactions as $t)
+                    $tlist[]=$t;
+
+                $wallet_transactions[]=[
+                    'date'=>$date,
+                    'transactions'=>$tlist
+                ];
+
+            }
+
+
             $balance = Wallet::balance($user->id);
 
         } else {
-            $history = [];
+            $wallet_transactions = [];
             $balance = 0;
         }
 
         return [
             'status' => 'success',
-            'data' => compact('history', 'balance')
+            'data' => compact('wallet_transactions', 'balance')
         ];
     }
     public function userbalance(){
