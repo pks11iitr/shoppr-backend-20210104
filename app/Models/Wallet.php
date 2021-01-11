@@ -76,7 +76,7 @@ class Wallet extends Model
 
     public function customer()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
 }
