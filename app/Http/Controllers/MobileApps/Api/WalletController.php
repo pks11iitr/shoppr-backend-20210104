@@ -37,10 +37,10 @@ class WalletController extends Controller
             $history=[];
             foreach($historyobj as $h){
 
-                if(!isset($history[date('D, M d, Y',$h->created_at)])){
-                    $history[date('D, M d, Y',$h->created_at)]=[];
+                if(!isset($history[date('D, M d, Y',strtotime($h->created_at))])){
+                    $history[date('D, M d, Y',strtotime($h->created_at))]=[];
                 }
-                $history[date('D, M d, Y',$h->created_at)][]=$h;
+                $history[date('D, M d, Y',strtotime($h->created_at))][]=$h;
             }
 
             $wallet_transactions=[];
