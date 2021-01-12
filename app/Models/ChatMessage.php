@@ -15,7 +15,7 @@ class ChatMessage extends Model
 
     protected $fillable=['chat_id', 'type', 'message', 'file_path', 'direction', 'status', 'price', 'quantity'];
 
-    public function getDocPathAttribute($value){
+    public function getFilePathAttribute($value){
         if($value)
             return Storage::url($value);
         return '';
