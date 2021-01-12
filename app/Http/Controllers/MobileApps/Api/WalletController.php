@@ -49,10 +49,20 @@ class WalletController extends Controller
                 $tlist=[];
                 foreach($date_transactions as $t)
                     $tlist[]=$t;
+                /*$tcdlist=[];
+                $tcclist=[];
+                foreach ($tlist as $tc)
+                    if($tc->type=='Credit'){
+                      $tcclist[]=$tc;
+                    }else{
+                        $tcdlist[]=$tc;
+                    }*/
 
                 $wallet_transactions[]=[
                     'date'=>$date,
-                    'transactions'=>$tlist
+                    'transactions'=>$tlist,
+                   // 'transcredit'=>$tcclist,
+                  //  'transdebit'=>$tcdlist
                 ];
 
             }
