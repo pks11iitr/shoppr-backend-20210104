@@ -85,4 +85,47 @@ class ChatMessageController extends Controller
             ]
         ];
     }
+
+    public function acceptProduct(Request $request, $message_id){
+
+        $user=$request->user;
+        $message=ChatMessage::where('customer_id', $user->id)->findOrFail($message_id);
+
+        $message->status='accepted';
+        $message->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Product has been accepted'
+        ];
+
+    }
+
+    public function rejectProduct(Request $request, $message_id){
+        $user=$request->user;
+        $message=ChatMessage::where('customer_id', $user->id)->findOrFail($message_id);
+
+        $message->status='rejected';
+        $message->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Product has been rejected'
+        ];
+    }
+
+
+    public function cancelProduct(Request $request, $message_id){
+        $user=$request->user;
+        $message=ChatMessage::where('customer_id', $user->id)->findOrFail($message_id);
+
+        $message->status='cancelled';
+        $message->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Product has been cancelled'
+        ];
+    }
+
 }
