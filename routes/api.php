@@ -31,19 +31,21 @@ $api->get('configurations', 'MobileApps\ConfigurationController@getFilters');
 $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
 
-    $api->get('get-options', 'MobileApps\ProfileController@getOptions');
-    $api->post('basic-info', 'MobileApps\ProfileController@updateBasicInfo');
-    $api->post('work-education', 'MobileApps\ProfileController@updateWorkInfo');
-    $api->post('personal-details', 'MobileApps\ProfileController@updatePersonalInfo');
-    $api->post('about', 'MobileApps\ProfileController@updateAboutMe');
+//    $api->get('get-options', 'MobileApps\ProfileController@getOptions');
+//    $api->post('basic-info', 'MobileApps\ProfileController@updateBasicInfo');
+//    $api->post('work-education', 'MobileApps\ProfileController@updateWorkInfo');
+//    $api->post('personal-details', 'MobileApps\ProfileController@updatePersonalInfo');
+//    $api->post('about', 'MobileApps\ProfileController@updateAboutMe');
 
     $api->get('home', 'MobileApps\HomeController@home');
     $api->get('profile-details/{id}', 'MobileApps\ProfileController@details');
-    $api->get('my-matches', 'MobileApps\ProfileController@findMatches');
+//    $api->get('my-matches', 'MobileApps\ProfileController@findMatches');
 
-    $api->get('chats', 'MobileApps\ChatCotroller@chatlist');
-    $api->get('chats/{id}', 'MobileApps\ChatCotroller@chatDetails');
-    $api->post('send/{id}', 'MobileApps\ChatCotroller@send');
+    $api->get('chats', 'MobileApps\Api\ChatController@chathistory');
+    $api->get('start-chat', 'MobileApps\Api\ChatController@startChat');
+
+    $api->get('chat-messages/{id}', 'MobileApps\Api\ChatMessageController@chatDetails');
+    $api->post('send-message/{id}', 'MobileApps\Api\ChatMessageController@send');
     //home
 
 

@@ -11,14 +11,14 @@ class Chat extends Model
 
     protected $table='chats';
 
-    protected $fillable=['user_1', 'user_2', 'direction', 'message'];
+    protected $fillable=['customer_id', 'shoppr_id'];
 
 
-    public function user1(){
-        return $this->belongsTo('App\Models\Customer', 'user_1');
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer', 'customer_id');
     }
 
-    public function user2(){
-        return $this->belongsTo('App\Models\Customer', 'user_2');
+    public function shoppr(){
+        return $this->belongsTo('App\Models\Shoppr', 'shoppr_id');
     }
 }

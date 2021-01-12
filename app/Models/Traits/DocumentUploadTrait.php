@@ -27,4 +27,13 @@ trait DocumentUploadTrait {
         $this->save();
     }
 
+    public function saveFile($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->file_path=$path;
+        $this->save();
+    }
+
 }
