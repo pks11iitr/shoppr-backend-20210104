@@ -36,7 +36,7 @@ class ChatMessageController extends Controller
         switch($request->type){
 
             case 'text':
-                ChatMessage::create([
+                $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
                     'message'=>$request->message,
                     'type'=>'text',
@@ -63,13 +63,26 @@ class ChatMessageController extends Controller
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
+            case 'product':
+                $message=ChatMessage::create([
+                    'chat_id'=>$chat_id,
+                    'message'=>'',
+                    'type'=>'product',
+                    'price'=>$request->price,
+                    'quantity'=>$request->quantity,
+                    'direction'=>0,
+                ]);
+                $message->saveFile($request->file, 'chats');
+                break;
 
         }
 
         return [
             'status'=>'success',
             'message'=>'Message has been submitted',
-            'data'=>[]
+            'data'=>[
+                'message_id'=>$message->id
+            ]
         ];
     }
 }

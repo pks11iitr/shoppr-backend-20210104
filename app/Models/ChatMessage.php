@@ -12,6 +12,6 @@ class ChatMessage extends Model
 
     protected $table='chatmessages';
 
-    protected $fillable=['chat_id', 'type', 'message', 'file_path', 'direction', 'status'];
+    protected $fillable=['chat_id', 'type', 'message', 'file_path', 'direction', 'status', 'price', 'quantity'];
 
 }
