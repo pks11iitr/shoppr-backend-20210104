@@ -74,6 +74,17 @@ class ChatMessageController extends Controller
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
+            case 'rating':
+                $message=ChatMessage::create([
+                    'chat_id'=>$chat_id,
+                    'message'=>'',
+                    'type'=>'rating',
+                    //'price'=>$request->price,
+                    'quantity'=>0,
+                    'direction'=>0,
+                ]);
+                //$message->saveFile($request->file, 'chats');
+                break;
 
         }
 
@@ -89,7 +100,9 @@ class ChatMessageController extends Controller
     public function acceptProduct(Request $request, $message_id){
 
         $user=$request->user;
-        $message=ChatMessage::where('customer_id', $user->id)->findOrFail($message_id);
+        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+            $chat->where('customer_id', $user->id);
+        })->findOrFail($message_id);
 
         $message->status='accepted';
         $message->save();
@@ -103,7 +116,9 @@ class ChatMessageController extends Controller
 
     public function rejectProduct(Request $request, $message_id){
         $user=$request->user;
-        $message=ChatMessage::where('customer_id', $user->id)->findOrFail($message_id);
+        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+            $chat->where('customer_id', $user->id);
+        })->findOrFail($message_id);
 
         $message->status='rejected';
         $message->save();
@@ -117,7 +132,9 @@ class ChatMessageController extends Controller
 
     public function cancelProduct(Request $request, $message_id){
         $user=$request->user;
-        $message=ChatMessage::where('customer_id', $user->id)->findOrFail($message_id);
+        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+            $chat->where('customer_id', $user->id);
+        })->findOrFail($message_id);
 
         $message->status='cancelled';
         $message->save();

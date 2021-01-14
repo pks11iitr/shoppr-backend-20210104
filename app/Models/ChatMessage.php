@@ -21,4 +21,8 @@ class ChatMessage extends Model
         return '';
     }
 
+    public function chat(){
+        return $this->belongsTo('App\Models\Chat', 'chat_id');
+    }
+
 }
