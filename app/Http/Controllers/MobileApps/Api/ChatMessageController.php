@@ -145,4 +145,25 @@ class ChatMessageController extends Controller
         ];
     }
 
+    public function rateService(Request $request, $message_id){
+
+        $request->validate([
+           'ratings'=>'integer|required|in:1,2,3,4,5'
+        ]);
+
+        $user=$request->user;
+        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+            $chat->where('customer_id', $user->id);
+        })->findOrFail($message_id);
+
+        $message->quantity=$request->ratings;
+        $message->status='accepted';
+        $message->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Ratings has been submitted'
+        ];
+    }
+
 }

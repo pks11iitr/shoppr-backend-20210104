@@ -50,6 +50,7 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('accept/{id}', 'MobileApps\Api\ChatMessageController@acceptProduct');
     $api->get('reject/{id}', 'MobileApps\Api\ChatMessageController@rejectProduct');
     $api->get('cancel/{id}', 'MobileApps\Api\ChatMessageController@cancelProduct');
+    $api->post('rate-service/{id}', 'MobileApps\Api\ChatMessageController@rateService');
 
 
     //home
