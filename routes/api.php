@@ -64,6 +64,9 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
         $api->get('decline/{message_id}', 'MobileApps\MessageCotroller@decline');
     });
 
+    $api->get('cart/{chat_id}', 'MobileApps\MessageCotroller@index');
+    $api->get('cart-cancel', 'MobileApps\MessageCotroller@cancelProduct');
+
 });
 $api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
 $api->get('stores-list', 'MobileApps\Api\StoreController@index');
