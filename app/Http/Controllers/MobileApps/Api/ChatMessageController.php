@@ -67,7 +67,7 @@ class ChatMessageController extends Controller
             case 'product':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
-                    'message'=>'',
+                    'message'=>$request->address,
                     'type'=>'product',
                     'price'=>$request->price,
                     'quantity'=>$request->quantity,
@@ -83,6 +83,19 @@ class ChatMessageController extends Controller
                     //'price'=>$request->price,
                     'quantity'=>0,
                     'direction'=>0,
+                ]);
+                //$message->saveFile($request->file, 'chats');
+                break;
+            case 'address':
+                $message=ChatMessage::create([
+                    'chat_id'=>$chat_id,
+                    'message'=>$request->adderss,
+                    'type'=>'address',
+                    //'price'=>$request->price,
+                    'quantity'=>0,
+                    'direction'=>0,
+                    'lat'=>$request->lat,
+                    'lang'=>$request->lang
                 ]);
                 //$message->saveFile($request->file, 'chats');
                 break;
