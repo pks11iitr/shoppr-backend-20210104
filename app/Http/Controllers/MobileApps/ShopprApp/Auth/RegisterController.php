@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\MobileApps\Auth;
+namespace App\Http\Controllers\MobileApps\ShopprApp\Auth;
 
 use App\Events\CustomerRegistered;
+use App\Events\ShopprRegistered;
 use App\Models\Customer;
+use App\Models\Shoppr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -33,7 +35,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Customer::create([
+        return Shoppr::create([
             'name' => $data['name'],
             'mobile'=>$data['mobile'],
         ]);
@@ -43,14 +45,14 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        if($customer=Customer::where('mobile', $request->mobile)->orWhere('email', $request->email)->first()){
+        if($customer=Shoppr::where('mobile', $request->mobile)->first()){
             return [
                 'status'=>'failed',
                 'message'=>'Email or mobile already registered'
             ];
         }
         $user = $this->create($request->all());
-        event(new CustomerRegistered($user));
+        event(new ShopprRegistered($user));
 
         return [
             'status'=>'success',

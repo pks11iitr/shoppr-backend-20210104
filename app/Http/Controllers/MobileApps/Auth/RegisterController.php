@@ -43,7 +43,7 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        if($customer=Customer::where('mobile', $request->mobile)->orWhere('email', $request->email)->first()){
+        if($customer=Customer::where('mobile', $request->mobile)->first()){
             return [
                 'status'=>'failed',
                 'message'=>'Email or mobile already registered'

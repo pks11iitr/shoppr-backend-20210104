@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\MobileApps\Auth;
+namespace App\Http\Controllers\MobileApps\ShopprApp\Auth;
 
 use App\Models\Customer;
 use App\Models\OTPModel;

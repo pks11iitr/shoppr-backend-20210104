@@ -80,7 +80,7 @@ $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
 
 
 //shoppr APIs
-$api->group(['prefix' => 'requests'], function ($api) {
+$api->group(['prefix' => 'shoppr'], function ($api) {
 
     //$api->post('login', 'MobileApps\Auth\LoginController@login');
     $api->post('login-with-otp', 'MobileApps\ShopprApp\Auth\LoginController@loginWithOtp');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\MobileApps\Auth;
+namespace App\Http\Controllers\MobileApps\ShopprApp\Auth;
 
 use App\Events\SendOtp;
 use App\Models\Customer;
