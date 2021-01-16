@@ -51,6 +51,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'customers',
         ],
+        'shopperapi' => [
+            'driver' => 'jwt',
+            'provider' => 'shoppers',
+        ],
     ],
 
     /*
@@ -84,6 +88,10 @@ return [
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
+        ],
+        'shoppers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Shoppr::class,
         ],
     ],
 

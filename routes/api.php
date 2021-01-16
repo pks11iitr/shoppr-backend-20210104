@@ -77,3 +77,20 @@ $api->get('customer-balance', 'MobileApps\Api\WalletController@userbalance');
 $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
 $api->post('recharge','MobileApps\Api\WalletController@addMoney');
 $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
+
+
+//shoppr APIs
+$api->group(['prefix' => 'requests'], function ($api) {
+
+    //$api->post('login', 'MobileApps\Auth\LoginController@login');
+    $api->post('login-with-otp', 'MobileApps\ShopprApp\Auth\LoginController@loginWithOtp');
+    $api->post('register', 'MobileApps\ShopprApp\Auth\RegisterController@register');
+//$api->post('forgot', 'MobileApps\Auth\ForgotPasswordController@forgot');
+    $api->post('verify-otp', 'MobileApps\ShopprApp\Auth\OtpController@verify');
+    $api->post('resend-otp', 'MobileApps\ShopprApp\Auth\OtpController@resend');
+//$api->post('update-password', 'MobileApps\Auth\ForgotPasswordController@updatePassword');
+    $api->post('fb-login', 'MobileApps\ShopprApp\Auth\LoginController@facebookLogin');
+    $api->post('gmail-login', 'MobileApps\ShopprApp\Auth\LoginController@gmailLogin');
+//test comment again
+
+});
