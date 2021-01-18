@@ -12,7 +12,7 @@ class Shoppr extends Authenticatable implements JWTSubject
     use HasFactory;
     protected $table='shoppers';
 
-    protected $fillable = ['mobile', 'name', 'lat','lang', 'isactive','location'];
+    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token'];
 
     protected $hidden = ['deleted_at','updated_at','created_at'];
 

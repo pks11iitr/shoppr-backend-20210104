@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\DB;
 class ChatController extends Controller
 {
     public function chathistory(Request $request){
+
         $user=$request->user;
 
         $users=Chat::with(['customer'=>function($user){
             $user->select('id', 'name', 'image');
         }])
-            ->where('shopper_id', $user->id)
+            ->where('shoppr_id', $user->id)
             ->orderBy('id', 'desc')
             ->get();
 

@@ -93,4 +93,12 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
     $api->post('gmail-login', 'MobileApps\ShopprApp\Auth\LoginController@gmailLogin');
 //test comment again
 
+    $api->group(['middleware' => ['shoppr-api-auth']], function ($api) {
+        $api->get('chats', 'MobileApps\ShopprApp\ChatController@chathistory');
+        //$api->get('start-chat', 'MobileApps\ShopprApp\ChatController@startChat');
+
+        $api->get('chat-messages/{id}', 'MobileApps\ShopprApp\ChatMessageController@chatDetails');
+        $api->post('send-message/{id}', 'MobileApps\ShopprApp\ChatMessageController@send');
+    });
+
 });

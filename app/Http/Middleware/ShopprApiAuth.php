@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CustomerApiAuth
+class ShopprApiAuth
 {
     /**
      * Handle an incoming request.
