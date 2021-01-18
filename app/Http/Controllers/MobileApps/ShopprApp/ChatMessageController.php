@@ -78,4 +78,21 @@ class ChatMessageController extends Controller
             ]
         ];
     }
+
+    public function chatDetails(Request $request, $chat_id){
+
+        $chats=ChatMessage::where('chat_id', $chat_id)
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return [
+
+            'status'=>'success',
+            'message'=>[],
+            'data'=>compact('chats', 'chat_id')
+
+        ];
+
+    }
+
 }
