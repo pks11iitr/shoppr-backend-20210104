@@ -42,7 +42,7 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 //    $api->get('my-matches', 'MobileApps\ProfileController@findMatches');
 
     $api->get('chats', 'MobileApps\Api\ChatController@chathistory');
-    $api->get('start-chat', 'MobileApps\Api\ChatController@startChat');
+    $api->get('start-chat/{store_id?}', 'MobileApps\Api\ChatController@startChat');
 
     $api->get('chat-messages/{id}', 'MobileApps\Api\ChatMessageController@chatDetails');
     $api->post('send-message/{id}', 'MobileApps\Api\ChatMessageController@send');

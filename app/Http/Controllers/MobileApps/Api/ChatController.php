@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Shoppr;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -63,7 +64,7 @@ class ChatController extends Controller
         ];
     }
 
-    public function startChat(Request $request){
+    public function startChat(Request $request, $store_id=null){
 
         $user=$request->user;
         $shoppr=Shoppr::first();
@@ -72,6 +73,23 @@ class ChatController extends Controller
             'customer_id'=>$user->id,
             'shoppr_id'=>$shoppr->id
         ]);
+
+        if($store_id){
+
+            $store=Store::findOrFail($store_id);
+
+            $store_message='Please get my items from this store. '.$store->store_name;
+
+            ChatMessage::create([
+                'message'=>$store_message,
+                'direction'=>0,
+                'type'=>'text',
+                'chat_id'=>$chat->id,
+                'lat'=>$store->lat,
+                'lang'=>$store->lang
+            ]);
+        }
+
 
         $message='I would like to deliver goods';
 
