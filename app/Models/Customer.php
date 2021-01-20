@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Models\Traits\DocumentUploadTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use DateTime;
 class Customer extends Authenticatable implements JWTSubject
 {
-    use DocumentUploadTrait;
+    use DocumentUploadTrait, Notifiable;
 
     protected $table='customers';
 
@@ -42,6 +43,16 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * Specifies the user's FCM token
+     *
+     * @return string|array
+     */
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
     }
 
     public function getImageAttribute($value){

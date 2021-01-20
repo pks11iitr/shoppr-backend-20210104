@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Services\Notification\CustomerFCMNotification;
 use Illuminate\Http\Request;
 
 class ChatMessageController extends Controller
@@ -16,6 +18,13 @@ class ChatMessageController extends Controller
             'file'=>'file'
         ]);
 
+        $user=$request->user;
+
+        $chat=Chat::with('customer')
+            ->where('shoppr_id', $user->id)
+            ->where('id', $chat_id)
+            ->firstOrFail();
+
         switch($request->type){
 
             case 'text':
@@ -25,6 +34,9 @@ class ChatMessageController extends Controller
                     'type'=>'text',
                     'direction'=>0,
                 ]);
+
+                $chat->customer->notify(new CustomerFCMNotification('New Chat', 'New Chat From Shoppr', $message));
+
                 break;
 
             case 'audio':
