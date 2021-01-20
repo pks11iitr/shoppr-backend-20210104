@@ -14,10 +14,10 @@ use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
 
 class FCMNotification extends Notification
 {
-
-    public function via($notifiable)
-    {
-        return [FcmChannel::class];
+    public function __construct($title, $body, $data){
+        $this->title=$title;
+        $this->body=$body;
+        $this->data=$data;
     }
 
     public function toFcm($notifiable)
@@ -35,6 +35,13 @@ class FCMNotification extends Notification
             )->setApns(
                 ApnsConfig::create()
                     ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios')));
+    }
+
+    // optional method when using kreait/laravel-firebase:^3.0, this method can be omitted, defaults to the default project
+    public function fcmProject($notifiable, $message)
+    {
+        // $message is what is returned by `toFcm`
+        return 'app'; // name of the firebase project to use
     }
 
 
