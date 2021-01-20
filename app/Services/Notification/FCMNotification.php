@@ -20,6 +20,11 @@ class FCMNotification extends Notification
         $this->data=$data;
     }
 
+    public function via($notifiable)
+    {
+        return [FcmChannel::class];
+    }
+
     public function toFcm($notifiable)
     {
         return FcmMessage::create()
