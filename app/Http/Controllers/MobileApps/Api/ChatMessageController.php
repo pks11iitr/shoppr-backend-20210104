@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 
 class ChatMessageController extends Controller
@@ -33,6 +34,13 @@ class ChatMessageController extends Controller
             'message'=>'string',
             'file'=>'file'
         ]);
+
+        $user=$request->user;
+
+        $chat=Chat::with('shoppr')
+            ->where('customer_id', $user->id)
+            ->where('id', $chat_id)
+            ->firstOrFail();
 
         switch($request->type){
 
@@ -101,6 +109,11 @@ class ChatMessageController extends Controller
                 break;
 
         }
+
+        //send notification
+        $message->refresh();
+
+        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Shoppr', $message->toArray()));
 
         return [
             'status'=>'success',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Services\Notification\CustomerFCMNotification;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 
 class ChatMessageController extends Controller
@@ -34,8 +35,6 @@ class ChatMessageController extends Controller
                     'type'=>'text',
                     'direction'=>0,
                 ]);
-
-                $chat->customer->notify(new CustomerFCMNotification('New Chat', 'New Chat From Shoppr', $message));
 
                 break;
 
@@ -81,6 +80,11 @@ class ChatMessageController extends Controller
                 //$message->saveFile($request->file, 'chats');
                 break;
         }
+
+        //send notification
+        $message->refresh();
+
+        $chat->customer->notify(new FCMNotification('New Chat', 'New Chat From Shoppr', $message->toArray()));
 
         return [
             'status'=>'success',
