@@ -52,7 +52,7 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function routeNotificationForFcm()
     {
-        return $this->fcm_token;
+        return $this->notification_token;
     }
 
     public function getImageAttribute($value){
