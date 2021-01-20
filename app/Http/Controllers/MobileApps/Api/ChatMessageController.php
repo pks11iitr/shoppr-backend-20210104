@@ -113,7 +113,7 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Shoppr', $message->toArray()));
+        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Shoppr', $message->only('message')));
 
         return [
             'status'=>'success',
