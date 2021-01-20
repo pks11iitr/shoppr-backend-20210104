@@ -33,7 +33,7 @@ class ChatMessageController extends Controller
                     'chat_id'=>$chat_id,
                     'message'=>$request->message,
                     'type'=>'text',
-                    'direction'=>0,
+                    'direction'=>1,
                 ]);
 
                 break;
@@ -43,7 +43,7 @@ class ChatMessageController extends Controller
                     'chat_id'=>$chat_id,
                     'message'=>'',
                     'type'=>'audio',
-                    'direction'=>0,
+                    'direction'=>1,
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
@@ -53,7 +53,7 @@ class ChatMessageController extends Controller
                     'chat_id'=>$chat_id,
                     'message'=>'',
                     'type'=>'image',
-                    'direction'=>0,
+                    'direction'=>1,
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
@@ -64,7 +64,7 @@ class ChatMessageController extends Controller
                     'type'=>'product',
                     'price'=>$request->price,
                     'quantity'=>$request->quantity,
-                    'direction'=>0,
+                    'direction'=>1,
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
@@ -75,7 +75,7 @@ class ChatMessageController extends Controller
                     'type'=>'rating',
                     //'price'=>$request->price,
                     'quantity'=>0,
-                    'direction'=>0,
+                    'direction'=>1,
                 ]);
                 //$message->saveFile($request->file, 'chats');
                 break;
