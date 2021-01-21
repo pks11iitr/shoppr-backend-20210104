@@ -53,7 +53,7 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->post('rate-service/{id}', 'MobileApps\Api\ChatMessageController@rateService');
 
     $api->get('cart/{chat_id}', 'MobileApps\Api\CartController@index');
-    $api->get('cart-cancel', 'MobileApps\Api\CartController@cancelProduct');
+    $api->get('cart-cancel/{message_id}', 'MobileApps\Api\CartController@cancelProduct');
 
 });
 $api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
