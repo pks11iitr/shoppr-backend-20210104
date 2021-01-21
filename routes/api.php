@@ -52,20 +52,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('cancel/{id}', 'MobileApps\Api\ChatMessageController@cancelProduct');
     $api->post('rate-service/{id}', 'MobileApps\Api\ChatMessageController@rateService');
 
-
-    //home
-
-
-    $api->group(['prefix' => 'requests'], function ($api) {
-        $api->get('', 'MobileApps\MessageController@index');
-        $api->get('interest/{receiver_id}', 'MobileApps\MessageController@sendInterest');
-        $api->get('request-photo/{receiver_id}', 'MobileApps\MessageController@sendPhotoRequest');
-        $api->get('accept/{message_id}', 'MobileApps\MessageController@accept');
-        $api->get('decline/{message_id}', 'MobileApps\MessageController@decline');
-    });
-
-    $api->get('cart/{chat_id}', 'MobileApps\MessageController@index');
-    $api->get('cart-cancel', 'MobileApps\MessageController@cancelProduct');
+    $api->get('cart/{chat_id}', 'MobileApps\Api\CartController@index');
+    $api->get('cart-cancel', 'MobileApps\Api\CartController@cancelProduct');
 
 });
 $api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
