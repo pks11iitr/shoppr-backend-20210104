@@ -41,13 +41,16 @@ class CartController extends Controller
         $user=$request->user;
         $message=ChatMessage::whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
-        })->findOrFail($message_id);
+        })
+            ->findOrFail($message_id);
 
         $message->status='cancelled';
         $message->save();
 
-        $items=ChatMessage::where('chat_id', $message->chat_id)
-            ->where('shoppr_id', $user->id)
+        $items=ChatMessage::whereHas('chat', function($chat)use($user){
+            $chat->where('customer_id', $user->id);
+        })
+            ->where('chat_id', $message->chat_id)
             ->where('type', 'product')
             ->where('status', 'accepted')
             ->get();
