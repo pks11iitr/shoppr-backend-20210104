@@ -60,7 +60,7 @@ class ChatMessageController extends Controller
             case 'product':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
-                    'message'=>$request->address,
+                    'message'=>$request->name,
                     'type'=>'product',
                     'price'=>$request->price,
                     'quantity'=>$request->quantity,
