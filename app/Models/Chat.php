@@ -21,4 +21,8 @@ class Chat extends Model
     public function shoppr(){
         return $this->belongsTo('App\Models\Shoppr', 'shoppr_id');
     }
+
+    public function messages(){
+        return $this->hasMany('App\Models\ChatMessage', 'chat_id');
+    }
 }
