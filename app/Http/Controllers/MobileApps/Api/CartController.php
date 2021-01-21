@@ -12,7 +12,9 @@ class CartController extends Controller
     public function index(Request $request, $chat_id){
         $user=$request->user;
 
-        $items=ChatMessage::where('customer_id', $user->id)
+        $items=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
+            $chat->where('customer_id', $user->id);
+        })
             ->where('chat_id', $chat_id)
             ->where('type', 'product')
             ->where('status', 'accepted')
