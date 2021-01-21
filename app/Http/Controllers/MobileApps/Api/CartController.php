@@ -60,7 +60,7 @@ class CartController extends Controller
                 'message'=>'No items in the cart'
             ];
 
-        Chat::where('type', 'total')
+        ChatMessage::where('type', 'total')
             ->where('chat_id',$message->chat_id)
             ->delete();
 
