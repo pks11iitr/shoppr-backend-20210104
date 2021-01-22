@@ -97,7 +97,7 @@ class ChatMessageController extends Controller
             case 'address':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
-                    'message'=>$request->adderss,
+                    'message'=>$request->address,
                     'type'=>'address',
                     //'price'=>$request->price,
                     'quantity'=>0,
