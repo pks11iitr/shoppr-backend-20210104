@@ -55,6 +55,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('cart/{chat_id}', 'MobileApps\Api\CartController@index');
     $api->get('cart-cancel/{message_id}', 'MobileApps\Api\CartController@cancelProduct');
 
+    $api->get('track-location/{chat_id}', 'MobileApps\Api\ShopperTrackController@track');
+
 });
 $api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
 $api->get('stores-list', 'MobileApps\Api\StoreController@index');
@@ -88,5 +90,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('chat-messages/{id}', 'MobileApps\ShopprApp\ChatMessageController@chatDetails');
         $api->post('send-message/{id}', 'MobileApps\ShopprApp\ChatMessageController@send');
     });
+
+
 
 });
