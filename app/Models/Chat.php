@@ -25,4 +25,8 @@ class Chat extends Model
     public function messages(){
         return $this->hasMany('App\Models\ChatMessage', 'chat_id');
     }
+
+    public function getCreatedAtAttribute($value){
+        return date('d/m/Y h:iA', strtotime($value));
+    }
 }

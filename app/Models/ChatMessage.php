@@ -25,4 +25,8 @@ class ChatMessage extends Model
         return $this->belongsTo('App\Models\Chat', 'chat_id');
     }
 
+    public function getCreatedAtAttribute($value){
+        return date('d/m/Y h:iA', strtotime($value));
+    }
+
 }
