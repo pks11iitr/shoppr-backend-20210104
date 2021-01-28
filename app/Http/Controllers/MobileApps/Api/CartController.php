@@ -30,10 +30,12 @@ class CartController extends Controller
 
         $grand_total=$total+$service_charge;
 
+        $wallet_balance = Wallet::balance($user->id);
+
         return [
             'status'=>'success',
             'message'=>'',
-            'data'=>compact('items', 'total', 'service_charge', 'grand_total')
+            'data'=>compact('items', 'total', 'service_charge', 'grand_total', 'wallet_balance')
         ];
 
     }
@@ -92,12 +94,12 @@ class CartController extends Controller
             'price'=>$grand_total
         ]);
 
-        $wallet_balance = Wallet::balance($user->id);
+
 
         return [
             'status'=>'success',
             'message'=>'Product has been cancelled',
-            'data'=>compact('items', 'total', 'service_charge', 'grand_total', 'wallet_balance')
+            'data'=>compact('items', 'total', 'service_charge', 'grand_total')
         ];
     }
 }
