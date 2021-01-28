@@ -8,10 +8,15 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Wallet;
+use App\Services\Payment\RazorPayService;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    public function __construct(RazorPayService $pay){
+        $this->pay=$pay;
+    }
+
     public function initiatePayment(Request $request, $order_id){
         $user=$request->user;
 
@@ -80,15 +85,15 @@ class PaymentController extends Controller
         $responsearr=json_decode($response);
         //var_dump($responsearr);die;
         if(isset($responsearr->id)){
-            $order->order_id=$responsearr->id;
-            $order->order_id_response=$response;
+            $order->pg_order_id=$responsearr->id;
+            $order->pg_order_id_response=$response;
             $order->save();
             return [
                 'status'=>'success',
                 'message'=>'success',
                 'data'=>[
                     'payment_done'=>'no',
-                    'razorpay_order_id'=> $order->order_id,
+                    'razorpay_order_id'=> $order->pg_order_id,
                     'total'=>$order->grandTotalForPayment()*100,
                     'email'=>$user->email??'',
                     'mobile'=>$user->mobile??'',
@@ -132,7 +137,7 @@ class PaymentController extends Controller
         }
 
         $order->payment_mode='COD';
-        $order->status='confirmed';
+        $order->status='Confirmed';
         $order->save();
 
         if($order->balance_used > 0)
@@ -161,8 +166,8 @@ class PaymentController extends Controller
             ];
 
         if($walletbalance >= $order->grandTotal()) {
-            $order->payment_status='paid';
-            $order->status='confirmed';
+            $order->payment_status='Paid';
+            $order->status='Confirmed';
             $order->use_balance=true;
             $order->balance_used=$order->grandTotal();
             $order->payment_mode='Online';
@@ -185,7 +190,7 @@ class PaymentController extends Controller
         }else if($walletbalance>0){
                 $order->use_balance=true;
                 $order->balance_used=$walletbalance;
-                $order->payment_mode='online';
+                $order->payment_mode='Online';
                 $order->save();
         }
 
