@@ -58,7 +58,7 @@ class OrderConfirmListner
             'type'=>'individual'
         ]);
 
-        FCMNotification::sendNotification($user->notification_token, 'Order Confirmed', $message);
+        //FCMNotification::sendNotification($user->notification_token, 'Order Confirmed', $message);
 
         // send invoice email
         $order->customer->notify(new FCMNotification('Order Confirmed', $message, ['message'=>$message]));
