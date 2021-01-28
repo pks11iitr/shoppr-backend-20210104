@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -18,6 +19,7 @@ class CartController extends Controller
             ->where('chat_id', $chat_id)
             ->where('type', 'product')
             ->where('status', 'accepted')
+            ->where('order_id', null)
             ->get();
 
         $total=0;
@@ -28,10 +30,12 @@ class CartController extends Controller
 
         $grand_total=$total+$service_charge;
 
+        $wallet_balance = Wallet::balance($user->id);
+
         return [
             'status'=>'success',
             'message'=>'',
-            'data'=>compact('items', 'total', 'service_charge', 'grand_total')
+            'data'=>compact('items', 'total', 'service_charge', 'grand_total', 'wallet_balance')
         ];
 
     }
@@ -44,6 +48,14 @@ class CartController extends Controller
         })
             ->findOrFail($message_id);
 
+
+        if($message->is_completed==true){
+            return [
+                'status'=>'failed',
+                'message'=>'This item cannot be cancelled now'
+            ];
+        }
+
         $message->status='cancelled';
         $message->save();
 
@@ -53,6 +65,7 @@ class CartController extends Controller
             ->where('chat_id', $message->chat_id)
             ->where('type', 'product')
             ->where('status', 'accepted')
+            ->where('order_id', null)
             ->get();
         if(!count($items))
             return [
@@ -80,6 +93,8 @@ class CartController extends Controller
             'direction'=>0,
             'price'=>$grand_total
         ]);
+
+
 
         return [
             'status'=>'success',

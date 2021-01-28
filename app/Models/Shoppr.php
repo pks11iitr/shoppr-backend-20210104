@@ -52,10 +52,4 @@ class Shoppr extends Authenticatable implements JWTSubject
         return $this->notification_token;
     }
 
-    public function getImageAttribute($value){
-        if($value)
-            return Storage::url($value);
-        return '';
-    }
-
 }
