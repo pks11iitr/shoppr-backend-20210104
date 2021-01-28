@@ -61,11 +61,11 @@ class OrderConfirmListner
         FCMNotification::sendNotification($user->notification_token, 'Order Confirmed', $message);
 
         // send invoice email
+        $order->customer->notify(new FCMNotification('Order Confirmed', $message, ['message'=>$message]));
 
-
-        $pdf=Order::generateInvoicePdfRaw($order->refid);
-
-        Mail::send(new SendMail(null, $order->email, "Order Confirmed at Arogyapeeth", 'mails.invoice-mail', ['order'=>$order], null, $pdf, []));
+//        $pdf=Order::generateInvoicePdfRaw($order->refid);
+//
+//        Mail::send(new SendMail(null, $order->email, "Order Confirmed at Arogyapeeth", 'mails.invoice-mail', ['order'=>$order], null, $pdf, []));
 
     }
 }
