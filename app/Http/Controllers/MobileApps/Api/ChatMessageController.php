@@ -127,12 +127,15 @@ class ChatMessageController extends Controller
     public function acceptProduct(Request $request, $message_id){
 
         $user=$request->user;
-        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+        $message=ChatMessage::with('chat')
+        ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
         $message->status='accepted';
         $message->save();
+
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
 
         return [
             'status'=>'success',
@@ -143,12 +146,15 @@ class ChatMessageController extends Controller
 
     public function rejectProduct(Request $request, $message_id){
         $user=$request->user;
-        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+        $message=ChatMessage::with('chat')
+        ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
         $message->status='rejected';
         $message->save();
+
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
 
         return [
             'status'=>'success',
@@ -159,12 +165,15 @@ class ChatMessageController extends Controller
 
     public function cancelProduct(Request $request, $message_id){
         $user=$request->user;
-        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+        $message=ChatMessage::with('chat')
+        ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
         $message->status='cancelled';
         $message->save();
+
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
 
         return [
             'status'=>'success',
