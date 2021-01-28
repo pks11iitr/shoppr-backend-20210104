@@ -86,7 +86,7 @@ class PaymentController extends Controller
         //var_dump($responsearr);die;
         if(isset($responsearr->id)){
             $order->pg_order_id=$responsearr->id;
-            $order->pg_order_id_response=$response;
+            $order->pg_order_response=$response;
             $order->save();
             return [
                 'status'=>'success',
@@ -239,7 +239,7 @@ class PaymentController extends Controller
             }
             $order->status = 'confirmed';
             $order->pg_payment_id = $request->razorpay_payment_id;
-            $order->pg_payment_id_response = $request->razorpay_signature;
+            $order->pg_payment_response = $request->razorpay_signature;
             $order->payment_status = 'Paid';
             $order->payment_mode = 'Online';
             $order->save();
