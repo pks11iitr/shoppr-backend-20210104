@@ -13,7 +13,7 @@ class Store extends Model
     use HasFactory,Active,DocumentUploadTrait;
     protected $table='stores';
 
-    protected $fillable = ['location_id', 'lat','lang', 'isactive','store_name','store_type','is_sale','image'];
+    protected $fillable = ['location_id','store_name','store_type','email','lat','lang','isactive','mobile','opening_time','address','about_store','is_sale','image'];
 
     protected $hidden = ['deleted_at','updated_at','created_at'];
 
