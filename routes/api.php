@@ -56,6 +56,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('cart-cancel/{message_id}', 'MobileApps\Api\CartController@cancelProduct');
 
     $api->get('initiate-order/{chat_id}', 'MobileApps\Api\OrderController@initiateOrder');
+    $api->get('order-details/{order_id}', 'MobileApps\Api\OrderController@details');
+    $api->get('orders', 'MobileApps\Api\OrderController@index');
 
     $api->post('initiate-payment/{order_id}', 'MobileApps\Api\PaymentController@initiatePayment');
 

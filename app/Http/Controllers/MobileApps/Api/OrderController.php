@@ -9,6 +9,24 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
+    public function index(Request $request){
+
+        $user=$request->user;
+
+        $orders=Order::where('user_id', $user->id)
+            ->where('status', '!=', 'Pending')
+            ->orderBy('id', 'desc')
+            ->select('id','refid', 'total', 'service_charge', 'created_at', 'status')
+            ->get();
+
+        return [
+            'status'=>'success',
+            'data'=>compact('orders')
+        ];
+
+    }
+
     public function initiateOrder(Request $request, $chat_id){
         $user=$request->user;
 
@@ -46,5 +64,20 @@ class OrderController extends Controller
                 'order_id'=>$order->id
             ]
         ];
+    }
+
+
+
+    public function details(Request $request, $order_id){
+        $user=$request->user;
+
+        $order=Order::with(['details'])->where('user_id', $user->id)
+            ->findOrFail($order_id);
+
+        return [
+                'status'=>'success',
+                'data'=>compact('order')
+            ];
+
     }
 }
