@@ -55,9 +55,15 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('cart/{chat_id}', 'MobileApps\Api\CartController@index');
     $api->get('cart-cancel/{message_id}', 'MobileApps\Api\CartController@cancelProduct');
 
-    $api->get('track-location/{chat_id}', 'MobileApps\Api\ShopperTrackController@track');
+    $api->get('initiate-order/{chat_id}', 'MobileApps\Api\OrderController@initiateOrder');
 
+    $api->post('initiate-payment/{order_id}', 'MobileApps\Api\PaymentController@initiatePayment');
+
+    $api->get('track-location/{chat_id}', 'MobileApps\Api\ShopperTrackController@track');
 });
+
+$api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
+
 $api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
 $api->get('stores-list', 'MobileApps\Api\StoreController@index');
 $api->get('get-profile', 'MobileApps\Api\ProfileController@index');

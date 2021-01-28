@@ -26,15 +26,15 @@ class Wallet extends Model
         return ($balances['Credit']??0)-($balances['Debit']??0);
     }
 
-    public static function points($userid){
-        $wallet=Wallet::where('user_id', $userid)->where('amount_type', 'POINT')->where('iscomplete', true)->select(DB::raw('sum(amount) as total'), 'type')->groupBy('type')->get();
-        $balances=[];
-        foreach($wallet as $w){
-            $balances[$w->type]=$w->total;
-        }
-
-        return ($balances['Credit']??0)-($balances['Debit']??0);
-    }
+//    public static function points($userid){
+//        $wallet=Wallet::where('user_id', $userid)->where('amount_type', 'POINT')->where('iscomplete', true)->select(DB::raw('sum(amount) as total'), 'type')->groupBy('type')->get();
+//        $balances=[];
+//        foreach($wallet as $w){
+//            $balances[$w->type]=$w->total;
+//        }
+//
+//        return ($balances['Credit']??0)-($balances['Debit']??0);
+//    }
 
 
     public static function updatewallet($userid, $description, $type, $amount, $amount_type, $orderid=null){
