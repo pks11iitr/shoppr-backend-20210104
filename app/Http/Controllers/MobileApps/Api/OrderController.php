@@ -32,6 +32,8 @@ class OrderController extends Controller
         $refid=env('MACHINE_ID').time();
 
         $order=Order::create([
+            'user_id'=>$user->id,
+            'chat_id'=>$chat_id,
             'refid'=>$refid,
             'total'=>$total,
             'service_charge'=>$service_charge
