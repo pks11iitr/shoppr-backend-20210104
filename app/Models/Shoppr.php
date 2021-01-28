@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Traits\DocumentUploadTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Shoppr extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable,DocumentUploadTrait;
     protected $table='shoppers';
 
-    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token'];
+    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image'];
 
     protected $hidden = ['deleted_at','updated_at','created_at'];
 
@@ -48,6 +50,12 @@ class Shoppr extends Authenticatable implements JWTSubject
     public function routeNotificationForFcm()
     {
         return $this->notification_token;
+    }
+
+    public function getImageAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return '';
     }
 
 }

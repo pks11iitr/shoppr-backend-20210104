@@ -28,6 +28,32 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     Route::get('/dashboard', 'SuperAdmin\DashboardController@index')->name('home');
 
+
+    Route::group(['prefix'=>'shoppr'], function(){
+        Route::get('/','SuperAdmin\ShopprController@index')->name('shoppr.list');
+        Route::get('create','SuperAdmin\ShopprController@create')->name('shoppr.create');
+        Route::post('store','SuperAdmin\ShopprController@store')->name('shoppr.store');
+        Route::get('edit/{id}','SuperAdmin\ShopprController@edit')->name('shoppr.edit');
+        Route::post('update/{id}','SuperAdmin\ShopprController@update')->name('shoppr.update');
+
+    });
+
+    Route::group(['prefix'=>'store'], function(){
+        Route::get('/','SuperAdmin\StoreController@index')->name('store.list');
+        Route::get('create','SuperAdmin\StoreController@create')->name('store.create');
+        Route::post('store','SuperAdmin\StoreController@store')->name('store.store');
+        Route::get('edit/{id}','SuperAdmin\StoreController@edit')->name('store.edit');
+        Route::post('update/{id}','SuperAdmin\StoreController@update')->name('store.update');
+        Route::post('upload-images/{id}','SuperAdmin\StoreController@images')->name('store.images.uploads');
+        Route::get('image-delete/{id}','SuperAdmin\StoreController@deleteimage')->name('store.image.delete');
+
+    });
+
+
+
+
+    //endshoppradmin
+
     Route::group(['prefix' => 'banners'], function () {
         Route::get('/', 'SuperAdmin\BannerController@index')->name('banners.list');
         Route::get('create', 'SuperAdmin\BannerController@create')->name('banners.create');
