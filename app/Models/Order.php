@@ -27,4 +27,8 @@ class Order extends Model
         return $this->total+$this->service_charge-$this->balance_used;
     }
 
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer', 'user_id');
+    }
+
 }
