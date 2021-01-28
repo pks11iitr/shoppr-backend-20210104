@@ -13,7 +13,7 @@ class ChatMessage extends Model
 
     protected $table='chatmessages';
 
-    protected $fillable=['chat_id', 'type', 'message', 'file_path', 'direction', 'status', 'price', 'quantity', 'lat', 'lang'];
+    protected $fillable=['chat_id', 'type', 'message', 'file_path', 'direction', 'status', 'price', 'quantity', 'lat', 'lang', 'order_id'];
 
     public function getFilePathAttribute($value){
         if($value)
