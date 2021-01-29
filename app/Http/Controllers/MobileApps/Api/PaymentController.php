@@ -175,7 +175,7 @@ class PaymentController extends Controller
 
             ChatMessage::where('chat_id', $order->chat_id)
                 ->where('order_id', null)
-                ->update(['order_id', $order->id]);
+                ->update(['order_id'=>$order->id]);
 
 //            OrderStatus::create([
 //                'order_id'=>$order->id,
