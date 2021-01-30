@@ -291,6 +291,7 @@ class PaymentController extends Controller
     private function sendTrackNotification($order){
 
         ChatMessage::create([
+            'message'=>'Track Location',
            'type'=>'track',
             'chat_id'=>$order->chat_id,
             'order_id'=>$order->id
