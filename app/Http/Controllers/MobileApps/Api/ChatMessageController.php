@@ -105,6 +105,10 @@ class ChatMessageController extends Controller
                     'lat'=>$request->lat,
                     'lang'=>$request->lang
                 ]);
+
+                $request->user->lat=$request->lat;
+                $request->user->lang=$request->lang;
+                $request->user->save();
                 //$message->saveFile($request->file, 'chats');
                 break;
 
