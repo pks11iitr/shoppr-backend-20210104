@@ -51,7 +51,7 @@ class ChatMessageController extends Controller
             case 'image':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
-                    'message'=>'',
+                    'message'=>$request->message,
                     'type'=>'image',
                     'direction'=>1,
                 ]);
