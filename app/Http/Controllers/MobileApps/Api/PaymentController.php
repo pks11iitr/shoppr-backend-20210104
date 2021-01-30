@@ -8,6 +8,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Wallet;
+use App\Services\Notification\FCMNotification;
 use App\Services\Payment\RazorPayService;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,8 @@ class PaymentController extends Controller
     public function initiatePayment(Request $request, $order_id){
         $user=$request->user;
 
-        $order=Order::where('user_id', $user->id)
+        $order=Order::with('customer')
+            ->where('user_id', $user->id)
             ->where('status', 'Pending')
             ->findOrFail($order_id);
 
@@ -46,7 +48,10 @@ class PaymentController extends Controller
         if($request->use_balance==1) {
             $result=$this->payUsingBalance($order);
             if($result['status']=='success'){
+
+
                 event(new OrderConfirmed($order));
+                $this->sendTrackNotification($order);
                 return [
                     'status'=>'success',
                     'message'=>'Congratulations! Your order at Hallobasket is successful',
@@ -149,7 +154,7 @@ class PaymentController extends Controller
 
 
         event(new OrderConfirmed($order));
-
+        $this->sendTrackNotification($order);
         return [
             'status'=>'success',
             'message'=>'Congratulations! Your order at Shoppr is successful',
@@ -262,6 +267,7 @@ class PaymentController extends Controller
 
             //event(new OrderSuccessfull($order));
             event(new OrderConfirmed($order));
+            $this->sendTrackNotification($order);
             return [
                 'status'=>'success',
                 'message'=> 'Congratulations! Your order at Hallobasket is successful',
@@ -280,5 +286,16 @@ class PaymentController extends Controller
                 ],
             ];
         }
+    }
+
+    private function sendTrackNotification($order){
+
+        ChatMessage::create([
+           'type'=>'track',
+            'chat_id'=>$order->chat_id,
+            'order_id'=>$order->id
+        ]);
+
+        $order->customer->notify(new FCMNotification('New Chat', 'New Chat From Shoppr', ['message'=>'']));
     }
 }

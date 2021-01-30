@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $table='orders';
 
-    protected $fillable=['user_id','chat_id', 'refid', 'total', 'service_charge', 'status', 'payment_status', 'payment_mode'];
+    protected $fillable=['user_id','shoppr_id', 'chat_id', 'refid', 'total', 'service_charge', 'status', 'payment_status', 'payment_mode'];
 
     public function details(){
         return $this->hasMany('App\Models\ChatMessage', 'order_id')
@@ -29,6 +29,10 @@ class Order extends Model
 
     public function customer(){
         return $this->belongsTo('App\Models\Customer', 'user_id');
+    }
+
+    public function shoppr(){
+        return $this->belongsTo('App\Models\Shoppr', 'shoppr_id');
     }
 
 }
