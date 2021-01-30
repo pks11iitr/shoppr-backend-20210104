@@ -140,6 +140,10 @@ class PaymentController extends Controller
         $order->status='Confirmed';
         $order->save();
 
+        ChatMessage::where('chat_id', $order->chat_id)
+            ->where('order_id', null)
+            ->update(['order_id'=>$order->id]);
+
         if($order->balance_used > 0)
             Wallet::updatewallet($order->user_id, 'Paid For Order ID: '.$order->refid, 'DEBIT',$order->balance_used, 'CASH', $order->id);
 
