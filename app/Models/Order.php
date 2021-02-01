@@ -35,7 +35,7 @@ class Order extends Model
         return $this->belongsTo('App\Models\Shoppr', 'shoppr_id');
     }
 
-    public function getCreatedATAttribute($value){
+    public function getCreatedAtAttribute($value){
         return date('d/m/Y h:iA', strtotime($value));
     }
 
