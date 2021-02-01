@@ -31,7 +31,8 @@ class RtcTokenBuilder
     #                    generated, set expireTimestamp as the current
     #                    timestamp + 600 (seconds)./
     public static function buildTokenWithUid($channelName, $uid, $role, $privilegeExpireTs){
-        return RtcTokenBuilder::buildTokenWithUserAccount(env('AGORA_APP_ID'), env('AGORA_CERTIFICATE'), $channelName, $uid, $role, $privilegeExpireTs);
+        $token= RtcTokenBuilder::buildTokenWithUserAccount(env('AGORA_APP_ID'), env('AGORA_CERTIFICATE'), $channelName, $uid, $role, $privilegeExpireTs);
+        return $token;
     }
 
     # appID: The App ID issued to you by Agora. Apply for a new App ID from
