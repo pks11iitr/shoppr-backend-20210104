@@ -32,12 +32,14 @@ class CallController extends Controller
             'channel'=>$channel_name,
             'caller'=>$user->name,
             'image'=>$user->image,
-            'id'=>''.$user->id
+            'user_id'=>''.$user->id
         ]));
+
+        $user_id=$user->id;
 
         return [
             'status'=>'success',
-            'data'=>compact('token', 'channel_name')
+            'data'=>compact('token', 'channel_name', 'user_id')
         ];
 
     }
