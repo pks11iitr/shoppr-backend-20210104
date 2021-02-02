@@ -28,7 +28,7 @@ class CallController extends Controller
             'caller'=>$user->name,
             'image'=>$user->image,
             'id'=>''.$user->id,
-            'message'=>'test'
+            //'message'=>'test'
 
         ]));
 
