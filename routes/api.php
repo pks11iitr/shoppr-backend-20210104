@@ -63,7 +63,7 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
     $api->get('track-location/{chat_id}', 'MobileApps\Api\ShopperTrackController@track');
 
-    $api->get('initiate-video-call/{user_id}', 'MobileApps\Api\CallController@initiateVideocall');
+    $api->get('initiate-video-call/{chat_id}', 'MobileApps\Api\CallController@initiateVideocall');
 });
 
 $api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
@@ -102,7 +102,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
         $api->post('update-location', 'MobileApps\ShopprApp\ShopperLocationController@update');
 
-        $api->get('initiate-video-call/{user_id}', 'MobileApps\ShopprApp\CallController@initiateVideocall');
+        $api->get('initiate-video-call/{chat_id}', 'MobileApps\ShopprApp\CallController@initiateVideocall');
     });
 
 
