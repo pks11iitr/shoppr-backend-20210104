@@ -32,7 +32,7 @@ class CallController extends Controller
             'channel'=>$channel_name,
             'caller'=>$user->name,
             'image'=>$user->image,
-            'id'=>$user->id
+            'id'=>''.$user->id
         ]));
 
         return [
