@@ -27,7 +27,7 @@ class CallController extends Controller
             'channel'=>$channel_name,
             'caller'=>$user->name,
             'image'=>$user->image,
-            'user_id'=>''.$user->id,
+            'id'=>''.$user->id,
             //'message'=>'test'
 
         ]));
