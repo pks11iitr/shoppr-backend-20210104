@@ -26,15 +26,17 @@ class CallController extends Controller
         }
         $token=RtcTokenBuilder::buildTokenWithUid($channel_name, $user->id,1,0);
 
-        $chat->customer->notify(new FCMNotification('Calling..', 'Call from '.$user->name, [
-            'token'=>$token,
-            'channel'=>$channel_name,
-            'caller'=>$user->name,
-            'image'=>$user->image,
-            'id'=>''.$user->id,
-            //'message'=>'test'
+        if(empty($request->channel_name)) {
+            $chat->customer->notify(new FCMNotification('Calling..', 'Call from ' . $user->name, [
+                'token' => $token,
+                'channel' => $channel_name,
+                'caller' => $user->name,
+                'image' => $user->image,
+                'id' => '' . $user->id,
+                //'message'=>'test'
 
-        ]));
+            ]));
+        }
 
         $user_id=$user->id;
 
