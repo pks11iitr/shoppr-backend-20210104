@@ -4,7 +4,7 @@ include("RtcTokenBuilder.php");
 $appID = "b39ff59abf8e48728d42ac518e72c844";
 $appCertificate = "9202fde4505b47ddbba3a89d9316fb8a";
 $channelName = "randomchannel3";
-$uid = 2882341273;
+$uid = 20;
 $uidStr = "2882341273";
 $role = RtcTokenBuilder::RoleAttendee;
 $expireTimeInSeconds = 3600;
