@@ -19,7 +19,11 @@ class CallController extends Controller
         $chat=Chat::with('customer')
             ->findOrFail($chat_id);
 
-        $channel_name='shopprchannel'.$user->id;
+        if(!empty($request->channel_name)){
+            $channel_name=$request->channel_name;
+        }else{
+            $channel_name='shopprchannel'.$user->id;
+        }
         $token=RtcTokenBuilder::buildTokenWithUid($channel_name, $user->id,1,0);
 
         $chat->customer->notify(new FCMNotification('Calling..', 'Call from '.$user->name, [
