@@ -84,7 +84,7 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->customer->notify(new FCMNotification('New Chat', 'New Chat From Rider', $message->only('message')));
+        $chat->customer->notify(new FCMNotification('New Chat', 'New Chat From Rider', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',

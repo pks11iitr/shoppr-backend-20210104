@@ -22,7 +22,7 @@ class CallController extends Controller
         if(!empty($request->channel_name)){
             $channel_name=$request->channel_name;
         }else{
-            $channel_name='shopprchannel'.$user->id;
+            $channel_name='shopprchannel'.$user->id.'_'.$chat->customer->id;
         }
         $token=RtcTokenBuilder::buildTokenWithUid($channel_name, $user->id,1,0);
 
@@ -33,12 +33,16 @@ class CallController extends Controller
                 'caller' => $user->name,
                 'image' => $user->image,
                 'id' => '' . $user->id,
+                'type'=>'call'
                 //'message'=>'test'
 
             ]));
         }
 
-        $user_id=$user->id;
+        if($chat->customer->id==$user->id)
+            $user_id=$user->id.rand(11,99);
+        else
+            $user_id=$user->id;
 
         return [
             'status'=>'success',

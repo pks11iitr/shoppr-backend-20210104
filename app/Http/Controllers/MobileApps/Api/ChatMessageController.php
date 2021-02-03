@@ -117,13 +117,13 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
+        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
             'message'=>'Message has been submitted',
             'data'=>[
-                'message_id'=>$message->id
+                'message_id'=>$message->id,
             ]
         ];
     }
@@ -139,7 +139,7 @@ class ChatMessageController extends Controller
         $message->status='accepted';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
@@ -158,7 +158,7 @@ class ChatMessageController extends Controller
         $message->status='rejected';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
@@ -177,7 +177,7 @@ class ChatMessageController extends Controller
         $message->status='cancelled';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
