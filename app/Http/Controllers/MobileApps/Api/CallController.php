@@ -41,10 +41,12 @@ class CallController extends Controller
             ]));
         }
 
-        if($chat->shoppr->id==$user->id)
-            $user_id=$user->id.rand(11,99);
-        else
-            $user_id=$user->id;
+//        if($chat->shoppr->id==$user->id)
+//            $user_id=$user->id.rand(11,99);
+//        else
+//            $user_id=$user->id;
+
+        $user_id=1;
 
         return [
             'status'=>'success',
