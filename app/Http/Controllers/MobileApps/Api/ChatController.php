@@ -68,7 +68,7 @@ class ChatController extends Controller
 
         $user=$request->user;
         if($user->id==4){
-            $shoppr=Shoppr::find(5);
+            $shoppr=Shoppr::find(4);
         }else{
             $shoppr=Shoppr::find(1);
         }
