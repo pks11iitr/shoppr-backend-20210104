@@ -67,7 +67,11 @@ class ChatController extends Controller
     public function startChat(Request $request, $store_id=null){
 
         $user=$request->user;
-        $shoppr=Shoppr::first();
+        if($user->id==4){
+            $shoppr=Shoppr::find(4);
+        }else{
+            $shoppr=Shoppr::find(1);
+        }
 
         $chat=Chat::create([
             'customer_id'=>$user->id,
