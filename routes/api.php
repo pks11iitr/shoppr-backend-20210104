@@ -103,6 +103,10 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->post('update-location', 'MobileApps\ShopprApp\ShopperLocationController@update');
 
         $api->get('initiate-video-call/{chat_id}', 'MobileApps\ShopprApp\CallController@initiateVideocall');
+
+        $api->get('order-details/{order_id}', 'MobileApps\ShopprApp\OrderController@details');
+        $api->get('orders', 'MobileApps\ShopprApp\OrderController@index');
+
     });
 
 

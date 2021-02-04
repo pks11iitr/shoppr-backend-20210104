@@ -15,7 +15,8 @@ class OrderController extends Controller
 
         $user=$request->user;
 
-        $orders=Order::where('user_id', $user->id)
+        $orders=Order::with('details')
+            ->where('user_id', $user->id)
             ->where('status', '!=', 'Pending')
             ->orderBy('id', 'desc')
             ->select('id','refid', 'total', 'service_charge', 'created_at', 'status')
