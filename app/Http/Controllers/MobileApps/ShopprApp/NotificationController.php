@@ -11,7 +11,7 @@ class NotificationController extends Controller
 {
     public function index(Request $request){
 
-        $user=$request->user;
+        $user=auth()->guard('shopperapi')->user();
 
         $notifications=Notification::where('user_type', 'SHOPPR');
 
