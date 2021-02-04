@@ -101,6 +101,11 @@ class ChatMessageController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
+        ChatMessage::where('chat_id', $chat_id)
+            ->where('seen_at', null)
+            ->where('direction', 0)
+            ->update(['seen_at'=>date('Y-m-d H:i:s')]);
+
         return [
 
             'status'=>'success',

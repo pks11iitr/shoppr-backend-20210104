@@ -13,7 +13,7 @@ class ChatMessage extends Model
 
     protected $table='chatmessages';
 
-    protected $fillable=['chat_id', 'type', 'message', 'file_path', 'direction', 'status', 'price', 'quantity', 'lat', 'lang', 'order_id'];
+    protected $fillable=['chat_id', 'type', 'message', 'file_path', 'direction', 'status', 'price', 'quantity', 'lat', 'lang', 'order_id','seen_at'];
 
     public function getFilePathAttribute($value){
         if($value)
@@ -29,4 +29,9 @@ class ChatMessage extends Model
         return date('d/m/Y h:iA', strtotime($value));
     }
 
+    public function getSeenAtAttribute($value){
+        if($value)
+            return date('d/m/Y h:iA', strtotime($value));
+        return null;
+    }
 }
