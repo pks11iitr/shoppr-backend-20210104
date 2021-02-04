@@ -23,7 +23,8 @@ class NotificationController extends Controller
             $notifications=$notifications->where('type','all');
         }
 
-        $notifications=$notifications->select('id','title', 'description')
+        $notifications=$notifications->select('id','title', 'description', 'created_at')
+            ->orderBy('id', 'desc')
             ->paginate(1000);
 
         return [
