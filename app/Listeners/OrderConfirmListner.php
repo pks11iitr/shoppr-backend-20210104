@@ -40,32 +40,43 @@ class OrderConfirmListner
 
     public function sendNotifications($order){
 
-        $message='';
-//        if($order->details[0]->entity_type == 'App\Models\Product'){
-//            $message='Congratulations! Your purchase of Rs. '.$order->total_cost.' at Arogyapeeth.com is successfull. Order Reference ID: '.$order->refid;
-//        }else{
-            $message='Congratulations! Your therapy booking of Rs. '.$order->grandTotal().' at Shoppr is successfull. Order Reference ID: '.$order->refid;
+        $message='Congratulations! Your order of Rs. '.$order->grandTotal().' at Shoppr is successfull. Order Reference ID: '.$order->refid;
 
-//        }
+        $title='Order Confirmed';
 
         $user=$order->customer;
 
+
+        //customer notification
         Notification::create([
             'user_id'=>$order->user_id,
-            'title'=>'Order Confirmed',
+            'title'=>$title,
             'description'=>$message,
             'data'=>null,
-            'type'=>'individual'
+            'type'=>'individual',
+            'user_type'=>'CUSTOMER'
         ]);
 
-        //FCMNotification::sendNotification($user->notification_token, 'Order Confirmed', $message);
+        $user->notify(new FCMNotification($title, $message . $user->name, [
+            'type'=>'order'
+        ]));
 
-        // send invoice email
-        $order->customer->notify(new FCMNotification('Order Confirmed', $message, ['message'=>$message]));
+        //shoppr notification
 
-//        $pdf=Order::generateInvoicePdfRaw($order->refid);
-//
-//        Mail::send(new SendMail(null, $order->email, "Order Confirmed at Arogyapeeth", 'mails.invoice-mail', ['order'=>$order], null, $pdf, []));
+        $shopper_message='Order ID:'.$order->refid.' has been confirmed with total amount of Rs. '.$order->grandTotal().' at Shoppr is successfull.';
+
+        Notification::create([
+            'user_id'=>$order->shoppr_id,
+            'title'=>$title,
+            'description'=>$shopper_message,
+            'data'=>null,
+            'type'=>'individual',
+            'user_type'=>'SHOPPR'
+        ]);
+
+        $order->shoppr->notify(new FCMNotification($title, $shopper_message , [
+            'type'=>'order'
+        ]));
 
     }
 }

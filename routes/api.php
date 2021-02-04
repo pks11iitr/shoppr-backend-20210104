@@ -77,7 +77,7 @@ $api->get('customer-balance', 'MobileApps\Api\WalletController@userbalance');
 $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
 $api->post('recharge','MobileApps\Api\WalletController@addMoney');
 $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
-
+$api->get('notifications', 'MobileApps\Api\NotificationController@index');
 
 //shoppr APIs
 $api->group(['prefix' => 'shoppr'], function ($api) {
@@ -108,6 +108,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('orders', 'MobileApps\ShopprApp\OrderController@index');
 
     });
+
+    $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
 
 
 
