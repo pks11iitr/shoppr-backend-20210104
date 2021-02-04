@@ -20,8 +20,8 @@ class RtmTokenBuilder
     #                    Agora Service within 10 minutes after the token is
     #                    generated, set expireTimestamp as the current
     #                    timestamp + 600 (seconds)./
-    public static function buildToken($appID, $appCertificate, $userAccount, $role, $privilegeExpireTs){
-        $token = AccessToken::init($appID, $appCertificate, $userAccount, "");
+    public static function buildToken($channelName, $userAccount, $role, $privilegeExpireTs){
+        $token = AccessToken::init(env('AGORA_APP_ID'), env('AGORA_CERTIFICATE'), $channelName, $userAccount);
         $Privileges = AccessToken::Privileges;
         $token->addPrivilege($Privileges["kRtmLogin"], $privilegeExpireTs);
         return $token->build();

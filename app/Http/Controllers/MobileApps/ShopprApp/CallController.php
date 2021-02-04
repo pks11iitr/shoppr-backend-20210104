@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\Customer;
 use App\Models\Shoppr;
 use App\Services\Agora\RtcTokenBuilder;
+use App\Services\Agora\RtmTokenBuilder;
 use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,8 @@ class CallController extends Controller
             $channel_name='shopprchannel'.$user->id.'_'.$chat->customer->id;
         }
         $token=RtcTokenBuilder::buildTokenWithUid($channel_name, 2,1,0);
+
+        $rtm_token=RtmTokenBuilder::buildToken($channel_name, 2,1,0);
 
         if(empty($request->channel_name)) {
             $chat->customer->notify(new FCMNotification('Calling..', 'Call from ' . $user->name, [
@@ -47,7 +50,7 @@ class CallController extends Controller
 
         return [
             'status'=>'success',
-            'data'=>compact('token', 'channel_name', 'user_id')
+            'data'=>compact('token', 'rtm_token','channel_name', 'user_id')
         ];
 
     }
