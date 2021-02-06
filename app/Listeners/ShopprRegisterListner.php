@@ -31,5 +31,14 @@ class ShopprRegisterListner
         $otp=OTPModel::createOTP('shopper', $event->shoppr->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
         Msg91::send($event->shoppr->mobile,$msg);
+
+        //register on sendbird app
+        $sendbird=app('App\Services\SendBird\SendBird');
+        $response=$sendbird->createUser($event->shoppr);
+
+        if(isset($response['user_id'])){
+            $event->shoppr->sendbird_token=$response['access_token']??null;
+            $event->shoppr->save();
+        }
     }
 }
