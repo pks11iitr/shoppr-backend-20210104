@@ -174,11 +174,16 @@ class ChatMessageController extends Controller
 
     public function cancelProduct(Request $request, $message_id){
         $user=$request->user;
-        $message=ChatMessage::with('chat')
+        $message=ChatMessage::with(['chat','order'])
         ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
+        if($message->order)
+            return [
+                'status'=>'failed',
+                'message'=>'Item Cannot Be Cancelled Now'
+            ];
         $message->status='cancelled';
         $message->save();
 
