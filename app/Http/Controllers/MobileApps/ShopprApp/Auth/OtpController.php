@@ -119,7 +119,7 @@ class OtpController extends Controller
                     'status'=>'success',
                     'message'=>'OTP Has Been Verified',
                     'token'=>Auth::guard('customerapi')->fromUser($user),
-                    'user_id'=>'Customer-'.$user->id,
+                    'user_id'=>'Shoppr-'.$user->id,
                     'sendbird_token'=>$user->sendbird_token
                 ];
             }
