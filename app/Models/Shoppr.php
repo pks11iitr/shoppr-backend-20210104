@@ -15,7 +15,7 @@ class Shoppr extends Authenticatable implements JWTSubject
     use HasFactory, Notifiable,DocumentUploadTrait;
     protected $table='shoppers';
 
-    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image'];
+    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image','email','address'];
 
     protected $hidden = ['deleted_at','updated_at','created_at'];
 
@@ -56,6 +56,10 @@ class Shoppr extends Authenticatable implements JWTSubject
         if($value)
             return Storage::url($value);
         return Storage::url('customers/default.jpeg');
+    }
+
+    public function order(){
+        return $this->hasMany('App\Models\Order', 'shoppr_id');
     }
 
 }
