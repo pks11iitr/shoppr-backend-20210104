@@ -111,6 +111,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
         $api->get('order-details/{order_id}', 'MobileApps\ShopprApp\OrderController@details');
         $api->get('orders', 'MobileApps\ShopprApp\OrderController@index');
+        $api->post('upload-document', 'MobileApps\ShopprApp\ProfileController@uploaddocument');
+        $api->post('update-details', 'MobileApps\ShopprApp\ProfileController@bankdetails');
 
     });
 
