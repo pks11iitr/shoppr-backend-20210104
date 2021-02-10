@@ -15,7 +15,7 @@ class Shoppr extends Authenticatable implements JWTSubject
     use HasFactory, Notifiable,DocumentUploadTrait;
     protected $table='shoppers';
 
-    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image'];
+    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image','address','password','pan_card'.'sendbird_token','aadhaar_card','dl_no','account_no','ifsc_code','account_holder','bank_name','form_step'];
 
     protected $hidden = ['deleted_at','updated_at','created_at'];
 

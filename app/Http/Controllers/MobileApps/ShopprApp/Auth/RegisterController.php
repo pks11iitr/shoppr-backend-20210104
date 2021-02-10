@@ -23,7 +23,12 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'mobile'=>['required', 'string', 'max:10']
+            'mobile'=>['required', 'string', 'max:10'],
+            'address'=>['required', 'string'],
+            'password'=>['required', 'string', 'min:6'],
+            'state'=>['required', 'string'],
+            'city'=>['required', 'string'],
+            'image'=>['required', 'image'],
         ]);
     }
 
@@ -38,6 +43,10 @@ class RegisterController extends Controller
         return Shoppr::create([
             'name' => $data['name'],
             'mobile'=>$data['mobile'],
+            'address'=>$data['address'],
+            'password'=>Hash::make($data['password']),
+            'city'=>$data['city'],
+            'state'=>$data['state'],
         ]);
     }
 
@@ -52,6 +61,7 @@ class RegisterController extends Controller
             ];
         }
         $user = $this->create($request->all());
+        $user->saveImage($request->image, 'shopper');
         event(new ShopprRegistered($user));
 
         return [

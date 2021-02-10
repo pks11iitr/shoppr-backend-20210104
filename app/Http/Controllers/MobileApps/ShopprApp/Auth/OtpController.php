@@ -48,10 +48,12 @@ class OtpController extends Controller
 
                 $user->notification_token=$request->notification_token;
                 $user->status=1;
+                $user->form_step=1;
                 $user->save();
 
                 return [
                     'status'=>'success',
+                    'form_step'=>$user->form_step??0,
                     'message'=>'OTP has been verified successfully',
                     'token'=>Auth::guard('shopperapi')->fromUser($user)
                 ];
@@ -59,6 +61,7 @@ class OtpController extends Controller
 
             return [
                 'status'=>'failed',
+                'form_step'=>'',
                 'message'=>'OTP is not correct',
                 'token'=>''
             ];
@@ -66,6 +69,7 @@ class OtpController extends Controller
         }
         return [
             'status'=>'failed',
+            'form_step'=>'',
             'message'=>'Request is not valid',
             'token'=>''
         ];
@@ -83,6 +87,7 @@ class OtpController extends Controller
 
                 return [
                     'status'=>'success',
+                    'form_step'=>$user->form_step??0,
                     'message'=>'OTP has been verified successfully',
                     'token'=>Auth::guard('shopperapi')->fromUser($user)
                 ];
@@ -90,6 +95,7 @@ class OtpController extends Controller
 
             return [
                 'status'=>'failed',
+                'form_step'=>'',
                 'message'=>'OTP is not correct',
                 'token'=>''
             ];
@@ -97,6 +103,7 @@ class OtpController extends Controller
         }
         return [
             'status'=>'failed',
+            'form_step'=>'',
             'message'=>'Account has been blocked',
             'token'=>''
         ];
@@ -113,6 +120,7 @@ class OtpController extends Controller
 
                 return [
                     'status'=>'success',
+                    'form_step'=>$user->form_step??0,
                     'message'=>'OTP Has Been Verified',
                     'token'=>Auth::guard('customerapi')->fromUser($user)
                 ];
@@ -120,6 +128,7 @@ class OtpController extends Controller
 
             return [
                 'status'=>'failed',
+                'form_step'=>'',
                 'message'=>'OTP is not correct',
                 'token'=>''
             ];
@@ -127,6 +136,7 @@ class OtpController extends Controller
         }
         return [
             'status'=>'failed',
+            'form_step'=>'',
             'message'=>'Account has been blocked',
             'token'=>''
         ];

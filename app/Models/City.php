@@ -9,5 +9,6 @@ class City extends Model
 {
     use HasFactory;
     protected $table='cities';
+    protected $hidden = ['created_at','deleted_at','updated_at'];
 
 }

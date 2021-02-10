@@ -9,7 +9,7 @@ class State extends Model
 {
     use HasFactory;
     protected $table='states';
-
+    protected $hidden = ['created_at','deleted_at','updated_at'];
 
     public function cities(){
         return $this->hasMany('App\Models\City', 'state_id');

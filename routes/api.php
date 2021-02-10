@@ -89,6 +89,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 //$api->post('update-password', 'MobileApps\Auth\ForgotPasswordController@updatePassword');
     $api->post('fb-login', 'MobileApps\ShopprApp\Auth\LoginController@facebookLogin');
     $api->post('gmail-login', 'MobileApps\ShopprApp\Auth\LoginController@gmailLogin');
+    $api->get('state-list', 'MobileApps\ShopprApp\StateController@state');
 //test comment again
 
     $api->group(['middleware' => ['shoppr-api-auth']], function ($api) {
