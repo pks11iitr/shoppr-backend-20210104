@@ -8,14 +8,21 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Wallet;
+use App\Services\Notification\FCMNotification;
+use App\Services\Payment\RazorPayService;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    public function __construct(RazorPayService $pay){
+        $this->pay=$pay;
+    }
+
     public function initiatePayment(Request $request, $order_id){
         $user=$request->user;
 
-        $order=Order::where('user_id', $user->id)
+        $order=Order::with('customer')
+            ->where('user_id', $user->id)
             ->where('status', 'Pending')
             ->findOrFail($order_id);
 
@@ -41,7 +48,10 @@ class PaymentController extends Controller
         if($request->use_balance==1) {
             $result=$this->payUsingBalance($order);
             if($result['status']=='success'){
+
+
                 event(new OrderConfirmed($order));
+                $this->sendTrackNotification($order);
                 return [
                     'status'=>'success',
                     'message'=>'Congratulations! Your order at Hallobasket is successful',
@@ -80,15 +90,15 @@ class PaymentController extends Controller
         $responsearr=json_decode($response);
         //var_dump($responsearr);die;
         if(isset($responsearr->id)){
-            $order->order_id=$responsearr->id;
-            $order->order_id_response=$response;
+            $order->pg_order_id=$responsearr->id;
+            $order->pg_order_response=$response;
             $order->save();
             return [
                 'status'=>'success',
                 'message'=>'success',
                 'data'=>[
                     'payment_done'=>'no',
-                    'razorpay_order_id'=> $order->order_id,
+                    'razorpay_order_id'=> $order->pg_order_id,
                     'total'=>$order->grandTotalForPayment()*100,
                     'email'=>$user->email??'',
                     'mobile'=>$user->mobile??'',
@@ -132,15 +142,19 @@ class PaymentController extends Controller
         }
 
         $order->payment_mode='COD';
-        $order->status='confirmed';
+        $order->status='Confirmed';
         $order->save();
+
+        ChatMessage::where('chat_id', $order->chat_id)
+            ->where('order_id', null)
+            ->update(['order_id'=>$order->id]);
 
         if($order->balance_used > 0)
             Wallet::updatewallet($order->user_id, 'Paid For Order ID: '.$order->refid, 'DEBIT',$order->balance_used, 'CASH', $order->id);
 
 
         event(new OrderConfirmed($order));
-
+        $this->sendTrackNotification($order);
         return [
             'status'=>'success',
             'message'=>'Congratulations! Your order at Shoppr is successful',
@@ -161,8 +175,8 @@ class PaymentController extends Controller
             ];
 
         if($walletbalance >= $order->grandTotal()) {
-            $order->payment_status='paid';
-            $order->status='confirmed';
+            $order->payment_status='Paid';
+            $order->status='Confirmed';
             $order->use_balance=true;
             $order->balance_used=$order->grandTotal();
             $order->payment_mode='Online';
@@ -170,7 +184,7 @@ class PaymentController extends Controller
 
             ChatMessage::where('chat_id', $order->chat_id)
                 ->where('order_id', null)
-                ->update(['order_id', $order->id]);
+                ->update(['order_id'=>$order->id]);
 
 //            OrderStatus::create([
 //                'order_id'=>$order->id,
@@ -185,7 +199,7 @@ class PaymentController extends Controller
         }else if($walletbalance>0){
                 $order->use_balance=true;
                 $order->balance_used=$walletbalance;
-                $order->payment_mode='online';
+                $order->payment_mode='Online';
                 $order->save();
         }
 
@@ -234,14 +248,14 @@ class PaymentController extends Controller
             }
             $order->status = 'confirmed';
             $order->pg_payment_id = $request->razorpay_payment_id;
-            $order->pg_payment_id_response = $request->razorpay_signature;
+            $order->pg_payment_response = $request->razorpay_signature;
             $order->payment_status = 'Paid';
             $order->payment_mode = 'Online';
             $order->save();
 
             ChatMessage::where('chat_id', $order->chat_id)
                 ->where('order_id', null)
-                ->update(['order_id', $order->id]);
+                ->update(['order_id'=>$order->id]);
 
 //            OrderStatus::create([
 //                'order_id'=>$order->id,
@@ -253,6 +267,7 @@ class PaymentController extends Controller
 
             //event(new OrderSuccessfull($order));
             event(new OrderConfirmed($order));
+            $this->sendTrackNotification($order);
             return [
                 'status'=>'success',
                 'message'=> 'Congratulations! Your order at Hallobasket is successful',
@@ -271,5 +286,17 @@ class PaymentController extends Controller
                 ],
             ];
         }
+    }
+
+    private function sendTrackNotification($order){
+
+        ChatMessage::create([
+            'message'=>'Track Location',
+           'type'=>'track',
+            'chat_id'=>$order->chat_id,
+            'order_id'=>$order->id
+        ]);
+
+        $order->customer->notify(new FCMNotification('New Chat', 'New Chat From Shoppr', ['message'=>'']));
     }
 }

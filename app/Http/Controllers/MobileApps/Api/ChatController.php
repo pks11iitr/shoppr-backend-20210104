@@ -67,7 +67,11 @@ class ChatController extends Controller
     public function startChat(Request $request, $store_id=null){
 
         $user=$request->user;
-        $shoppr=Shoppr::first();
+        if($user->id==4){
+            $shoppr=Shoppr::find(4);
+        }else{
+            $shoppr=Shoppr::find(1);
+        }
 
         $chat=Chat::create([
             'customer_id'=>$user->id,
@@ -76,18 +80,18 @@ class ChatController extends Controller
 
         if($store_id){
 
-            $store=Store::findOrFail($store_id);
-
-            $store_message='Please get my items from this store. '.$store->store_name;
-
-            ChatMessage::create([
-                'message'=>$store_message,
-                'direction'=>0,
-                'type'=>'text',
-                'chat_id'=>$chat->id,
-                'lat'=>$store->lat,
-                'lang'=>$store->lang
-            ]);
+            $store=Store::find($store_id);
+            if($store){
+                $store_message='Please get my items from this store. '.$store->store_name;
+                ChatMessage::create([
+                    'message'=>$store_message,
+                    'direction'=>0,
+                    'type'=>'store',
+                    'chat_id'=>$chat->id,
+                    'lat'=>$store->lat,
+                    'lang'=>$store->lang
+                ]);
+            }
         }
 
 

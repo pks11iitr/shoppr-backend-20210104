@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 
@@ -45,6 +46,12 @@ class ProfileController extends Controller
             'name'=>'required|string',
             'email'=>'string'
         ]);
+
+        if($request->email && Customer::where('email', $request->email)->where('id', '!=', $user->id)->first())
+            return [
+                'status'=>'failed',
+                'message'=>'Email already register with other user',
+            ];
 
         $user->name=$request->name;
         $user->email=$request->email;

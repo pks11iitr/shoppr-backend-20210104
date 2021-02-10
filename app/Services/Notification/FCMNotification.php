@@ -14,10 +14,11 @@ use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
 
 class FCMNotification extends Notification
 {
-    public function __construct($title, $body, $data){
+    public function __construct($title, $body, $data, $action='notification_screen'){
         $this->title=$title;
         $this->body=$body;
         $this->data=$data;
+        $this->action=$action;
     }
 
     public function via($notifiable)
@@ -36,7 +37,7 @@ class FCMNotification extends Notification
             ->setAndroid(
                 AndroidConfig::create()
                     ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
-                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A'))
+                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A')->setClickAction($this->action))
             )->setApns(
                 ApnsConfig::create()
                     ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios')));

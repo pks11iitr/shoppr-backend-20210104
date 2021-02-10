@@ -55,7 +55,9 @@ class OtpController extends Controller
                     'status'=>'success',
                     'form_step'=>$user->form_step??0,
                     'message'=>'OTP has been verified successfully',
-                    'token'=>Auth::guard('shopperapi')->fromUser($user)
+                    'token'=>Auth::guard('shopperapi')->fromUser($user),
+                    'user_id'=>'Shoppr-'.$user->id,
+                    'sendbird_token'=>$user->sendbird_token
                 ];
             }
 
@@ -89,7 +91,9 @@ class OtpController extends Controller
                     'status'=>'success',
                     'form_step'=>$user->form_step??0,
                     'message'=>'OTP has been verified successfully',
-                    'token'=>Auth::guard('shopperapi')->fromUser($user)
+                    'token'=>Auth::guard('shopperapi')->fromUser($user),
+                    'user_id'=>'Shoppr-'.$user->id,
+                    'sendbird_token'=>$user->sendbird_token
                 ];
             }
 
@@ -122,7 +126,9 @@ class OtpController extends Controller
                     'status'=>'success',
                     'form_step'=>$user->form_step??0,
                     'message'=>'OTP Has Been Verified',
-                    'token'=>Auth::guard('customerapi')->fromUser($user)
+                    'token'=>Auth::guard('customerapi')->fromUser($user),
+                    'user_id'=>'Shoppr-'.$user->id,
+                    'sendbird_token'=>$user->sendbird_token
                 ];
             }
 

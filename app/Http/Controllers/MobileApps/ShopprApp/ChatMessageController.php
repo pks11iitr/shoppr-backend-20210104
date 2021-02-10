@@ -84,7 +84,7 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->customer->notify(new FCMNotification('New Chat', 'New Chat From Rider', $message->only('message')));
+        $chat->customer->notify(new FCMNotification('New Chat', 'New Chat From Rider', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
@@ -100,6 +100,11 @@ class ChatMessageController extends Controller
         $chats=ChatMessage::where('chat_id', $chat_id)
             ->orderBy('id', 'asc')
             ->get();
+
+        ChatMessage::where('chat_id', $chat_id)
+            ->where('seen_at', null)
+            ->where('direction', 0)
+            ->update(['seen_at'=>date('Y-m-d H:i:s')]);
 
         return [
 

@@ -17,6 +17,11 @@ class ChatMessageController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
+        ChatMessage::where('chat_id', $chat_id)
+                ->where('seen_at', null)
+                ->where('direction', 1)
+                ->update(['seen_at'=>date('Y-m-d H:i:s')]);
+
         return [
 
             'status'=>'success',
@@ -105,6 +110,10 @@ class ChatMessageController extends Controller
                     'lat'=>$request->lat,
                     'lang'=>$request->lang
                 ]);
+
+                $request->user->lat=$request->lat;
+                $request->user->lang=$request->lang;
+                $request->user->save();
                 //$message->saveFile($request->file, 'chats');
                 break;
 
@@ -113,13 +122,13 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', $message->only('message')));
+        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
             'message'=>'Message has been submitted',
             'data'=>[
-                'message_id'=>$message->id
+                'message_id'=>$message->id,
             ]
         ];
     }
@@ -127,12 +136,15 @@ class ChatMessageController extends Controller
     public function acceptProduct(Request $request, $message_id){
 
         $user=$request->user;
-        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+        $message=ChatMessage::with('chat')
+        ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
         $message->status='accepted';
         $message->save();
+
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
@@ -143,12 +155,15 @@ class ChatMessageController extends Controller
 
     public function rejectProduct(Request $request, $message_id){
         $user=$request->user;
-        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+        $message=ChatMessage::with('chat')
+        ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
         $message->status='rejected';
         $message->save();
+
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',
@@ -159,12 +174,20 @@ class ChatMessageController extends Controller
 
     public function cancelProduct(Request $request, $message_id){
         $user=$request->user;
-        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+        $message=ChatMessage::with(['chat','order'])
+        ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
+        if($message->order)
+            return [
+                'status'=>'failed',
+                'message'=>'Item Cannot Be Cancelled Now'
+            ];
         $message->status='cancelled';
         $message->save();
+
+        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
 
         return [
             'status'=>'success',

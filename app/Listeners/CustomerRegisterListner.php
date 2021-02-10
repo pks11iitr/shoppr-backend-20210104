@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\CustomerRegistered;
 use App\Models\OTPModel;
+use App\Services\SendBird;
 use App\Services\SMS\Msg91;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,5 +34,16 @@ class CustomerRegisterListner implements ShouldQueue
         $otp=OTPModel::createOTP('customer', $event->user->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
         Msg91::send($event->user->mobile,$msg);
+
+        //register on sendbird app
+        $sendbird=app('App\Services\SendBird\SendBird');
+        $response=$sendbird->createUser($event->user);
+
+        if(isset($response['user_id'])){
+            $event->user->sendbird_token=$response['access_token']??null;
+            $event->user->save();
+        }
+
+
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class OrderController extends Controller
 
         $user=$request->user;
 
-        $orders=Order::where('user_id', $user->id)
+        $orders=Order::with('details')
+            ->where('user_id', $user->id)
             ->where('status', '!=', 'Pending')
             ->orderBy('id', 'desc')
             ->select('id','refid', 'total', 'service_charge', 'created_at', 'status')
@@ -29,6 +31,10 @@ class OrderController extends Controller
 
     public function initiateOrder(Request $request, $chat_id){
         $user=$request->user;
+
+        $chat=Chat::with('customer','shoppr')
+            ->where('customer_id', $user->id)
+            ->findOrFail($chat_id);
 
         $items=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
             $chat->where('customer_id', $user->id);
@@ -51,6 +57,7 @@ class OrderController extends Controller
 
         $order=Order::create([
             'user_id'=>$user->id,
+            'shoppr_id'=>$chat->shoppr_id,
             'chat_id'=>$chat_id,
             'refid'=>$refid,
             'total'=>$total,
@@ -71,7 +78,9 @@ class OrderController extends Controller
     public function details(Request $request, $order_id){
         $user=$request->user;
 
-        $order=Order::with(['details'])->where('user_id', $user->id)
+        $order=Order::with(['details'])
+            ->where('user_id', $user->id)
+            ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
             ->findOrFail($order_id);
 
         return [

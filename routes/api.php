@@ -62,6 +62,12 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->post('initiate-payment/{order_id}', 'MobileApps\Api\PaymentController@initiatePayment');
 
     $api->get('track-location/{chat_id}', 'MobileApps\Api\ShopperTrackController@track');
+
+    $api->get('initiate-video-call/{chat_id}', 'MobileApps\Api\CallController@initiateVideocall');
+
+    $api->post('register-as-merchant','MobileApps\Api\PartnerController@register');
+    $api->get('view-application','MobileApps\Api\PartnerController@view');
+
 });
 
 $api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
@@ -75,7 +81,7 @@ $api->get('customer-balance', 'MobileApps\Api\WalletController@userbalance');
 $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
 $api->post('recharge','MobileApps\Api\WalletController@addMoney');
 $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
-
+$api->get('notifications', 'MobileApps\Api\NotificationController@index');
 
 //shoppr APIs
 $api->group(['prefix' => 'shoppr'], function ($api) {
@@ -100,7 +106,15 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->post('send-message/{id}', 'MobileApps\ShopprApp\ChatMessageController@send');
 
         $api->post('update-location', 'MobileApps\ShopprApp\ShopperLocationController@update');
+
+        $api->get('initiate-video-call/{chat_id}', 'MobileApps\ShopprApp\CallController@initiateVideocall');
+
+        $api->get('order-details/{order_id}', 'MobileApps\ShopprApp\OrderController@details');
+        $api->get('orders', 'MobileApps\ShopprApp\OrderController@index');
+
     });
+
+    $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
 
 
 
