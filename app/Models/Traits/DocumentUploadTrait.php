@@ -36,4 +36,28 @@ trait DocumentUploadTrait {
         $this->save();
     }
 
+    public function savePanCard($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->pan_card=$path;
+        $this->save();
+    }
+    public function saveAadhaarCard($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->aadhaar_card=$path;
+        $this->save();
+    }
+    public function saveDlNo($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->de_no=$path;
+        $this->save();
+    }
 }

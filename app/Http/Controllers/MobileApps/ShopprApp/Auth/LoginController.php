@@ -60,6 +60,7 @@ class LoginController extends Controller
         }
         return [
             'status'=>'failed',
+            'form_step'=>'',
             'token'=>'',
             'message'=>'Credentials are not correct'
         ];
@@ -86,12 +87,12 @@ class LoginController extends Controller
             $otp=OTPModel::createOTP('shopper', $user->id, 'login');
             $msg=str_replace('{{otp}}', $otp, config('sms-templates.login'));
             Msg91::send($user->mobile,$msg);
-            return ['status'=>'success', 'message'=>'otp verify', 'token'=>''];
+            return ['status'=>'success','form_step'=>$user->form_step, 'message'=>'otp verify', 'token'=>''];
         }
         else if($user->status==1)
-            return ['status'=>'success', 'message'=>'Login Successfull', 'token'=>$token];
+            return ['status'=>'success','form_step'=>$user->form_step, 'message'=>'Login Successfull', 'token'=>$token];
         else
-            return ['status'=>'failed', 'message'=>'This account has been blocked', 'token'=>''];
+            return ['status'=>'failed','form_step'=>'', 'message'=>'This account has been blocked', 'token'=>''];
     }
 
 
@@ -109,16 +110,16 @@ class LoginController extends Controller
 
         $user=Shoppr::where('mobile', $request->mobile)->first();
         if(!$user)
-            return ['status'=>'failed', 'message'=>'This account is not registered with us. Please signup to continue'];
+            return ['status'=>'failed','form_step'=>'', 'message'=>'This account is not registered with us. Please signup to continue'];
 
         if(!in_array($user->status, [0,1]))
-            return ['status'=>'failed', 'message'=>'This account has been blocked'];
+            return ['status'=>'failed','form_step'=>'', 'message'=>'This account has been blocked'];
 
         $otp=OTPModel::createOTP('shopper', $user->id, 'login');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.login'));
         event(new SendOtp($user->mobile, $msg));
 
-        return ['status'=>'success', 'message'=>'Please verify OTP to continue'];
+        return ['status'=>'success','form_step'=>$user->form_step, 'message'=>'Please verify OTP to continue'];
     }
 
 

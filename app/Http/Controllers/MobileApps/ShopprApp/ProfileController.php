@@ -11,7 +11,9 @@ class ProfileController extends Controller
     public function state(Request $request){
 
         $request->validate([
-            'image'=>'required|image'
+            'pan_card'=>'required|image',
+            'pan_card'=>'required|image',
+            'pan_card'=>'required|image'
         ]);
         $user=$request->user;
 
