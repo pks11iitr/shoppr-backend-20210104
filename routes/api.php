@@ -114,6 +114,9 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->post('upload-document', 'MobileApps\ShopprApp\ProfileController@uploaddocument');
         $api->post('update-details', 'MobileApps\ShopprApp\ProfileController@bankdetails');
 
+        $api->get('wallet-history', 'MobileApps\ShopprApp\WalletController@index');
+        $api->get('wallet-balance', 'MobileApps\ShopprApp\WalletController@getWalletBalance');
+
     });
 
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
