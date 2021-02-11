@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ShopprWallet extends Model
@@ -25,7 +26,7 @@ class ShopprWallet extends Model
     }
 
     public function getDateAttribute($value){
-        return date('D, d-M-Y H:iA', strtotime($this->created_at));
+        return date('h:iA', strtotime($this->created_at));
     }
 
     public function shoppr()

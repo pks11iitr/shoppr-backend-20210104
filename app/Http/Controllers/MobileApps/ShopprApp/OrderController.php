@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -34,9 +35,37 @@ class OrderController extends Controller
             ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
             ->findOrFail($order_id);
 
+        if($order->status=='Confirmed')
+            $order->show_deliver_button=1;
+        else
+            $order->show_deliver_button=0;
+
         return [
             'status'=>'success',
             'data'=>compact('order')
+        ];
+
+    }
+
+    public function deliverOrder(Request $request, $order_id){
+
+        $user=$request->user;
+
+        $order=Order::where('shoppr_id', $user->id)
+            ->where('status', 'Confirmed')
+            ->findOrFail($order_id);
+
+        $commission=Settings::where('name', 'Commission')->first();
+        $commission=$commission->value??0;
+
+        $order->rider_commission=$commission;
+        $order->payment_status='Paid';
+        $order->status='Delivered';
+        $order->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Order Has Been Delivered'
         ];
 
     }
