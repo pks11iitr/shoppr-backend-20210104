@@ -44,20 +44,36 @@ trait DocumentUploadTrait {
         $this->pan_card=$path;
         $this->save();
     }
-    public function saveAadhaarCard($file, $urlprefix){
+    public function saveFrontAadhaarCard($file, $urlprefix){
         $name = $file->getClientOriginalName();
         $contents = file_get_contents($file);
         $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
         \Storage::put($path, $contents, 'public');
-        $this->aadhaar_card=$path;
+        $this->front_aadhaar_card=$path;
         $this->save();
     }
-    public function saveDlNo($file, $urlprefix){
+    public function saveBackAadhaarCard($file, $urlprefix){
         $name = $file->getClientOriginalName();
         $contents = file_get_contents($file);
         $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
         \Storage::put($path, $contents, 'public');
-        $this->dl_no=$path;
+        $this->back_aadhaar_card=$path;
+        $this->save();
+    }
+    public function front_dl_no($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->front_dl_no=$path;
+        $this->save();
+    }
+    public function saveBackDlNo($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->back_dl_no=$path;
         $this->save();
     }
 }

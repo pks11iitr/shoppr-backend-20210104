@@ -13,18 +13,27 @@ class ProfileController extends Controller
 
         $request->validate([
             'pan_card' => 'required|image',
-            'aadhaar_card' => 'required|image',
-            'dl_no' => 'required|image'
+            'front_aadhaar_card' => 'required|image',
+            'back_aadhaar_card' => 'required|image',
+            'front_dl_no' => 'required|image',
+            'back_dl_no' => 'required|image'
         ]);
         $user = $request->user;
         if ($request->pan_card) {
             $user->savePanCard($request->pan_card, 'shopper');
         }
-        if ($request->aadhaar_card) {
-            $user->saveAadhaarCard($request->aadhaar_card, 'shopper');
+        if ($request->front_aadhaar_card) {
+            $user->saveFrontAadhaarCard($request->front_aadhaar_card, 'shopper');
         }
-        if ($request->dl_no) {
-            $user->saveDlNo($request->dl_no, 'shopper');
+        if ($request->back_aadhaar_card) {
+            $user->saveBackAadhaarCard($request->back_aadhaar_card, 'shopper');
+        }
+        if ($request->front_dl_no) {
+            $user->saveFrontDlNo($request->front_dl_no, 'shopper');
+        }
+
+        if ($request->back_dl_no) {
+            $user->saveBackDlNo($request->back_dl_no, 'shopper');
         }
         $user->form_step = 2;
         if ($user->save()) {
