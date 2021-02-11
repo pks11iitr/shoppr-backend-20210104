@@ -19,6 +19,42 @@
       </div><!-- /.container-fluid -->
     </section>
 
+      <section class="content">
+          <div class="container-fluid">
+              <div class="row">
+                  <!-- left column -->
+                  <div class="col-md-12">
+                      <!-- general form elements -->
+                      <div class="card card-primary">
+                          <div class="card-header">
+                              <h3 class="card-title">Shoppr Wallet</h3>
+                          </div>
+                          <!-- /.card-header -->
+                          <!-- form start -->
+                          <form role="form" method="post" enctype="multipart/form-data" action="{{route('shoppr.wallet.add',['id'=>$data->id])}}">
+                              @csrf
+                              <div class="card-body">
+                                  <div class="form-group">
+                                      <label for="exampleInputEmail1">Available Balance: {{\App\Models\ShopprWallet::balance($data->id)}}</label>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="exampleInputEmail1">Add Money</label>
+                                      <input type="number" name="amount" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$data->name}}">
+                                  </div>
+                              </div>
+                              <!-- /.card-body -->
+                              <div class="card-footer">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                          </form>
+                      </div>
+                      <!-- /.card -->
+                  </div>
+                  <!--/.col (right) -->
+              </div>
+              <!-- /.row -->
+          </div><!-- /.container-fluid -->
+      </section>
 
     <!-- Main content -->
     <section class="content">
@@ -63,13 +99,13 @@
                             <option value="0" {{$data->isactive==0?'selected':''}}>No</option>
                         </select>
                       </div>
-                    <div class="form-group">
-                        <label>Is Status</label>
-                        <select class="form-control" name="status" required>
-                            <option  selected="selected" value="1" {{$data->status==1?'selected':''}}>Yes</option>
-                            <option value="0" {{$data->status==0?'selected':''}}>No</option>
-                        </select>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label>Is Status</label>--}}
+{{--                        <select class="form-control" name="status" required>--}}
+{{--                            <option  selected="selected" value="1" {{$data->status==1?'selected':''}}>Yes</option>--}}
+{{--                            <option value="0" {{$data->status==0?'selected':''}}>No</option>--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
                     <div class="form-group">
                         <label for="exampleInputFile">File input</label>
                         <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" >

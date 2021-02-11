@@ -64,13 +64,13 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label>Is Status</label>
-                        <select class="form-control" name="status" required>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label>Is Status</label>--}}
+{{--                        <select class="form-control" name="status" required>--}}
+{{--                            <option value="1">Yes</option>--}}
+{{--                            <option value="0">No</option>--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
                     <div class="form-group">
                         <label for="exampleInputFile">File input</label>
                         <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" required>

@@ -65,7 +65,7 @@
                    <th>Langitude</th>
                    <th>Image</th>
                     <th>Isactive</th>
-                    <th>Status</th>
+                    <th>Wallet Balance</th>
                    <th>Action</th>
                   </tr>
                   </thead>
@@ -84,9 +84,7 @@
                              @endif
                         </td>
                       <td>
-                          @if($data->status==1){{'Yes'}}
-                          @else{{'No'}}
-                          @endif
+                          {{\App\Models\ShopprWallet::balance($data->id)}}
                       </td>
                       <td><a href="{{route('shoppr.edit',['id'=>$data->id])}}" class="btn btn-success">Edit</a></td>
                  </tr>

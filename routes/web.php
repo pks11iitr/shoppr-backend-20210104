@@ -36,6 +36,8 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::get('edit/{id}','SuperAdmin\ShopprController@edit')->name('shoppr.edit');
         Route::post('update/{id}','SuperAdmin\ShopprController@update')->name('shoppr.update');
 
+        Route::post('add-money/{id}','SuperAdmin\ShopprController@addMoney')->name('shoppr.wallet.add');
+
     });
 
     Route::group(['prefix'=>'store'], function(){

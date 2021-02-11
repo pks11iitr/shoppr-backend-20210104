@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shoppr;
+use App\Models\ShopprWallet;
 use Illuminate\Http\Request;
 
 class ShopprController extends Controller
@@ -79,5 +80,13 @@ class ShopprController extends Controller
         Shoppr::where('id', $id)->delete();
         return redirect()->back()->with('success', 'Data has been deleted');
     }*/
+
+    public function addMoney(Request $request, $id){
+
+        ShopprWallet::updatewallet($id, 'Amount Credited By Admin', 'Credit', $request->amount);
+
+        return redirect()->back()->with('success', 'Amount has been credited to shoppr wallet');
+
+    }
 }
 
