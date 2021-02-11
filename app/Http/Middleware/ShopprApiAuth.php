@@ -21,6 +21,13 @@ class ShopprApiAuth
                 'status'=>'failed',
                 'message'=>'Please login to continue'
             ], 200);
+//        if(!$user->isactive){
+//            return [
+//                'status'=>'failed',
+//                'message'=>'Inactive Account'
+//            ];
+//        }
+
 
         $request->merge(compact('user'));
         return $next($request);
