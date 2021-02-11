@@ -60,7 +60,7 @@ trait DocumentUploadTrait {
         $this->back_aadhaar_card=$path;
         $this->save();
     }
-    public function front_dl_no($file, $urlprefix){
+    public function saveFrontDlNo($file, $urlprefix){
         $name = $file->getClientOriginalName();
         $contents = file_get_contents($file);
         $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
