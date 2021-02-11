@@ -117,6 +117,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('wallet-history', 'MobileApps\ShopprApp\WalletController@index');
         $api->get('wallet-balance', 'MobileApps\ShopprApp\WalletController@getWalletBalance');
 
+        $api->get('deliver-order/{order_id}', 'MobileApps\ShopprApp\OrderController@deliverOrder');
+
     });
 
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');

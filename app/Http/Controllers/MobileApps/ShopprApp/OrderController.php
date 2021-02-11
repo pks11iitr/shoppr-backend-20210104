@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Settings;
+use App\Models\ShopprWallet;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -62,6 +63,8 @@ class OrderController extends Controller
         $order->payment_status='Paid';
         $order->status='Delivered';
         $order->save();
+
+        ShopprWallet::updatewallet($user->id,'Order Id:'.$order->refid.' Delivered', 'Debit', $order->total,$order->id);
 
         return [
             'status'=>'success',

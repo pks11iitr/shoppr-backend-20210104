@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -49,7 +50,8 @@ class OrderController extends Controller
         foreach($items as $i){
             $total=$total+$i->price;
         }
-        $service_charge=100;
+        $service_charge=Settings::where('name', 'Service Fee')->first();
+        $service_charge=$service_charge->value??0;
 
         $grand_total=$total+$service_charge;
 
