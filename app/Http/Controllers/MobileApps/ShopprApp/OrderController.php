@@ -21,6 +21,13 @@ class OrderController extends Controller
             ->select('id','refid', 'total', 'service_charge', 'created_at', 'status')
             ->paginate(10);
 
+        foreach($orders as $o){
+            if($o->status=='Confirmed')
+                $o->show_deliver_button=1;
+            else
+                $o->show_deliver_button=0;
+        }
+
         return [
             'status'=>'success',
             'data'=>compact('orders')
