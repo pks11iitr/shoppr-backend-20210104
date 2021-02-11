@@ -91,6 +91,7 @@ class WalletController extends Controller
 
             $tlist=[];
             foreach($date_transactions as $t)
+                $t->created_at=date('h:iA', strtotime($t->created_at));
                 $tlist[]=$t;
 
             $commission_transactions[]=[
