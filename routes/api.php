@@ -119,6 +119,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
         $api->get('deliver-order/{order_id}', 'MobileApps\ShopprApp\OrderController@deliverOrder');
 
+        $api->get('commission-history', 'MobileApps\ShopprApp\WalletController@commissions');
+
     });
 
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
