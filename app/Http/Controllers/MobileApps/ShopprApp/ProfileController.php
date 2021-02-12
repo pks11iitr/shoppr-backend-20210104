@@ -77,4 +77,14 @@ class ProfileController extends Controller
         }
 
     }
+
+    public function getProfileCompletionStatus(Request $request){
+
+        return [
+            'status'=>'success',
+            'form_step'=>$request->user->form_step??0
+        ];
+
+    }
+
 }

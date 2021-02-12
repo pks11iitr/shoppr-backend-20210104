@@ -121,6 +121,9 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
         $api->post('commission-history', 'MobileApps\ShopprApp\WalletController@commissions');
 
+        $api->get('profile-status', 'MobileApps\ShopprApp\ProfileController@getProfileCompletionStatus');
+
+
     });
 
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
