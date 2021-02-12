@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Setting </h1>
+                        <h1>Commission </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -31,23 +31,23 @@
                                         <a href="{{route('shoppr.create')}}" class="btn btn-primary">Add Shoppr</a> </div>--}}
                                     <div class="col-9">
 
-                                  {{--      <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <input  id="fullname"  class="form-control" name="search" placeholder=" search title" value="{{request('search')}}"  type="text" />
-                                                </div>
-                                                <div class="col-4">
-                                                    <select id="ordertype" name="ordertype" class="form-control" >
-                                                        <option value="" {{ request('ordertype')==''?'selected':''}}>Please Select</option>
-                                                        <option value="DESC" {{ request('ordertype')=='DESC'?'selected':''}}>DESC</option>
-                                                        <option value="ASC" {{ request('ordertype')=='ASC'?'selected':''}}>ASC</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-4">
-                                                    <button type="submit" name="save" class="btn btn-primary">Submit</button>
-                                                </div>
-                                            </div>
-                                        </form>--}}
+                                        {{--      <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
+                                                  <div class="row">
+                                                      <div class="col-4">
+                                                          <input  id="fullname"  class="form-control" name="search" placeholder=" search title" value="{{request('search')}}"  type="text" />
+                                                      </div>
+                                                      <div class="col-4">
+                                                          <select id="ordertype" name="ordertype" class="form-control" >
+                                                              <option value="" {{ request('ordertype')==''?'selected':''}}>Please Select</option>
+                                                              <option value="DESC" {{ request('ordertype')=='DESC'?'selected':''}}>DESC</option>
+                                                              <option value="ASC" {{ request('ordertype')=='ASC'?'selected':''}}>ASC</option>
+                                                          </select>
+                                                      </div>
+                                                      <div class="col-4">
+                                                          <button type="submit" name="save" class="btn btn-primary">Submit</button>
+                                                      </div>
+                                                  </div>
+                                              </form>--}}
                                     </div>
 
                                 </div>
@@ -58,9 +58,10 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                        <th>Action</th>
+                                        <th>Shopper Name</th>
+                                        <th>OrderId</th>
+                                        <th>Commission Amount</th>
+                                        <th>Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -68,21 +69,24 @@
                                         <tr>
                                             <td>{{$data->name}}</td>
                                             <td>{{$data->value}}</td>
-                                            <td><a href="{{route('setting.edit',['id'=>$data->id])}}" class="btn btn-success">Edit</a></td>
+                                            <td>{{$data->value}}</td>
+                                            <td>{{$data->value}}</td>
+
                                         </tr>
                                     @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                        <th>Action</th>
+                                        <th>Shopper Name</th>
+                                        <th>OrderId</th>
+                                        <th>Commission Amount</th>
+                                        <th>Date</th>
                                     </tr>
                                     </tfoot>
                                 </table>
                             </div>
 
-                        <!-- /.card-body -->
+                            <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
                         <!-- /.card -->

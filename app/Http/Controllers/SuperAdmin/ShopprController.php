@@ -83,10 +83,15 @@ class ShopprController extends Controller
 
     public function addMoney(Request $request, $id){
 
-        ShopprWallet::updatewallet($id, 'Amount Credited By Admin', 'Credit', $request->amount);
+        ShopprWallet::updatewallet($id, 'Amount Credited By Admin', $request->type, $request->amount);
 
         return redirect()->back()->with('success', 'Amount has been credited to shoppr wallet');
 
+    }
+    public function transaction(Request $request,$id){
+
+       $datas= ShopprWallet::where('user_id',$id)->paginate(20);
+        return view('admin.shoppr.history',['datas'=>$datas])->with('success', 'Data has been updated');
     }
 }
 

@@ -28,12 +28,15 @@
                       <div class="card card-primary">
                           <div class="card-header">
                               <h3 class="card-title">Shoppr Wallet</h3>
+
                           </div>
                           <!-- /.card-header -->
                           <!-- form start -->
+
                           <form role="form" method="post" enctype="multipart/form-data" action="{{route('shoppr.wallet.add',['id'=>$data->id])}}">
                               @csrf
                               <div class="card-body">
+                                  <a href="{{route('shoppr.tranaction.list',['id'=>$data->id])}}" class="btn btn-success">Transaction</a>
                                   <div class="form-group">
                                       <label for="exampleInputEmail1">Available Balance: {{\App\Models\ShopprWallet::balance($data->id)}}</label>
                                   </div>
