@@ -193,6 +193,16 @@ class PaymentController extends Controller
 
             Wallet::updatewallet($order->user_id, 'Paid For Order ID: '.$order->refid, 'DEBIT',$order->balance_used, 'CASH', $order->id);
 
+            //payment done chat
+            $message=ChatMessage::create([
+                'chat_id'=>$order->chat_id,
+                'message'=>'Payment Received',
+                'type'=>'paid',
+                'order_id'=>$order->id
+            ]);
+
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat'])));
+
             return [
                 'status'=>'success',
             ];

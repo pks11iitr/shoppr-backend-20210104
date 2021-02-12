@@ -95,7 +95,7 @@ class ChatController extends Controller
         }
 
 
-        $message='I would like to deliver goods';
+        $message='I am excited to shop & deliver things to you!';
 
         ChatMessage::create([
             'message'=>$message,
@@ -104,7 +104,7 @@ class ChatController extends Controller
             'chat_id'=>$chat->id
         ]);
 
-        $share_location='Please share your location';
+        $share_location='Please share your delivery address and share the location on map.';
 
         ChatMessage::create([
             'message'=>$share_location,

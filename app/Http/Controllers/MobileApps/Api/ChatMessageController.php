@@ -202,13 +202,17 @@ class ChatMessageController extends Controller
         ]);
 
         $user=$request->user;
-        $message=ChatMessage::whereHas('chat', function($chat)use($user){
+        $message=ChatMessage::with('order')->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
+
 
         $message->quantity=$request->ratings;
         $message->status='accepted';
         $message->save();
+
+        $message->order->ratings=$request->ratings;
+        $message->order->save();
 
         return [
             'status'=>'success',
