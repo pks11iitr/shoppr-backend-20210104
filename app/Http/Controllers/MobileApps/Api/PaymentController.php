@@ -201,7 +201,7 @@ class PaymentController extends Controller
                 'order_id'=>$order->id
             ]);
 
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat'])));
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$order->chat_id])));
 
             return [
                 'status'=>'success',
@@ -278,6 +278,17 @@ class PaymentController extends Controller
             //event(new OrderSuccessfull($order));
             event(new OrderConfirmed($order));
             $this->sendTrackNotification($order);
+
+            //payment done chat
+            $message=ChatMessage::create([
+                'chat_id'=>$order->chat_id,
+                'message'=>'Payment Received',
+                'type'=>'paid',
+                'order_id'=>$order->id
+            ]);
+
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$order->chat_id])));
+
             return [
                 'status'=>'success',
                 'message'=> 'Congratulations! Your order at Hallobasket is successful',

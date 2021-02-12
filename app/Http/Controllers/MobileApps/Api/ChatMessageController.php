@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\Shoppr;
 use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,8 @@ class ChatMessageController extends Controller
 {
 
     public function chatDetails(Request $request, $chat_id){
+
+        $chat=Chat::findOrFail($chat_id);
 
         $chats=ChatMessage::where('chat_id', $chat_id)
             ->orderBy('id', 'asc')
@@ -22,11 +25,14 @@ class ChatMessageController extends Controller
                 ->where('direction', 1)
                 ->update(['seen_at'=>date('Y-m-d H:i:s')]);
 
+        $shopper=Shoppr::select('name','image','id')
+        ->find($chat->shoppr_id);
+
         return [
 
             'status'=>'success',
             'message'=>[],
-            'data'=>compact('chats', 'chat_id')
+            'data'=>compact('chats', 'chat_id', 'shoppr')
 
         ];
 
@@ -122,7 +128,7 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
+        $chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
 
         return [
             'status'=>'success',
@@ -144,7 +150,7 @@ class ChatMessageController extends Controller
         $message->status='accepted';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
 
         return [
             'status'=>'success',
@@ -163,7 +169,7 @@ class ChatMessageController extends Controller
         $message->status='rejected';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
 
         return [
             'status'=>'success',
@@ -187,7 +193,7 @@ class ChatMessageController extends Controller
         $message->status='cancelled';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Chat', 'New Chat From Customer', array_merge($message->only('message'), ['type'=>'chat'])));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
 
         return [
             'status'=>'success',
@@ -213,6 +219,8 @@ class ChatMessageController extends Controller
 
         $message->order->ratings=$request->ratings;
         $message->order->save();
+
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
 
         return [
             'status'=>'success',
