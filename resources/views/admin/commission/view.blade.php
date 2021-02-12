@@ -65,12 +65,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($datas as $data)
+                                    @foreach($commission_transactions as $data)
                                         <tr>
-                                            <td>{{$data->name}}</td>
-                                            <td>{{$data->value}}</td>
-                                            <td>{{$data->value}}</td>
-                                            <td>{{$data->value}}</td>
+                                            <td>{{$data->value??'name'}}</td>
+                                            <td>{{$data->refid??''}}</td>
+                                            <td>{{$data->rider_commission??''}}</td>
+                                            <td>{{$data->created_at??''}}</td>
+
 
                                         </tr>
                                     @endforeach
