@@ -150,7 +150,7 @@ class ChatMessageController extends Controller
         $message->status='accepted';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id])));
 
         return [
             'status'=>'success',
@@ -169,7 +169,7 @@ class ChatMessageController extends Controller
         $message->status='rejected';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id])));
 
         return [
             'status'=>'success',
@@ -193,7 +193,7 @@ class ChatMessageController extends Controller
         $message->status='cancelled';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id])));
 
         return [
             'status'=>'success',
@@ -220,7 +220,7 @@ class ChatMessageController extends Controller
         $message->order->ratings=$request->ratings;
         $message->order->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$message->chat_id])));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id])));
 
         return [
             'status'=>'success',

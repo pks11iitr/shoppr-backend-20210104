@@ -201,7 +201,7 @@ class PaymentController extends Controller
                 'order_id'=>$order->id
             ]);
 
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$order->chat_id])));
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$order->chat_id])));
 
             return [
                 'status'=>'success',
@@ -287,7 +287,7 @@ class PaymentController extends Controller
                 'order_id'=>$order->id
             ]);
 
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>$order->chat_id])));
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$order->chat_id])));
 
             return [
                 'status'=>'success',
