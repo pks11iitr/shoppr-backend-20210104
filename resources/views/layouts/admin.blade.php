@@ -143,6 +143,16 @@
                             </p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('setting.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Setting
+
+                            </p>
+                        </a>
+                    </li>
                    {{-- <li class="nav-item">
                         <a href="{{route('news.list')}}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>

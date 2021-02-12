@@ -51,7 +51,12 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     });
 
+    Route::group(['prefix' => 'setting'], function () {
 
+        Route::get('/','SuperAdmin\SettingController@index')->name('setting.list');
+        Route::get('edit/{id}','SuperAdmin\SettingController@edit')->name('setting.edit');
+        Route::post('update/{id}', 'SuperAdmin\SettingController@update')->name('setting.update');
+    });
 
 
     //endshoppradmin

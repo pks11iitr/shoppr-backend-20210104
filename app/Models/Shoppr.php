@@ -57,6 +57,11 @@ class Shoppr extends Authenticatable implements JWTSubject
             return Storage::url($value);
         return Storage::url('customers/default.jpeg');
     }
+    public function getPanCardAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return Storage::url('customers/default.jpeg');
+    }
 
     public function order(){
         return $this->hasMany('App\Models\Order', 'shoppr_id');

@@ -41,6 +41,7 @@ class ProfileController extends Controller
                 'status' => 'success',
                 'form_step' => $user->form_step,
                 'message' => 'updated',
+                'pan_card' => $user->pan_card,
             ];
         } else {
             return [
