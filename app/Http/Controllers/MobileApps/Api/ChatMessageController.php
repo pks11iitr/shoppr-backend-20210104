@@ -25,7 +25,7 @@ class ChatMessageController extends Controller
                 ->where('direction', 1)
                 ->update(['seen_at'=>date('Y-m-d H:i:s')]);
 
-        $shopper=Shoppr::select('name','image','id')
+        $shoppr=Shoppr::select('name','image','id')
         ->find($chat->shoppr_id);
 
         return [
