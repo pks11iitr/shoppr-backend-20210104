@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Setting </h1>
+                        <h1>Transaction </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -27,11 +27,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    {{--<div class="col-3">
-                                        <a href="{{route('shoppr.create')}}" class="btn btn-primary">Add Shoppr</a> </div>--}}
+                                    <div class="col-3">
+                                        {{--<a href="{{route('shoppr.create')}}" class="btn btn-primary">Add Shoppr</a> </div>--}}
                                     <div class="col-9">
 
-                                  {{--      <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
+                                       {{-- <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-4">
                                                     <input  id="fullname"  class="form-control" name="search" placeholder=" search title" value="{{request('search')}}"  type="text" />
@@ -59,29 +59,44 @@
                                     <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Value</th>
-                                        <th>Action</th>
+                                        <th>Refid</th>
+                                        <th>Amount</th>
+                                        <th>Orderid</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+
+
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($datas as $data)
                                         <tr>
-                                            <td>{{$data->name}}</td>
-                                            <td>{{$data->value}}</td>
-                                            <td><a href="{{route('setting.edit',['id'=>$data->id])}}" class="btn btn-success">Edit</a></td>
+                                            <td>{{$data->shoppr->name}}</td>
+                                            <td>{{$data->refid}}</td>
+                                            <td>{{$data->amount}}</td>
+                                            <td>{{$data->order_id}}</td>
+                                            <td>{{$data->created_at}}</td>
+                                            <td>{{$data->type}}</td>
+                                            <td>{{$data->description}}</td>
+
                                         </tr>
                                     @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Value</th>
-                                        <th>Action</th>
+                                        <th>Refid</th>
+                                        <th>Amount</th>
+                                        <th>Orderid</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
                                     </tr>
                                     </tfoot>
                                 </table>
                             </div>
-
+                        {{$datas->appends(request()->query())->links() }}
                         <!-- /.card-body -->
                         </div>
                         <!-- /.card -->

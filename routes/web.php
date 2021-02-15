@@ -37,6 +37,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('update/{id}','SuperAdmin\ShopprController@update')->name('shoppr.update');
 
         Route::post('add-money/{id}','SuperAdmin\ShopprController@addMoney')->name('shoppr.wallet.add');
+        Route::get('history-list/{id}','SuperAdmin\ShopprController@transaction')->name('shoppr.tranaction.list');
 
     });
 
@@ -58,7 +59,9 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('update/{id}', 'SuperAdmin\SettingController@update')->name('setting.update');
     });
 
-
+    Route::group(['prefix'=>'commission'], function() {
+        Route::get('/', 'SuperAdmin\CommissionController@index')->name('commission.list');
+    });
     //endshoppradmin
 
     Route::group(['prefix' => 'banners'], function () {
