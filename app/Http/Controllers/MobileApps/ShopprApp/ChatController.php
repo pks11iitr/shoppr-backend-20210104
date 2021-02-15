@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\RejectedChat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -61,4 +62,87 @@ class ChatController extends Controller
             'data'=>compact('userchats')
         ];
     }
+
+    public function acceptChat(Request $request, $chat_id){
+        $user=$request->user;
+
+        $chat=Chat::where('shoppr_id', 0)
+            ->find($chat_id);
+        if(!$chat)
+            return [
+                'status'=>'failed',
+                'message'=>"This booking is no longer available"
+            ];
+
+        $chat->shoppr_id=$user->id;
+        $chat->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Please start discussion with customer'
+        ];
+
+    }
+
+    public function rejectChat(Request $request, $chat_id){
+        $user=$request->user;
+
+        $chat=Chat::where('shoppr_id', 0)
+            ->find($chat_id);
+        if(!$chat)
+            return [
+                'status'=>'failed',
+                'message'=>"This booking is no longer available"
+            ];
+
+        RejectedChat::create([
+            'shoppr_id'=>$user->id,
+            'chat_id'=>$chat_id
+        ]);
+
+        return [
+            'status'=>'success',
+            'message'=>'Please start discussion with customer'
+        ];
+
+    }
+
+
+    public function availableChats(Request $request){
+        $user=$request->user;
+
+        $chats=Chat::with(['customer'=>function($user){
+            $user->select('id', 'name', 'image');
+        }])
+        ->whereDoesntHave('rejectedby', function($rejectedby) use($user){
+            $rejectedby->where('rejected_chats.shoppr_id', $user->id);
+        })
+        ->where('shoppr_id', 0) // unassigned chats
+        ->orderBy('id', 'desc')
+        ->get();
+
+        $userchats=[];
+        foreach($chats as $userchat){
+
+            $distance=distance($userchat->lat, $userchat->lang, $user->lat, $user->lang);
+
+            $userchats[]=[
+                'id'=>$userchat->id,
+                'name'=>$userchat->customer->name,
+                'image'=>$userchat->customer->image,
+                'distance'=>round($distance, 2),
+                'date'=>$userchat->created_at
+            ];
+        }
+
+        return [
+            'status'=>'success',
+            'message'=>'',
+            'data'=>compact('userchats')
+        ];
+    }
+
+
+
+
 }

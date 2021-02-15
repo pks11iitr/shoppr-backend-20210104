@@ -67,15 +67,17 @@ class ChatController extends Controller
     public function startChat(Request $request, $store_id=null){
 
         $user=$request->user;
-        if($user->id==4){
-            $shoppr=Shoppr::find(4);
-        }else{
-            $shoppr=Shoppr::find(1);
-        }
+//        if($user->id==4){
+//            $shoppr=Shoppr::find(4);
+//        }else{
+//            $shoppr=Shoppr::find(1);
+//        }
 
         $chat=Chat::create([
             'customer_id'=>$user->id,
-            'shoppr_id'=>$shoppr->id
+            'shoppr_id'=>0,
+            'lat'=>$request->lat,
+            'lang'=>$request->lang
         ]);
 
         if($store_id){
@@ -121,6 +123,65 @@ class ChatController extends Controller
             ]
         ];
     }
+
+
+//    public function startChat(Request $request, $store_id=null){
+//
+//        $user=$request->user;
+//        if($user->id==4){
+//            $shoppr=Shoppr::find(4);
+//        }else{
+//            $shoppr=Shoppr::find(1);
+//        }
+//
+//        $chat=Chat::create([
+//            'customer_id'=>$user->id,
+//            'shoppr_id'=>$shoppr->id
+//        ]);
+//
+//        if($store_id){
+//
+//            $store=Store::find($store_id);
+//            if($store){
+//                $store_message='Please get my items from this store. '.$store->store_name;
+//                ChatMessage::create([
+//                    'message'=>$store_message,
+//                    'direction'=>1,
+//                    'type'=>'store',
+//                    'chat_id'=>$chat->id,
+//                    'lat'=>$store->lat,
+//                    'lang'=>$store->lang
+//                ]);
+//            }
+//        }
+//
+//
+//        $message='I am excited to shop & deliver things to you!';
+//
+//        ChatMessage::create([
+//            'message'=>$message,
+//            'direction'=>1,
+//            'type'=>'text',
+//            'chat_id'=>$chat->id
+//        ]);
+//
+//        $share_location='Please share your delivery address and share the location on map.';
+//
+//        ChatMessage::create([
+//            'message'=>$share_location,
+//            'direction'=>1,
+//            'type'=>'address-request',
+//            'chat_id'=>$chat->id
+//        ]);
+//
+//        return [
+//            'status'=>'success',
+//            'message'=>'',
+//            'data'=>[
+//                'id'=>$chat->id
+//            ]
+//        ];
+//    }
 
 
 }

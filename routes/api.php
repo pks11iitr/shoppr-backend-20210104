@@ -123,6 +123,9 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
         $api->get('profile-status', 'MobileApps\ShopprApp\ProfileController@getProfileCompletionStatus');
 
+        $api->get('available-chats', 'MobileApps\ShopprApp\ChatController@availableChats');
+        $api->get('accept-chat/{chat_id}', 'MobileApps\ShopprApp\ChatController@acceptChat');
+        $api->get('reject-chat/{chat_id}', 'MobileApps\ShopprApp\ChatController@rejectChat');
 
     });
 

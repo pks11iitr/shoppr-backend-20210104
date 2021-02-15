@@ -11,7 +11,7 @@ class Chat extends Model
 
     protected $table='chats';
 
-    protected $fillable=['customer_id', 'shoppr_id'];
+    protected $fillable=['customer_id', 'shoppr_id', 'lat','lang'];
 
 
     public function customer(){
@@ -28,5 +28,9 @@ class Chat extends Model
 
     public function getCreatedAtAttribute($value){
         return date('d/m/Y h:iA', strtotime($value));
+    }
+
+    public function rejectedby(){
+        return $this->belongsToMany('App\Models\Shoppr', 'rejected_chats', 'chat_id', 'shoppr_id');
     }
 }
