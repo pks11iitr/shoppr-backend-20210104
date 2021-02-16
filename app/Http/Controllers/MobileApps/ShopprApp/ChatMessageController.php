@@ -97,6 +97,13 @@ class ChatMessageController extends Controller
 
     public function chatDetails(Request $request, $chat_id){
 
+        $chat=Chat::with(['customer'=>function($customer){
+            $customer->select('id','name','image');
+        }])->findOrFail($chat_id);
+
+        $customer=$chat->customer;
+
+
         $chats=ChatMessage::where('chat_id', $chat_id)
             ->orderBy('id', 'asc')
             ->get();
@@ -110,7 +117,7 @@ class ChatMessageController extends Controller
 
             'status'=>'success',
             'message'=>[],
-            'data'=>compact('chats', 'chat_id')
+            'data'=>compact('chats', 'chat_id', 'customer')
 
         ];
 
