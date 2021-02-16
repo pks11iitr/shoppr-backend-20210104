@@ -97,7 +97,7 @@ class ProfileController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-        if($type->type=='checkin')
+        if(($type->type??'')=='checkin')
             return [
                 'status'=>'failed',
                 'message'=>'Already checked in'
@@ -125,7 +125,7 @@ class ProfileController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-        if($type->type=='checkout')
+        if(($type->type??'')=='checkout')
             return [
                 'status'=>'failed',
                 'message'=>'Already checked out'
@@ -145,7 +145,39 @@ class ProfileController extends Controller
 
     }
 
+    public function attendencelist(Request $request)
+    {
 
+        $user = $request->user;
+
+        $attendencesobj = Checkin::where('shoppr_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->get();
+        $attendences1 = [];
+        foreach ($attendencesobj as $at) {
+            if ($at->type == 'checkin') {
+                $attendences1[date('Y-m-d', strtotime($at->created_at))]['checkin'] = date('h:ia', strtotime($at->created_at));
+                $attendences1[date('Y-m-d', strtotime($at->created_at))]['checkin-address'] = $at->address;
+            } else {
+                $attendences1[date('Y-m-d', strtotime($at->created_at))]['checkout'] = date('h:ia', strtotime($at->created_at));
+                $attendences1[date('Y-m-d', strtotime($at->created_at))]['checkout-address'] = $at->address;
+            }
+        }
+        $attendences = [];
+        foreach ($attendences1 as $key => $val) {
+            $attendences[] = [
+                'date' => $key,
+                'checkin' => $val['checkin'] ?? '-',
+                'checkout' => $val['checkout'] ?? '-',
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'data' => compact('attendences')
+        ];
+
+    }
 
 
 }

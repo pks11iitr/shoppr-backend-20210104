@@ -145,10 +145,16 @@ class ChatController extends Controller
             ];
         }
 
+        $type=Checkin::where('shoppr_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $type=$type->type??'checkout';
+
         return [
             'status'=>'success',
             'message'=>'',
-            'data'=>compact('userchats')
+            'data'=>compact('userchats','type')
         ];
     }
 
