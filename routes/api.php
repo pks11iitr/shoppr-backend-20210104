@@ -127,6 +127,11 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('accept-chat/{chat_id}', 'MobileApps\ShopprApp\ChatController@acceptChat');
         $api->get('reject-chat/{chat_id}', 'MobileApps\ShopprApp\ChatController@rejectChat');
 
+        $api->post('check-in', 'MobileApps\ShopprApp\ProfileController@checkin');
+        $api->post('check-out', 'MobileApps\ShopprApp\ProfileController@checkout');
+
+
+
     });
 
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');

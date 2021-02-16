@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Checkin;
 use App\Models\State;
 use Illuminate\Http\Request;
 
@@ -86,5 +87,65 @@ class ProfileController extends Controller
         ];
 
     }
+
+
+    public function checkin(Request $request){
+
+        $user=$request->user;
+
+        $type=Checkin::where('shoppr_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if($type->type=='checkin')
+            return [
+                'status'=>'failed',
+                'message'=>'Already checked in'
+            ];
+
+        Checkin::create([
+            'shoppr_id'=>$user->id,
+            'lat'=>$request->lat,
+            'lang'=>$request->lang,
+            'type'=>'checkin',
+            'address'=>$request->address
+        ]);
+
+        return [
+            'status'=>'success',
+        ];
+
+    }
+
+    public function checkout(Request $request){
+
+        $user=$request->user;
+
+        $type=Checkin::where('shoppr_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if($type->type=='checkout')
+            return [
+                'status'=>'failed',
+                'message'=>'Already checked out'
+            ];
+
+        Checkin::create([
+            'shoppr_id'=>$user->id,
+            'lat'=>$request->lat,
+            'lang'=>$request->lang,
+            'type'=>'checkout',
+            'address'=>$request->address
+        ]);
+
+        return [
+            'status'=>'success',
+        ];
+
+    }
+
+
+
 
 }

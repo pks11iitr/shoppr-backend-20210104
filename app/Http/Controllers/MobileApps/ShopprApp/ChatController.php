@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\Checkin;
 use App\Models\RejectedChat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,10 +57,16 @@ class ChatController extends Controller
             ];
         }
 
+        $type=Checkin::where('shoppr_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $type=$type->type??'checkout';
+
         return [
             'status'=>'success',
             'message'=>'',
-            'data'=>compact('userchats')
+            'data'=>compact('userchats', 'type')
         ];
     }
 
