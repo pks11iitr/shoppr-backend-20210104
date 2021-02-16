@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Shoppr;
 use App\Models\Store;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -122,6 +123,34 @@ class ChatController extends Controller
                 'id'=>$chat->id
             ]
         ];
+    }
+
+
+    public function autoassign(Request $request, $chat_id){
+
+        $chat=Chat::findOrFail($chat_id);
+
+        if($chat->shoppr_id)
+            return [
+                'status'=>'failed',
+                'message'=>'Chat is no longer available'
+            ];
+
+        $shoppr=Shoppr::find(1);
+
+        $chat->shoppr_id=$shoppr->id;
+        $chat->save();
+
+        $chat->customer->notify(new FCMNotification('Shoppr Assigned', $message->message??'', array_merge(['message'=>'Shoppr Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id])));
+
+        $shoppr->notify(new FCMNotification('New Order', $message->message??'', array_merge(['message'=>'New Order'], ['type'=>'chat-assigned', 'chat_id'=>''.$message->chat_id])));
+
+        return [
+            'status'=>'success',
+            'message'=>'Shoppr has been assigned'
+        ];
+
+
     }
 
 

@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Checkin;
 use App\Models\RejectedChat;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -83,6 +84,8 @@ class ChatController extends Controller
 
         $chat->shoppr_id=$user->id;
         $chat->save();
+
+        $chat->customer->notify(new FCMNotification('Shoppr Assigned', $message->message??'', array_merge(['message'=>'Shoppr Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id])));
 
         return [
             'status'=>'success',
