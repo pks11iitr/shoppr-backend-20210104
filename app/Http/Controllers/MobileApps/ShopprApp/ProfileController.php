@@ -148,11 +148,17 @@ class ProfileController extends Controller
     public function attendencelist(Request $request)
     {
 
+        $from_date=$request->from_date??date('Y-m-01');
+        $to_date=$request->to_date??date('Y-m-t');
+
         $user = $request->user;
 
         $attendencesobj = Checkin::where('shoppr_id', $user->id)
             ->orderBy('id', 'desc')
+            ->where('created_at', '>=', $from_date.' 00:00:00')
+            ->where('created_at', '<=', $to_date.' 23:59:59')
             ->get();
+
         $attendences1 = [];
         foreach ($attendencesobj as $at) {
             if ($at->type == 'checkin') {
