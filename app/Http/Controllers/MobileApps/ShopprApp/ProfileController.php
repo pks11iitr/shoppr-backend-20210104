@@ -174,7 +174,9 @@ class ProfileController extends Controller
             $attendences[] = [
                 'date' => $key,
                 'checkin' => $val['checkin'] ?? '-',
+                'checkin-address' => $val['checkin-address'] ?? '-',
                 'checkout' => $val['checkout'] ?? '-',
+                'checkout-address' => $val['checkout-address'] ?? '-',
             ];
         }
 
