@@ -128,7 +128,7 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat-screen'));
+        $chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id], 'chat-screen')));
 
         return [
             'status'=>'success',
@@ -150,7 +150,7 @@ class ChatMessageController extends Controller
         $message->status='accepted';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Item Accepted', $message->message??'', array_merge(['message'=>'Item Accepted'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat-screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Item Accepted', $message->message??'', array_merge(['message'=>'Item Accepted'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id], 'chat-screen')));
 
         return [
             'status'=>'success',
@@ -169,7 +169,7 @@ class ChatMessageController extends Controller
         $message->status='rejected';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Item Rejected', $message->message??'', array_merge(['message'=>'Item Rejected'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat-screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Item Rejected', $message->message??'', array_merge(['message'=>'Item Rejected'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id],'chat-screen')));
         return [
             'status'=>'success',
             'message'=>'Product has been rejected'
@@ -192,7 +192,7 @@ class ChatMessageController extends Controller
         $message->status='cancelled';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat-screen'));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id],'chat-screen')));
 
         return [
             'status'=>'success',
@@ -219,7 +219,7 @@ class ChatMessageController extends Controller
         $message->order->ratings=$request->ratings;
         $message->order->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat-screen'));
+        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id],'chat-screen')));
 
         return [
             'status'=>'success',
