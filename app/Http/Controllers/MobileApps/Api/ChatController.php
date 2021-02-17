@@ -133,8 +133,8 @@ class ChatController extends Controller
 
         if($chat->shoppr_id)
             return [
-                'status'=>'failed',
-                'message'=>'Chat is no longer available'
+                'status'=>'success',
+                'message'=>'Shoppr has been assigned'
             ];
 
         $shoppr=Shoppr::find(1);
