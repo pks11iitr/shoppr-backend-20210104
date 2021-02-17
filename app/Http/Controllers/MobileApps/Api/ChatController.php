@@ -21,6 +21,7 @@ class ChatController extends Controller
             $user->select('id', 'name', 'image');
         }])
             ->where('customer_id', $user->id)
+            ->where('shoppr_id','!=', 0)
             ->orderBy('id', 'desc')
             ->get();
 
