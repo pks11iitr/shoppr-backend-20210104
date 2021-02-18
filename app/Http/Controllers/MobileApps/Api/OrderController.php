@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Settings;
+use PDF;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
