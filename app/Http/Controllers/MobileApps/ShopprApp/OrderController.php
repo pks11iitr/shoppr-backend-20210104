@@ -69,6 +69,7 @@ class OrderController extends Controller
         $order->rider_commission=$commission;
         $order->payment_status='Paid';
         $order->status='Delivered';
+        $order->delivered_at=date('Y-m-d H:i:s');
         $order->save();
 
         ShopprWallet::updatewallet($user->id,'Order Id:'.$order->refid.' Delivered', 'Debit', $order->total,$order->id);

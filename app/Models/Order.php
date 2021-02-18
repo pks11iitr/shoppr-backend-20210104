@@ -19,6 +19,13 @@ class Order extends Model
             ->where('status', 'accepted');
     }
 
+    public function deliveryaddress(){
+        return $this->hasMany('App\Models\ChatMessage', 'order_id')
+            ->where('type','address');
+    }
+
+
+
     public function grandTotal(){
         return $this->total+$this->service_charge;
     }

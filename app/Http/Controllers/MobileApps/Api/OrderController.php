@@ -91,4 +91,14 @@ class OrderController extends Controller
             ];
 
     }
+
+
+    public function downloadPDF(Request $request, $order_refid){
+        $orders = Order::with(['details','customer'])->where('refid', $order_refid)
+        ->firstOrFail();
+        // var_dump($orders);die();
+        $pdf = PDF::loadView('admin.orders.newinvoice', compact('orders'))->setPaper('a4', 'portrait');
+        return $pdf->download('invoice.pdf');
+        //return view('admin.contenturl.newinvoice',['orders'=>$orders]);
+    }
 }
