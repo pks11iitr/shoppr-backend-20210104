@@ -33,10 +33,11 @@ class SendNewOrderNotification implements ShouldQueue
      */
     public function handle()
     {
-        $shopprs=Shoppr::get();
+        $shopprs=Shoppr::select('notification_token')->get();
         foreach($shopprs as $shoppr){
-            if($shoppr->notification_token)
-            $shoppr->notify(new FCMNotification('New Order', $message->message??'', array_merge(['message'=>'New Order'], ['type'=>'pending-order', 'chat_id'=>''.$this->chat_id]),'pending-order'));
+            if($shoppr->notification_token){
+                $shoppr->notify(new FCMNotification('New Order', $message->message??'', array_merge(['message'=>'New Order'], ['type'=>'pending-order', 'chat_id'=>''.$this->chat_id]),'pending-order'));
+            }
         }
     }
 }
