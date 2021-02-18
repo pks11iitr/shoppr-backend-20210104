@@ -42,7 +42,7 @@
                                   </div>
                                   <div class="form-group">
                                       <label for="exampleInputEmail1">Add Money</label>
-                                      <input type="number" name="amount" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$data->name}}">
+                                      <input type="number" name="amount" class="form-control" id="exampleInputEmail1" placeholder="Enter add money" value="{{$data->name}}">
                                   </div>
                               </div>
                               <!-- /.card-body -->
@@ -75,48 +75,66 @@
               <form role="form" method="post" enctype="multipart/form-data" action="{{route('shoppr.update',['id'=>$data->id])}}">
                  @csrf
                 <div class="card-body">
-					<div class="form-group">
-                    <label for="exampleInputEmail1">Name</label>
-                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$data->name}}">
-                  </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Mobile</label>
-                        <input type="number" maxlength="10" minlength="10" name="mobile" class="form-control" id="exampleInputEmail1" placeholder="Enter Mobile" readonly value="{{$data->mobile}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Location</label>
-                        <input type="text" name="location" class="form-control" id="exampleInputEmail1" placeholder="Enter Location" value="{{$data->location}}">
-                    </div>
-					<div class="form-group">
-                    <label for="exampleInputEmail1">Latitude</label><br>
-                        <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude" value="{{$data->lat}}">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Langitude</label><br>
-                      <input type="text" name="lang" class="form-control" id="exampleInputEmail1" placeholder="Enter Lang" value="{{$data->lang}}">
-                  </div>
-                    <div class="form-group">
-                        <label>Is Active</label>
-                        <select class="form-control" name="isactive" required>
-                           <option  selected="selected" value="1" {{$data->isactive==1?'selected':''}}>Yes</option>
-                            <option value="0" {{$data->isactive==0?'selected':''}}>No</option>
-                        </select>
-                      </div>
-{{--                    <div class="form-group">--}}
-{{--                        <label>Is Status</label>--}}
-{{--                        <select class="form-control" name="status" required>--}}
-{{--                            <option  selected="selected" value="1" {{$data->status==1?'selected':''}}>Yes</option>--}}
-{{--                            <option value="0" {{$data->status==0?'selected':''}}>No</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-                    <div class="form-group">
-                        <label for="exampleInputFile">File input</label>
-                        <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" >
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$data->name}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mobile</label>
+                                <input type="number" maxlength="10" minlength="10" name="mobile" class="form-control" id="exampleInputEmail1" placeholder="Enter Mobile" readonly value="{{$data->mobile}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Location</label>
+                                <input type="text" name="location" class="form-control" id="exampleInputEmail1" placeholder="Enter Location" value="{{$data->location}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Is Active</label>
+                                <select class="form-control" name="isactive" required>
+                                    <option  selected="selected" value="1" {{$data->isactive==1?'selected':''}}>Yes</option>
+                                    <option value="0" {{$data->isactive==0?'selected':''}}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label for="exampleInputEmail1">Latitude</label><br>
+                                <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude" value="{{$data->lat}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Langitude</label><br>
+                              <input type="text" name="lang" class="form-control" id="exampleInputEmail1" placeholder="Enter Lang" value="{{$data->lang}}">
+                          </div>
+                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label>Is Status</label>--}}
+{{--                                <select class="form-control" name="status" required>--}}
+{{--                                    <option  selected="selected" value="1" {{$data->status==1?'selected':''}}>Yes</option>--}}
+{{--                                    <option value="0" {{$data->status==0?'selected':''}}>No</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputFile">File input</label>
+                                <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" >
 
+                            </div>
+                            <img src="{{$data->image}}" height="100" width="200">
+                        </div>
                     </div>
-                    <img src="{{$data->image}}" height="100" width="200">
+                </div>
 
-                      </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
@@ -130,8 +148,6 @@
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
-
 </div>
 <!-- ./wrapper -->
 @endsection

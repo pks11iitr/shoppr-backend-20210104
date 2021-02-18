@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Setting Update</h1>
+                        <h1>Setting</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">setting Update</li>
+                            <li class="breadcrumb-item active">setting</li>
                         </ol>
                     </div>
                 </div>
@@ -34,13 +34,19 @@
                             <form role="form" method="post" enctype="multipart/form-data" action="{{route('setting.update',['id'=>$data->id])}}">
                                 @csrf
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Name</label>
-                                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$data->name}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Value</label>
-                                        <input type="number" name="value" class="form-control" id="exampleInputEmail1" placeholder="Enter value" value="{{$data->value}}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Name</label>
+                                                <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$data->name}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Value</label>
+                                                <input type="number" name="value" class="form-control" id="exampleInputEmail1" placeholder="Enter value" value="{{$data->value}}">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -54,12 +60,8 @@
                     <!--/.col (right) -->
                 </div>
                 <!-- /.row -->
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
-
-        <!-- Main content -->
-        <!-- /.content -->
-
     </div>
     <!-- ./wrapper -->
 @endsection

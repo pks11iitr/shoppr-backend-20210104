@@ -73,6 +73,12 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::get('delete/{id}', 'SuperAdmin\BannerController@delete')->name('banners.delete');
     });
 
+    Route::group(['prefix' => 'customer'], function (){
+        Route::get('/','SuperAdmin\CustomerController@index')->name('customer.list');
+        Route::get('edit/{id}','SuperAdmin\CustomerController@edit')->name('customer.edit');
+        Route::post('update/{id}','SuperAdmin\CustomerController@update')->name('customer.update');
+    });
+
     Route::group(['prefix'=>'news'], function(){
         Route::get('/','SuperAdmin\NewsUpdateController@index')->name('news.list');
         Route::get('create','SuperAdmin\NewsUpdateController@create')->name('news.create');
@@ -88,6 +94,12 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('store','SuperAdmin\StoryController@store')->name('story.store');
         Route::get('edit/{id}','SuperAdmin\StoryController@edit')->name('story.edit');
         Route::post('update/{id}','SuperAdmin\StoryController@update')->name('story.update');
+
+    });
+
+    Route::group(['prefix'=>'order'], function(){
+        Route::get('/','SuperAdmin\OrderController@index')->name('order.list');
+        Route::get('details/{id}','SuperAdmin\OrderController@details')->name('order.details');
 
     });
 
