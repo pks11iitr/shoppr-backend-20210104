@@ -85,7 +85,7 @@
 
             <td colspan="6">{{$orders->customer->name??''}}<br>
                 <span>{{$orders->customer->mobile}}</span><br>
-                <span>{{$orders->deliveryaddress->message??''}},</span>
+                <span>{{$orders->deliveryaddress[0]->message??''}},</span>
             </td>
 
         </tbody>
