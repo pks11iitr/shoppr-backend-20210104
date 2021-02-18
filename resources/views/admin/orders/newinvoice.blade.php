@@ -80,7 +80,7 @@
 
         <tr class="border-right">
             <td colspan="6">{{$orders->customer->name??''}}<br>
-                <span>{{$order->customer->mobile}}</span><br>
+                <span>{{$orders->customer->mobile}}</span><br>
             </td>
 
             <td colspan="6">{{$orders->customer->name??''}}<br>
