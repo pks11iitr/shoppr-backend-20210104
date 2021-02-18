@@ -94,7 +94,7 @@ class OrderController extends Controller
     }
 
 
-    public function downloadPDF(Request $request, $order_refid){
+    public function downloadInvoice(Request $request, $order_refid){
         $orders = Order::with(['details','customer'])->where('refid', $order_refid)
         ->firstOrFail();
         // var_dump($orders);die();
