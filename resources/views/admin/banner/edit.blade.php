@@ -35,46 +35,28 @@
               <form role="form" method="post" enctype="multipart/form-data" action="{{route('banners.update',['id'=>$banner->id])}}">
                  @csrf
                 <div class="card-body">
-                <!--  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>-->
-
-{{--                   <div class="form-group">--}}
-{{--                        <label>Type</label>--}}
-{{--                        <select class="form-control" name="type" required>--}}
-{{--                           <option  selected="selected" value="all" {{$banner->type=='all'?'selected':''}}>All</option>--}}
-{{--                           <option value="product" {{$banner->type=='product'?'selected':''}}>Product</option>--}}
-{{--                            <option value="therapy" {{$banner->type=='therapy'?'selected':''}}>Therapy</option>--}}
-{{--                        </select>--}}
-{{--                      </div>--}}
-                    <div class="form-group">
-                        <label>Is Active</label>
-                        <select class="form-control" name="isactive" required>
-                           <option  selected="selected" value="1" {{$banner->isactive==1?'selected':''}}>Yes</option>
-                            <option value="0" {{$banner->isactive==0?'selected':''}}>No</option>
-                        </select>
-                      </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" name="image" class="custom-file-input" id="exampleInputFile" accept="image/*">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text" id="">Upload</span>
-
-                      </div>
-
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input type="file" name="image" class="form-control" id="exampleInputFile" accept="image/*">
+                              </div>
+                            </div>
+                          </div>
+                          <img src="{{$banner->image}}" height="100" width="200">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Is Active</label>
+                                <select class="form-control" name="isactive" required>
+                                    <option  selected="selected" value="1" {{$banner->isactive==1?'selected':''}}>Yes</option>
+                                    <option value="0" {{$banner->isactive==0?'selected':''}}>No</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <image src="{{$banner->image}}" height="100" width="200">
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -87,11 +69,8 @@
           <!--/.col (right) -->
         </div>
         <!-- /.row -->
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
-    <!-- /.content -->
-
-
 </div>
 <!-- ./wrapper -->
 @endsection

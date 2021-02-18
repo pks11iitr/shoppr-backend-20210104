@@ -52,24 +52,14 @@
                              @endif
                         </td>
                       <td><a href="{{route('banners.edit',['id'=>$bann->id])}}" class="btn btn-success">Edit</a>&nbsp;&nbsp;
-                      <a href="{{route('banners.delete',['id'=>$bann->id])}}" class="btn btn-success">Delete</a></td>
+                      <a href="{{route('banners.delete',['id'=>$bann->id])}}" class="btn btn-danger">Delete</a></td>
                  </tr>
                  @endforeach
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Image</th>
-{{--                    <th>Type</th>--}}
-                    <th>Isactive</th>
-                    <th>Action</th>
-                  </tr>
-                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
             </div>
-            <!-- /.card -->
-            <!-- /.card -->
           </div>
           <!-- /.col -->
         </div>
@@ -77,9 +67,6 @@
       </div>
       <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
-
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 @endsection
