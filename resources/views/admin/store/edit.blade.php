@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Store Update</h1>
+            <h1>Store</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Store Update</li>
+              <li class="breadcrumb-item active">Store</li>
             </ol>
           </div>
         </div>
@@ -36,68 +36,90 @@
               <form role="form" method="post" enctype="multipart/form-data" action="{{route('store.update',['id'=>$data->id])}}">
                  @csrf
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Store Name</label>
-                        <input type="text" name="store_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Store Name" value="{{$data->store_name}}">
-                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Store Name</label>
+                                <input type="text" name="store_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Store Name" value="{{$data->store_name}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Store Type</label>
+                                <input type="text" name="store_type"class="form-control" id="exampleInputEmail1" placeholder="Enter Store type" value="{{$data->store_type}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mobile</label>
+                                <input type="number" name="mobile" maxlength="10" minlength="10" class="form-control" id="exampleInputEmail1" placeholder="Enter Mobile" value="{{$data->mobile}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email</label>
+                                <input type="email" name="email"class="form-control" id="exampleInputEmail1" placeholder="Enter email" value="{{$data->email}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Open Timing</label>
+                                <input type="text" name="opening_time"class="form-control" id="exampleInputEmail1" placeholder="Enter Open Timing" value="{{$data->opening_time}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Is Active</label>
+                                <select class="form-control" name="isactive" required>
+                                    <option  selected="selected" value="1" {{$data->isactive==1?'selected':''}}>Yes</option>
+                                    <option value="0" {{$data->isactive==0?'selected':''}}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Address</label>
+                                <textarea class="form-control" name="address" rows="3">
+                                    {{$data->address}}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">About Store</label>
+                                <textarea class="form-control" name="about_store" rows="3">  {{$data->about_store}}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label for="exampleInputEmail1">Latitude</label><br>
+                                <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude" value="{{$data->lat}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Langitude</label><br>
+                              <input type="text" name="lang" class="form-control" id="exampleInputEmail1" placeholder="Enter Lang" value="{{$data->lang}}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputFile">File input</label>
+                                <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" >
+                            </div>
+                            <img src="{{$data->image}}" height="100" width="200">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Is Sale</label>
+                                <select class="form-control" name="is_sale" required>
+                                    <option  selected="selected" value="1" {{$data->is_sale==1?'selected':''}}>Yes</option>
+                                    <option value="0" {{$data->is_sale==0?'selected':''}}>No</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Store Type</label>
-                        <input type="text" name="store_type"class="form-control" id="exampleInputEmail1" placeholder="Enter Store type" value="{{$data->store_type}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Mobile</label>
-                        <input type="number" name="mobile" maxlength="10" minlength="10" class="form-control" id="exampleInputEmail1" placeholder="Enter Mobile" value="{{$data->mobile}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" name="email"class="form-control" id="exampleInputEmail1" placeholder="Enter email" value="{{$data->email}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Open Timing</label>
-                        <input type="text" name="opening_time"class="form-control" id="exampleInputEmail1" placeholder="Enter Open Timing" value="{{$data->opening_time}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Address</label>
-                        <textarea id="w3review" name="address" rows="4" cols="120">
-                            {{$data->address}}</textarea>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">About Store</label>
-                        <textarea id="w3review" name="about_store" rows="4" cols="120">  {{$data->about_store}}</textarea>
-
-                    </div>
-					<div class="form-group">
-                    <label for="exampleInputEmail1">Latitude</label><br>
-                        <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude" value="{{$data->lat}}">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Langitude</label><br>
-                      <input type="text" name="lang" class="form-control" id="exampleInputEmail1" placeholder="Enter Lang" value="{{$data->lang}}">
-                  </div>
-                    <div class="form-group">
-                        <label>Is Active</label>
-                        <select class="form-control" name="isactive" required>
-                           <option  selected="selected" value="1" {{$data->isactive==1?'selected':''}}>Yes</option>
-                            <option value="0" {{$data->isactive==0?'selected':''}}>No</option>
-                        </select>
                       </div>
-                    <div class="form-group">
-                        <label>Is Sale</label>
-                        <select class="form-control" name="is_sale" required>
-                            <option  selected="selected" value="1" {{$data->is_sale==1?'selected':''}}>Yes</option>
-                            <option value="0" {{$data->is_sale==0?'selected':''}}>No</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputFile">File input</label>
-                        <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" >
-
-                    </div>
-                    <img src="{{$data->image}}" height="100" width="200">
-
-                      </div>
+                </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>

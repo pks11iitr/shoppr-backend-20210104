@@ -83,34 +83,17 @@
                                         </tr>
                                     @endforeach
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Refid</th>
-                                        <th>Amount</th>
-                                        <th>Orderid</th>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Description</th>
-                                    </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         {{$datas->appends(request()->query())->links() }}
                         <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
-                        <!-- /.card -->
                     </div>
                     <!-- /.col -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container-fluid -->
+            </div>
         </section>
-        <!-- /.content -->
-
-        <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
 @endsection

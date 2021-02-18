@@ -86,8 +86,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{route('home')}}" class="brand-link">
-           <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                 style="opacity: .8">-->
+            <img src="{{asset('admin-theme/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
             <span class="brand-text font-weight-light">Shoppr CMS</span>
         </a>
 
@@ -118,12 +118,19 @@
                         </a>
 
                     <li class="nav-item">
-                        <a href="{{route('banners.list')}}" class="nav-link active">
-                            <i class="far fa-circle nav-icon"></i>
+                        <a href="{{route('banners.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
                             <p>Banners</p>
                         </a>
-
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('customer.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Customer</p>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="{{route('shoppr.list')}}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
@@ -161,6 +168,13 @@
                                 Commission
 
                             </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('order.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Orders</p>
                         </a>
                     </li>
                    {{-- <li class="nav-item">
