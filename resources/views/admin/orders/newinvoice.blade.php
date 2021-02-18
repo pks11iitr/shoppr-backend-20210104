@@ -118,7 +118,7 @@
         @foreach($orders->details as $product)
         <tr class="border-right">
             <td colspan="3">{{$product->message}}</td>
-            <td colspan="3">{{$product->quantity}}</td>
+            <td colspan="1">{{$product->quantity}}</td>
             <td colspan="1">Rs. {{$product->price}}</td>
         </tr>
         @endforeach
