@@ -86,9 +86,15 @@ class OrderController extends Controller
             ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
             ->findOrFail($order_id);
 
+        if($order->status=='Delivered'){
+            $show_invoice_link=1;
+        }else
+            $show_invoice_link=0;
+
+
         return [
                 'status'=>'success',
-                'data'=>compact('order')
+                'data'=>compact('order', 'show_invoice_link')
             ];
 
     }
