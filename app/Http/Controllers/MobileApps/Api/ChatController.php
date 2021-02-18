@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendNewOrderNotification;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Shoppr;
@@ -117,6 +118,8 @@ class ChatController extends Controller
             'chat_id'=>$chat->id
         ]);
 
+        dispatch(new SendNewOrderNotification($chat->id));
+
         return [
             'status'=>'success',
             'message'=>'',
@@ -144,7 +147,7 @@ class ChatController extends Controller
 
         $chat->customer->notify(new FCMNotification('Shoppr Assigned', $message->message??'', array_merge(['message'=>'Shoppr Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat-screen'));
 
-        $shoppr->notify(new FCMNotification('New Order', $message->message??'', array_merge(['message'=>'New Order'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat-screen'));
+        $shoppr->notify(new FCMNotification('New Order', $message->message??'', array_merge(['message'=>'New Order'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'pending-orders'));
 
         return [
             'status'=>'success',

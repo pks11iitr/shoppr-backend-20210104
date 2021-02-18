@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Settings;
+use PDF;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -85,10 +86,26 @@ class OrderController extends Controller
             ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
             ->findOrFail($order_id);
 
+        if($order->status=='Delivered'){
+            $show_invoice_link=1;
+        }else
+            $show_invoice_link=0;
+
+
         return [
                 'status'=>'success',
-                'data'=>compact('order')
+                'data'=>compact('order', 'show_invoice_link')
             ];
 
+    }
+
+
+    public function downloadInvoice(Request $request, $order_refid){
+        $orders = Order::with(['details','customer'])->where('refid', $order_refid)
+        ->firstOrFail();
+        // var_dump($orders);die();
+        $pdf = PDF::loadView('admin.orders.newinvoice', compact('orders'))->setPaper('a4', 'portrait');
+        return $pdf->download('invoice.pdf');
+        //return view('admin.contenturl.newinvoice',['orders'=>$orders]);
     }
 }

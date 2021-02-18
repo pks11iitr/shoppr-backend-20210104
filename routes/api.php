@@ -72,6 +72,9 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
 });
 
+$api->get('download-invoice/{order_refid}', ['as'=>'download.invoice', 'uses'=>'MobileApps\Api\OrderController@downloadInvoice']);
+
+
 $api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
 
 $api->get('shoppr-list', 'MobileApps\Api\HomeController@index');

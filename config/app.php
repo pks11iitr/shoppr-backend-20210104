@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         'Kodeine\Acl\AclServiceProvider',
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'acl' => 'Kodeine\Acl\Middleware\HasPermission',
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 
