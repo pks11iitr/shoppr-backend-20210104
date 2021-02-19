@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Active;
 use App\Models\Traits\DocumentUploadTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Shoppr extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable,DocumentUploadTrait;
+    use HasFactory, Notifiable,DocumentUploadTrait, Active;
+
     protected $table='shoppers';
 
     protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image','address','password','pan_card'.'sendbird_token','front_aadhaar_card','front_dl_no','account_no','ifsc_code','account_holder','bank_name','form_step','state','city','back_aadhaar_card','back_dl_no'];

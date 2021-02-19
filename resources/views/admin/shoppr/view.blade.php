@@ -34,7 +34,7 @@
         <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
               <div class="row">
 					      <div class="col-4">
-                           <input  id="fullname"  class="form-control" name="search" placeholder=" search title" value="{{request('search')}}"  type="text" />
+                           <input  id="fullname"  class="form-control" name="search" placeholder=" search name" value="{{request('search')}}"  type="text" />
                            </div>
 					  <div class="col-4">
                           <select id="ordertype" name="ordertype" class="form-control" >

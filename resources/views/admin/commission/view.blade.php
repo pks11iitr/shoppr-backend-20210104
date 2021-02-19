@@ -29,27 +29,25 @@
                                 <div class="row">
                                     {{--<div class="col-3">
                                         <a href="{{route('shoppr.create')}}" class="btn btn-primary">Add Shoppr</a> </div>--}}
-                                    <div class="col-9">
+                                    <div class="col-12">
 
-                                        {{--      <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
-                                                  <div class="row">
-                                                      <div class="col-4">
-                                                          <input  id="fullname"  class="form-control" name="search" placeholder=" search title" value="{{request('search')}}"  type="text" />
-                                                      </div>
-                                                      <div class="col-4">
-                                                          <select id="ordertype" name="ordertype" class="form-control" >
-                                                              <option value="" {{ request('ordertype')==''?'selected':''}}>Please Select</option>
-                                                              <option value="DESC" {{ request('ordertype')=='DESC'?'selected':''}}>DESC</option>
-                                                              <option value="ASC" {{ request('ordertype')=='ASC'?'selected':''}}>ASC</option>
-                                                          </select>
-                                                      </div>
-                                                      <div class="col-4">
-                                                          <button type="submit" name="save" class="btn btn-primary">Submit</button>
-                                                      </div>
-                                                  </div>
-                                              </form>--}}
+                                        <form class="form-validate form-horizontal" method="get" action="" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <input id="fullname" class="form-control" name="search" placeholder=" search shopper name" value="{{request('search')}}" type="text"/>
+                                                </div><br><br>
+                                                <div class="col-4">
+                                                    <input   class="form-control" name="from_date" value="{{request('from_date')}}"  type="date" />
+                                                </div>
+                                                <div class="col-4">
+                                                    <input  class="form-control" name="to_date" value="{{request('to_date')}}"  type="date" />
+                                                </div>
+                                                <div class="col-4">
+                                                    <button type="submit" name="save" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-
                                 </div>
                             </div>
 
@@ -67,12 +65,10 @@
                                     <tbody>
                                     @foreach($commission_transactions as $data)
                                         <tr>
-                                            <td>{{$data->value??'name'}}</td>
+                                            <td>{{$data->shoppr->name??''}}</td>
                                             <td>{{$data->refid??''}}</td>
                                             <td>{{$data->rider_commission??''}}</td>
                                             <td>{{$data->created_at??''}}</td>
-
-
                                         </tr>
                                     @endforeach
                                     </tbody>

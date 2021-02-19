@@ -15,8 +15,19 @@ class CommissionController extends Controller
 
         public function index(Request $request){
 
-            $historyobj=Order::select('refid', 'created_at', 'rider_commission')
+            $historyobj=Order::select('refid', 'created_at', 'rider_commission','shoppr_id')
                 ->where('status', 'Delivered');
+
+            if(isset($request->search)){
+                $historyobj=Order::where('status', 'Delivered')->where(function($historyobj) use ($request){
+
+                    $historyobj->where('refid', 'like', "%".$request->search."%")
+                        ->orWhereHas('shoppr', function($shoppr)use( $request){
+                            $shoppr->where('name', 'like', "%".$request->search."%");
+                        });
+                });
+
+            }
 
             if(isset($request->from_date)){
                 $historyobj=$historyobj->where('created_at', '>=', $request->from_date.' 00:00:00');
@@ -63,11 +74,8 @@ class CommissionController extends Controller
             }
 
             $commission=$commission->sum('rider_commission');
+
             return view('admin.commission.view',['commission_transactions'=>$historyobj,'commission'=>$commission]);
-            /*return [
-                'status' => 'success',
-                'data' => compact('commission_transactions', 'commission')
-            ];*/
 
         }
 
