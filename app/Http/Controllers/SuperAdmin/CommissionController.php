@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Settings;
+use App\Models\Shoppr;
 use App\Models\Story;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +36,10 @@ class CommissionController extends Controller
 
             if(isset($request->to_date)){
                 $historyobj=$historyobj->where('created_at', '<=', $request->to_date.' 23:59:59');
+            }
+            if($request->shoppr_id) {
+                $historyobj = $historyobj->where('shoppr_id', $request->shoppr_id);
+
             }
 
             $historyobj=$historyobj->orderBy('id', 'desc')
@@ -75,7 +80,9 @@ class CommissionController extends Controller
 
             $commission=$commission->sum('rider_commission');
 
-            return view('admin.commission.view',['commission_transactions'=>$historyobj,'commission'=>$commission]);
+            $riders = Shoppr::active()->get();
+
+            return view('admin.commission.view',['commission_transactions'=>$historyobj,'commission'=>$commission,'riders'=>$riders]);
 
         }
 

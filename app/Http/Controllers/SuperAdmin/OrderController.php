@@ -48,8 +48,34 @@ class OrderController extends Controller
     }
 
     public function details(Request $request,$id){
-        $order = Order::with('details','deliveryaddress')->where('id',$id)->first();
+        $order = Order::with('details','deliveryaddress')
+            ->where('id',$id)->first();
+        $riders = Shoppr::active()->get();
 
-        return view('admin.order.details',['order'=>$order]);
+        return view('admin.order.details',['order'=>$order,'riders'=>$riders]);
     }
+
+    public function changePaymentStatus(Request $request, $id){
+
+        $status=$request->status;
+        $order=Order::find($id);
+
+        $order->payment_status=$status;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Payment Status Has Been Updated');
+
+    }
+
+    public function changeRider(Request $request,$id){
+        $order =Order::findOrFail($id);
+
+        $shoppr=Shoppr::findOrFail($request->riderid);
+        if($order->update([
+            'shoppr_id'=>$shoppr->id,
+        ]))
+
+        return redirect()->back()->with('success', 'Rider Has Been change');
+    }
+
 }

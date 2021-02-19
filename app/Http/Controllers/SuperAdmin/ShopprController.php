@@ -93,5 +93,10 @@ class ShopprController extends Controller
        $datas= ShopprWallet::where('user_id',$id)->paginate(20);
         return view('admin.shoppr.history',['datas'=>$datas])->with('success', 'Data has been updated');
     }
+
+    public function details(Request $request,$id){
+        $shoppr =Shoppr::findOrFail($id);
+        return view('admin.shoppr.details',['shoppr'=>$shoppr]);
+    }
 }
 

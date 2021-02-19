@@ -43,7 +43,9 @@
                                     </tr>
                                     <tr>
                                         <td>Rider Name</td>
-                                        <td>{{$order->shoppr->name??''}}</td>
+                                        <td>{{$order->shoppr->name??''}}
+                                            <a href="{{route('order.details',['id'=>$order->id])}}" class="open-RiderChange btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$order->id}}">Change Rider</a>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Service Charge</td>
@@ -54,12 +56,12 @@
                                         <td>{{$order->total}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Status</td>
-                                        <td>{{$order->status}}</td>
-                                    </tr>
-                                    <tr>
                                         <td>Payment Status</td>
-                                        <td>{{$order->payment_status}}</td>
+                                        <td>{{$order->payment_status}}
+                                            @if(in_array($order->payment_status, ['Pending']))
+                                                <a href="{{route('payment.status.change', ['id'=>$order->id,'status'=>'Paid'])}}" name='status' class="btn btn-primary">Mark As Paid</a>
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Payment Mode</td>
@@ -68,6 +70,26 @@
                                     <tr>
                                         <td>Delivery Schedule</td>
                                         <td>{{$order->delivery_at}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>{{$order->status}}<br><br>
+                                            @if(in_array($order->status, ['Confirmed']))
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'processing'])}}" name='status' class="btn btn-primary">Processing</a>
+                                            @endif
+                                            @if(in_array($order->status, ['Confirmed', 'Pending']))
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'cancelled'])}}" name='status' class="btn btn-primary">Cancel</a>
+                                            @endif
+
+                                            @if(in_array($order->status, ['Delivered']))
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'completed'])}}" name='status' class="btn btn-primary">Completed</a>
+                                            @endif
+
+                                            @if(in_array($order->status, ['Cancelled']))
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'reopen'])}}" name='status' class="btn btn-primary">Re-Open</a>
+                                            @endif
+
+                                        </td>
                                     </tr>
 
                                     </tbody>
@@ -132,6 +154,41 @@
             </div>
             <!-- /.container-fluid -->
         </section>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Change Rider</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" method="post" enctype="multipart/form-data"  action="{{route('rider.change',['id'=>$order->id])}}">
+                            @csrf
+                            <input type="hidden" name="orderid" class="form-control" id="orderid">
+                            <div class="form-group">
+                                <label for="exampleInputtitle">Rider Name</label>
+                                <select name="riderid" class="form-control" id="riderid" placeholder="" >
+                                    @foreach($riders as $rider)
+                                        <option value="{{$rider->id}}"
+                                            {{$order->shoppr_id==$rider->id?'selected':''}}>{{$rider->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit">Change</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <!-- ./wrapper -->
 @endsection

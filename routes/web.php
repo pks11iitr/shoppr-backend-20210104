@@ -38,6 +38,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
         Route::post('add-money/{id}','SuperAdmin\ShopprController@addMoney')->name('shoppr.wallet.add');
         Route::get('history-list/{id}','SuperAdmin\ShopprController@transaction')->name('shoppr.tranaction.list');
+        Route::get('details/{id}','SuperAdmin\ShopprController@details')->name('shoppr.details');
 
     });
 
@@ -100,6 +101,14 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
     Route::group(['prefix'=>'order'], function(){
         Route::get('/','SuperAdmin\OrderController@index')->name('order.list');
         Route::get('details/{id}','SuperAdmin\OrderController@details')->name('order.details');
+        Route::post('changeRider/{id}','SuperAdmin\OrderController@changeRider')->name('rider.change');
+        Route::get('change-payment-status/{id}','SuperAdmin\OrderController@changePaymentStatus')->name('payment.status.change');
+        Route::get('change-status/{id}','SuperAdmin\OrderController@changeStatus')->name('order.status.change');
+
+    });
+
+    Route::group(['prefix'=>'checkin'], function(){
+        Route::get('/','SuperAdmin\CheckinController@index')->name('checkin.list');
 
     });
 

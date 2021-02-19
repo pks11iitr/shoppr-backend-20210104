@@ -123,12 +123,12 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{route('banners.list')}}" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>Banners</p>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{route('banners.list')}}" class="nav-link">--}}
+{{--                            <i class="nav-icon fas fa-th"></i>--}}
+{{--                            <p>Banners</p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                     <li class="nav-item">
                         <a href="{{route('customer.list')}}" class="nav-link">
@@ -181,6 +181,13 @@
                         <a href="{{route('order.list')}}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
                             <p>Orders</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('checkin.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Checkin Checkout</p>
                         </a>
                     </li>
                    {{-- <li class="nav-item">
