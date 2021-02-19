@@ -80,15 +80,6 @@
                                             @if(in_array($order->status, ['Confirmed']))
                                                 <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'Cancelled'])}}" name='status' class="btn btn-primary">Mark Cancelled</a>
                                             @endif
-
-                                            @if(in_array($order->status, ['Delivered']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'completed'])}}" name='status' class="btn btn-primary">Completed</a>
-                                            @endif
-
-                                            @if(in_array($order->status, ['Cancelled']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'reopen'])}}" name='status' class="btn btn-primary">Re-Open</a>
-                                            @endif
-
                                         </td>
                                     </tr>
 
