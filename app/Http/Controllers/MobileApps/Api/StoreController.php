@@ -25,7 +25,7 @@ class StoreController extends Controller
         };
         if($search){
             $stores=$stores->where(function($query) use ($search){
-                $query->where('name', 'LIKE', "%".$search."%")
+                $query->where('store_name', 'LIKE', "%".$search."%")
                 ->orWhereHas('categories', function($categories) use($search){
                     $categories->where('name', 'LIKE', "%".$search."%");
                 });
