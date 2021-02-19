@@ -46,7 +46,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>Total: {{$round(revenue['total']??0)}}</h3>
+                                <h3>Total: {{round($revenue['total']??0)}}</h3>
                                 <p>
                                     Wallet Balance Used: {{$revenue['balance']??0}}<br>&nbsp;
                                 </p>
