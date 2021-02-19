@@ -62,16 +62,22 @@
                                         <th>Rider Name</th>
                                         <th>CheckIn</th>
                                         <th>CheckOut</th>
-                                        <th>Date & Time</th>
+                                        <th>Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($checkins as $checkin)
+                                    @foreach($attendences as $key=>$value)
+                                        @php
+                                            $shoppr=explode('**',$key)[0];
+                                            $date=explode('**', $key)[1];
+                                        @endphp
                                         <tr>
-                                            <td>{{$checkin->shoppr->name??''}}</td>
-                                            <td>{{$checkin->value??'name'}}</td>
-                                            <td>{{$checkin->value??'name'}}</td>
-                                            <td>{{$checkin->created_at}}</td>
+                                            <td>{{$shoppr??''}}</td>
+
+                                            <td>@if(isset($value['checkin'])){{($value['checkin']['address']??'').' at '.($value['checkin']['time']??'')}}@endif</td>
+                                            <td>@if(isset($value['checkout'])){{($value['checkout']['address']??'').' at '.($value['checkout']['time']??'')}}@endif</td>
+
+                                            <td>{{$date??''}}</td>
 
                                         </tr>
                                     @endforeach
