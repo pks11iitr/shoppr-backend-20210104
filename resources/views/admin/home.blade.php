@@ -29,10 +29,10 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>Total: {{$product['total']??0}}</h3>
+                                <h3>Total: {{$orders['total']??0}}</h3>
                                 <p>
-                                    Confirmed:{{$product['completed']??0}}<br>
-                                    Delivered:{{$product['dispatched']??0}}<br>
+                                    Confirmed:{{$orders['Confirmed']??0}}<br>
+                                    Delivered:{{$orders['Delivered']??0}}<br>
                                 </p>
                             </div>
                             <div class="icon">
@@ -46,11 +46,9 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>Total: {{$revenue['product']['total']??0}}</h3>
+                                <h3>Total: {{$revenue['total']??0}}</h3>
                                 <p>
-                                    Wallet Balance Used: {{$revenue['product']['balance']??0}}<br>
-                                    Cashback Used: {{$revenue['product']['point']??0}}<br>
-                                    Discount Given: {{$revenue['product']['discount']??0}}<br>&nbsp;
+                                    Wallet Balance Used: {{$revenue['balance']??0}}<br>&nbsp;
                                 </p>
                             </div>
                             <div class="icon">
@@ -64,12 +62,9 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>Total: {{$customer['total']??0}}</h3>
-
-                                <p>
-                                    Active:{{$customer[1]??0}}<br>
-                                    Inactive:{{$customer[0]??0}}<br>
-                                    Blocked:{{$customer[2]??0}}<br>&nbsp;
+                                <h3>Total: {{$customers??0}}</h3>
+                                <p>&nbsp;<br>
+                                    &nbsp;<br>
                                 </p>
                             </div>
                             <div class="icon">
@@ -83,18 +78,16 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>Total:{{$products??0}}</h3>
+                                <h3>Total:{{$shopprs??0}}</h3>
 
                                 <p>&nbsp;<br>
                                     &nbsp;<br>
-                                    &nbsp;<br>
-                                    &nbsp;
                                 </p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <span class="small-box-footer">Products info <i class="fas fa-info-circle"></i></span>
+                            <span class="small-box-footer">Shopprs info <i class="fas fa-info-circle"></i></span>
                         </div>
                     </div>
                     <!-- ./col -->
