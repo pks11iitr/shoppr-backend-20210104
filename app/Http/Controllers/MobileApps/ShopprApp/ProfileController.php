@@ -88,6 +88,18 @@ class ProfileController extends Controller
 
     }
 
+    public function getProfile(Request $request){
+
+        $user=$request->user;
+
+        return [
+            'status'=>'success',
+            'data'=>compact('user')
+        ];
+
+
+    }
+
 
     public function checkin(Request $request){
 
