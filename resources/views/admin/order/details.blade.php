@@ -42,9 +42,9 @@
                                         <td>{{$order->created_at}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Rider Name</td>
+                                        <td>Shoppr Name</td>
                                         <td>{{$order->shoppr->name??''}}
-                                            <a href="{{route('order.details',['id'=>$order->id])}}" class="open-RiderChange btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$order->id}}">Change Rider</a>
+                                            <a href="{{route('order.details',['id'=>$order->id])}}" class="open-RiderChange btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$order->id}}">Change Shoppr</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -173,7 +173,7 @@
                                 <select name="riderid" class="form-control" id="riderid" placeholder="" >
                                     @foreach($riders as $rider)
                                         <option value="{{$rider->id}}"
-                                            {{$order->shoppr_id==$rider->id?'selected':''}}>{{$rider->name}}</option>
+                                            {{$order->shoppr_id==$rider->id?'selected':''}}>{{$rider->name}}  (SHOPPR{{$rider->id}})</option>
                                     @endforeach
                                 </select>
                             </div>
