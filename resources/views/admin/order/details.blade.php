@@ -38,6 +38,10 @@
                                         <td>{{$order->refid}}</td>
                                     </tr>
                                     <tr>
+                                        <td>Date & Time</td>
+                                        <td>{{$order->created_at}}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Rider Name</td>
                                         <td>{{$order->shoppr->name??''}}</td>
                                     </tr>
@@ -62,9 +66,10 @@
                                         <td>{{$order->payment_mode}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Date & Time</td>
-                                        <td>{{$order->created_at}}</td>
+                                        <td>Delivery Schedule</td>
+                                        <td>{{$order->delivery_at}}</td>
                                     </tr>
+
                                     </tbody>
                                 </table>
                             </div>
