@@ -112,6 +112,15 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     });
 
+    Route::group(['prefix'=>'category'], function(){
+        Route::get('/','SuperAdmin\CategoryController@index')->name('category.list');
+        Route::get('create','SuperAdmin\CategoryController@create')->name('category.create');
+        Route::post('store','SuperAdmin\CategoryController@store')->name('category.store');
+        Route::get('edit/{id}','SuperAdmin\CategoryController@edit')->name('category.edit');
+        Route::post('update/{id}','SuperAdmin\CategoryController@update')->name('category.update');
+
+    });
+
 });
 
 require __DIR__.'/auth.php';

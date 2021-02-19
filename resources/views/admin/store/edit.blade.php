@@ -117,6 +117,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Categories</label>
+                                <select class="form-control" name="categories[]" required multiple>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}" @foreach($data->categories as $cat) @if($cat->id==$category->id){{'selected'}}@endif @endforeach>{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                       </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use DB;
@@ -12,23 +13,37 @@ class StoreController extends Controller
     public function index(Request $request){
         $latitude=   $request->lat??'28.56834';
         $longitude= $request->lang??'77.56834';
+        $category_id=$request->category_id??[];
+        $search=$request->search;
+        $stores = Store::active()
+            ->select(DB::raw('*, ROUND(( 6367 * acos( cos( radians(' . $latitude . ') ) * cos( radians( stores.lat ) ) * cos( radians( stores.lang ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( stores.lat ) ) ) ),2) AS distance'));
 
-        $stores = Store::active()->select(DB::raw('*, ROUND(( 6367 * acos( cos( radians(' . $latitude . ') ) * cos( radians( stores.lat ) ) * cos( radians( stores.lang ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( stores.lat ) ) ) ),2) AS distance'))
-            ->orderBy('distance', 'ASC')
+        if(!empty($category_id)){
+            $stores=$stores->whereHas('categories', function($category) use($category_id){
+                $category->whereIn('categories.id', $category_id);
+            })   ;
+        };
+        if($search){
+            $stores=$stores->where(function($query) use ($search){
+                $query->where('store_name', 'LIKE', "%".$search."%")
+                ->orWhereHas('categories', function($categories) use($search){
+                    $categories->where('name', 'LIKE', "%".$search."%");
+                });
+            });
+        }
+
+        $stores=$stores->orderBy('distance', 'ASC')
             ->get();
        // $stores=Store::active()->get();
-        if($stores->count()>0){
-            return [
-                'status'=>'success',
-                'message'=>'success',
-                'data'=>compact('stores')
-            ];
-        }else{
-            return [
-                'status'=>'failed',
-                'message'=>'No Record Found',
-            ];
-        }
+
+        $categories=Category::active()->select('id','name')->get();
+
+        return [
+            'status'=>'success',
+            'message'=>'success',
+            'data'=>compact('stores', 'categories')
+        ];
+
     }
 
     public function details(Request $request,$id){

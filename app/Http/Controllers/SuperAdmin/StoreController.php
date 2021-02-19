@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Document;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class StoreController extends Controller
 
 
     public function create(Request $request){
-        return view('admin.store.add');
+        $categories=Category::active()->get();
+        return view('admin.store.add', compact('categories'));
     }
 
     public function store(Request $request){
@@ -46,6 +48,7 @@ class StoreController extends Controller
         if($data=Store::create($request->only('store_name','store_type','email','lat','lang','isactive','mobile','opening_time','address','about_store','is_sale')))
         {
             $data->saveImage($request->image, 'stores');
+            $data->categories()->sync($request->categories);
             return redirect()->route('store.list')->with('success', 'Data has been created');
         }
         return redirect()->back()->with('error', 'Data create failed');
@@ -53,7 +56,8 @@ class StoreController extends Controller
 
     public function edit(Request $request,$id){
         $data = Store::with('images')->findOrFail($id);
-        return view('admin.store.edit',['data'=>$data]);
+        $categories=Category::active()->get();
+        return view('admin.store.edit',['data'=>$data, 'categories'=>$categories]);
     }
 
     public function update(Request $request,$id){
@@ -71,10 +75,11 @@ class StoreController extends Controller
             'is_sale'=>'required',
             'image'=>'image',
         ]);
-        $data = Store::findOrFail($id);
+        $data = Store::with('categories')->findOrFail($id);
 
         if($data->update($request->only('store_name','store_type','email','lat','lang','isactive','mobile','opening_time','address','about_store','is_sale')))
         {
+            $data->categories()->sync($request->categories);
             if($request->image){
                 $data->saveImage($request->image, 'stores');
             }

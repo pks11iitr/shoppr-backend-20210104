@@ -14,6 +14,10 @@ $api = app('Dingo\Api\Routing\Router');
 |
 */
 
+$api->get('chat', function(){
+    return view('chat');
+});
+
 //$api->post('login', 'MobileApps\Auth\LoginController@login');
 $api->post('login-with-otp', 'MobileApps\Auth\LoginController@loginWithOtp');
 $api->post('register', 'MobileApps\Auth\RegisterController@register');
@@ -104,6 +108,10 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 //test comment again
 
     $api->group(['middleware' => ['shoppr-api-auth']], function ($api) {
+
+        $api->get('profile', 'MobileApps\ShopprApp\ProfileController@getProfile');
+
+
         $api->get('chats', 'MobileApps\ShopprApp\ChatController@chathistory');
         //$api->get('start-chat', 'MobileApps\ShopprApp\ChatController@startChat');
 
