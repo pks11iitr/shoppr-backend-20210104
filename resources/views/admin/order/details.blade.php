@@ -12,7 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="">Order Details</a></li>
+                            <li class="breadcrumb-item active"><a href="">Order</a></li>
                         </ol>
                     </div>
                 </div>
@@ -28,6 +28,47 @@
                             <div class="card-header">
                                 <h3 class="card-title">Order Details</h3>
                             </div>
+
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <td>Order ID</td>
+                                        <td>{{$order->refid}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rider Name</td>
+                                        <td>{{$order->shoppr->name??''}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Service Charge</td>
+                                        <td>{{$order->service_charge}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td>{{$order->total}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>{{$order->status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Status</td>
+                                        <td>{{$order->payment_status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Mode</td>
+                                        <td>{{$order->payment_mode}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date & Time</td>
+                                        <td>{{$order->created_at}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
@@ -49,37 +90,33 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Order</th>
+                                        <th>Customer Details</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td>Order ID</td>
-                                        <td>{{$order->refid}}</td>
+                                        <td>Name</td>
+                                        <td>{{$order->customer->name??''}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Total</td>
-                                        <td>{{$order->total}}</td>
+                                        <td>Email</td>
+                                        <td>{{$order->customer->email??''}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Status</td>
-                                        <td>{{$order->status}}</td>
+                                        <td>Mobile</td>
+                                        <td>{{$order->customer->mobile??''}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Payment Status</td>
-                                        <td>{{$order->payment_status}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Date & Time</td>
-                                        <td>{{$order->created_at}}</td>
+                                        <td>Address</td>
+                                        <td>{{$order->deliveryaddress[0]->message??''}}</td>
                                     </tr>
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

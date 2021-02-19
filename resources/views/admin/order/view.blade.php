@@ -60,6 +60,15 @@
                                                     <input  class="form-control" name="todate" placeholder=" search name" value="{{request('todate')}}"  type="date" />
                                                 </div>
                                                 <div class="col-4">
+
+                                                    <select id="shoppr_id" name="shoppr_id" class="form-control" >
+                                                        <option value="" {{ request('shoppr_id')==''?'selected':''}}>Select Rider</option>
+                                                        @foreach($riders as $rider)
+                                                            <option value="{{$rider->id}}" {{request('shoppr_id')==$rider->id?'selected':''}}>{{ $rider->name }}</option>                                    @endforeach
+
+                                                    </select>
+                                                </div><br><br>
+                                                <div class="col-4">
                                                     <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
