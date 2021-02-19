@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use DB;
@@ -26,18 +27,15 @@ class StoreController extends Controller
         $stores=$stores->orderBy('distance', 'ASC')
             ->get();
        // $stores=Store::active()->get();
-        if($stores->count()>0){
-            return [
-                'status'=>'success',
-                'message'=>'success',
-                'data'=>compact('stores')
-            ];
-        }else{
-            return [
-                'status'=>'failed',
-                'message'=>'No Record Found',
-            ];
-        }
+
+        $categories=Category::active()->select('id','name')->get();
+
+        return [
+            'status'=>'success',
+            'message'=>'success',
+            'data'=>compact('stores', 'categories')
+        ];
+
     }
 
     public function details(Request $request,$id){
