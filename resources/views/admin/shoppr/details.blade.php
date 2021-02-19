@@ -36,41 +36,61 @@
                                     <tr>
                                         <td>Pan Card</td>
                                         <td>
-                                            <a href="{{$shoppr->pan_card}}">
-                                                <button type="button" target="_blank" class="btn btn-warning">View</button>
-                                            </a>
+                                            @if($shoppr->pan_card != null)
+                                                <a href="{{$shoppr->pan_card}}">
+                                                    <button type="button" target="_blank" class="btn btn-warning">View</button>
+                                                </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Front Aadhaar Card</td>
                                         <td>
-                                            <a href="{{$shoppr->front_aadhaar_card}}">
-                                                <button type="button" target="_blank" class="btn btn-warning">View</button>
-                                            </a>
+                                            @if($shoppr->front_aadhaar_card != null)
+                                                <a href="{{$shoppr->front_aadhaar_card}}">
+                                                    <button type="button" target="_blank" class="btn btn-warning">View</button>
+                                                </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Back Aadhaar Card</td>
                                         <td>
+                                            @if($shoppr->back_aadhaar_card != null)
                                             <a href="{{$shoppr->back_aadhaar_card}}">
                                                 <button type="button" target="_blank" class="btn btn-warning">View</button>
                                             </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Front DL</td>
                                         <td>
+                                            @if($shoppr->front_dl_no != null)
                                             <a href="{{$shoppr->front_dl_no}}">
                                                 <button type="button" target="_blank" class="btn btn-warning">View</button>
                                             </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Back DL</td>
                                         <td>
+                                            @if($shoppr->back_dl_no != null)
                                             <a href="{{$shoppr->back_dl_no}}">
                                                 <button type="button" target="_blank" class="btn btn-warning">View</button>
                                             </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
 
