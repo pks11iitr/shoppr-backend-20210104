@@ -86,7 +86,10 @@
                       <td>
                           {{\App\Models\ShopprWallet::balance($data->id)}}
                       </td>
-                      <td><a href="{{route('shoppr.edit',['id'=>$data->id])}}" class="btn btn-success">Edit</a></td>
+                      <td>
+                          <a href="{{route('shoppr.edit',['id'=>$data->id])}}" class="btn btn-success">Edit</a><br><br>
+                          <a href="{{route('shoppr.details',['id'=>$data->id])}}" class="btn btn-info">Details</a>
+                      </td>
                  </tr>
                  @endforeach
                   </tbody>
