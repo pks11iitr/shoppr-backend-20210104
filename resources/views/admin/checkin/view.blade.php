@@ -74,8 +74,8 @@
                                         <tr>
                                             <td>{{$shoppr??''}}</td>
                                             <td>{{$date??''}}</td>
-                                            <td>{{($value['checkin']['address']??'').' at '.($value['checkin']['time']??'')}}</td>
-                                            <td>{{($value['checkout']['address']??'').' at '.($value['checkout']['time']??'')}}</td>
+                                            <td>@if(isset($value['checkin'])){{($value['checkin']['address']??'').' at '.($value['checkin']['time']??'')}}@endif</td>
+                                            <td>@if(isset($value['checkout'])){{($value['checkout']['address']??'').' at '.($value['checkout']['time']??'')}}@endif</td>
 
                                         </tr>
                                     @endforeach
