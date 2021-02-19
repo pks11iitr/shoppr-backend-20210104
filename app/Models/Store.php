@@ -25,4 +25,8 @@ class Store extends Model
     public function images(){
         return $this->hasMany('App\Models\Document', 'store_id');
     }
+
+    public function categories(){
+        return $this->belongsToMany('App\Models\Category', 'store_categories', 'store_id', 'category_id');
+    }
 }

@@ -116,6 +116,12 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                    <li class="nav-item">
+                        <a href="{{route('category.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Category</p>
+                        </a>
+                    </li>
 
                     <li class="nav-item">
                         <a href="{{route('banners.list')}}" class="nav-link">
