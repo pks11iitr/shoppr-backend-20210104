@@ -62,7 +62,7 @@
                                         <th>Rider Name</th>
                                         <th>CheckIn</th>
                                         <th>CheckOut</th>
-                                        <th>Date & Time</th>
+                                        <th>Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -73,9 +73,11 @@
                                         @endphp
                                         <tr>
                                             <td>{{$shoppr??''}}</td>
-                                            <td>{{$date??''}}</td>
+
                                             <td>@if(isset($value['checkin'])){{($value['checkin']['address']??'').' at '.($value['checkin']['time']??'')}}@endif</td>
                                             <td>@if(isset($value['checkout'])){{($value['checkout']['address']??'').' at '.($value['checkout']['time']??'')}}@endif</td>
+
+                                            <td>{{$date??''}}</td>
 
                                         </tr>
                                     @endforeach
