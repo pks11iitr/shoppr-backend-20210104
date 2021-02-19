@@ -44,7 +44,7 @@
                                     <tr>
                                         <td>Shoppr Name</td>
                                         <td>{{$order->shoppr->name??''}}
-                                            <a href="{{route('order.details',['id'=>$order->id])}}" class="open-RiderChange btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$order->id}}">Change Shoppr</a>
+{{--                                            <a href="{{route('order.details',['id'=>$order->id])}}" class="open-RiderChange btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$order->id}}">Change Shoppr</a>--}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -75,10 +75,10 @@
                                         <td>Status</td>
                                         <td>{{$order->status}}<br><br>
                                             @if(in_array($order->status, ['Confirmed']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'processing'])}}" name='status' class="btn btn-primary">Processing</a>
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'Delivered'])}}" name='status' class="btn btn-primary">Mark Delivered</a>
                                             @endif
-                                            @if(in_array($order->status, ['Confirmed', 'Pending']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'cancelled'])}}" name='status' class="btn btn-primary">Cancel</a>
+                                            @if(in_array($order->status, ['Confirmed']))
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'Cancelled'])}}" name='status' class="btn btn-primary">Mark Cancelled</a>
                                             @endif
 
                                             @if(in_array($order->status, ['Delivered']))
