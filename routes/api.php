@@ -144,6 +144,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->post('check-out', 'MobileApps\ShopprApp\ProfileController@checkout');
         $api->get('attendences', 'MobileApps\ShopprApp\ProfileController@attendencelist');
 
+        $api->get('reviews', 'MobileApps\ShopprApp\ReviewController@index');
 
 
     });

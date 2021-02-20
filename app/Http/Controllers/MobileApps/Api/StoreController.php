@@ -15,6 +15,7 @@ class StoreController extends Controller
         $longitude= $request->lang??'77.56834';
         $category_id=$request->category_id??[];
         $search=$request->search;
+        $sortby=$request->sortby??'name';
         $stores = Store::active()
             ->select(DB::raw('*, ROUND(( 6367 * acos( cos( radians(' . $latitude . ') ) * cos( radians( stores.lat ) ) * cos( radians( stores.lang ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( stores.lat ) ) ) ),2) AS distance'));
 
@@ -32,8 +33,14 @@ class StoreController extends Controller
             });
         }
 
-        $stores=$stores->orderBy('distance', 'ASC')
-            ->get();
+        if($sortby){
+            if($request->sortby=='name')
+                $stores=$stores->orderBy('store_name', 'ASC');
+            else
+                $stores=$stores->orderBy('distance', 'ASC');
+        }
+
+        $stores=$stores->get();
        // $stores=Store::active()->get();
 
         $categories=Category::active()->select('id','name')->get();

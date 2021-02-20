@@ -97,7 +97,7 @@ class ChatMessageController extends Controller
             case 'rating':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
-                    'message'=>'',
+                    'message'=>$request->message??'',
                     'type'=>'rating',
                     //'price'=>$request->price,
                     'quantity'=>0,
@@ -203,7 +203,8 @@ class ChatMessageController extends Controller
     public function rateService(Request $request, $message_id){
 
         $request->validate([
-           'ratings'=>'integer|required|in:1,2,3,4,5'
+           'ratings'=>'integer|required|in:1,2,3,4,5',
+            'comment'=>'string'
         ]);
 
         $user=$request->user;
@@ -214,6 +215,7 @@ class ChatMessageController extends Controller
 
         $message->quantity=$request->ratings;
         $message->status='accepted';
+        $message->message=$request->comment;
         $message->save();
 
         $message->order->ratings=$request->ratings;
