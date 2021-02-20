@@ -79,7 +79,7 @@ class OrderController extends Controller
 
         $message=ChatMessage::create([
             'chat_id'=>$order->chat_id,
-            'message'=>$request->message??'',
+            'message'=>'',
             'type'=>'rating',
             //'price'=>$request->price,
             'quantity'=>0,
