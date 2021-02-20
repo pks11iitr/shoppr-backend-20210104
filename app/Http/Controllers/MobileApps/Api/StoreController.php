@@ -13,7 +13,12 @@ class StoreController extends Controller
     public function index(Request $request){
         $latitude=   $request->lat??'28.56834';
         $longitude= $request->lang??'77.56834';
-        $category_id=$request->category_id??[];
+        $category=$request->category_id??[];
+        $category_id=[];
+        foreach($category as $cat){
+            if(!empty($cat))
+                $category_id[]=$cat;
+        }
         $search=$request->search;
         $sortby=$request->sortby??'name';
         $stores = Store::active()
