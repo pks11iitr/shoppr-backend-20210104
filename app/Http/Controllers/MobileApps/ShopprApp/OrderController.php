@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Settings;
 use App\Models\ShopprWallet;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -73,6 +75,17 @@ class OrderController extends Controller
         $order->save();
 
         ShopprWallet::updatewallet($user->id,'Order Id:'.$order->refid.' Delivered', 'Debit', $order->total,$order->id);
+
+        $message=ChatMessage::create([
+            'chat_id'=>$order->chat_id,
+            'message'=>$request->message??'',
+            'type'=>'rating',
+            //'price'=>$request->price,
+            'quantity'=>0,
+            'direction'=>0,
+        ]);
+
+        $order->customer->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',

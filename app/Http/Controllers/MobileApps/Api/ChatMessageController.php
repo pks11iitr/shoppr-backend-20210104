@@ -94,17 +94,17 @@ class ChatMessageController extends Controller
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
-            case 'rating':
-                $message=ChatMessage::create([
-                    'chat_id'=>$chat_id,
-                    'message'=>$request->message??'',
-                    'type'=>'rating',
-                    //'price'=>$request->price,
-                    'quantity'=>0,
-                    'direction'=>0,
-                ]);
-                //$message->saveFile($request->file, 'chats');
-                break;
+//            case 'rating':
+//                $message=ChatMessage::create([
+//                    'chat_id'=>$chat_id,
+//                    'message'=>$request->message??'',
+//                    'type'=>'rating',
+//                    //'price'=>$request->price,
+//                    'quantity'=>0,
+//                    'direction'=>0,
+//                ]);
+//                //$message->saveFile($request->file, 'chats');
+//                break;
             case 'address':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
