@@ -4,6 +4,8 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\ShopprWallet;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -61,4 +63,21 @@ class CustomerController extends Controller
         return redirect()->back()->with('error','customer has been failed');
 
     }
+
+    public function addMoney(Request $request, $id){
+
+        if($request->type='Credit')
+            Wallet::updatewallet($id, 'Amount Credited By Admin', $request->type, $request->amount,'CASH');
+        else
+            Wallet::updatewallet($id, 'Amount Deducted By Admin', $request->type, $request->amount, 'CASH');
+
+        return redirect()->back()->with('success', 'Amount has been updated to customer wallet');
+
+    }
+    public function transaction(Request $request,$id){
+
+        $datas= Wallet::with('customer')->where('user_id',$id)->paginate(20);
+        return view('admin.customer.history',['datas'=>$datas])->with('success', 'Data has been updated');
+    }
+
 }

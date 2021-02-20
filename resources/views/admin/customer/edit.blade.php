@@ -19,6 +19,59 @@
             </div><!-- /.container-fluid -->
         </section>
 
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Customer Wallet</h3>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" method="post" enctype="multipart/form-data" action="{{route('customer.wallet.add',['id'=>$customer->id])}}">
+                                @csrf
+                                <div class="card-body">
+                                    <a href="{{route('customer.tranaction.list',['id'=>$customer->id])}}" class="btn btn-success">Transaction</a>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Available Balance: {{\App\Models\Wallet::balance($customer->id)}}</label>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Enter Amount</label>
+                                                <input type="number" name="amount" class="form-control" id="exampleInputEmail1" placeholder="Enter add money">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Credit/Debit</label>
+                                                <select name="type" class="form-control">
+                                                    <option value="Credit">Credit</option>
+                                                    <option value="Debit">Debit</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (right) -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">

@@ -40,9 +40,23 @@
                                   <div class="form-group">
                                       <label for="exampleInputEmail1">Available Balance: {{\App\Models\ShopprWallet::balance($data->id)}}</label>
                                   </div>
-                                  <div class="form-group">
-                                      <label for="exampleInputEmail1">Add Money</label>
-                                      <input type="number" name="amount" class="form-control" id="exampleInputEmail1" placeholder="Enter add money" value="{{$data->name}}">
+                                  <div class="row">
+
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label for="exampleInputEmail1">Enter Amount</label>
+                                              <input type="number" name="amount" class="form-control" id="exampleInputEmail1" placeholder="Enter add money">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label for="exampleInputEmail1">Credit/Debit</label>
+                                              <select name="type" class="form-control">
+                                                  <option value="Credit">Credit</option>
+                                                  <option value="Debit">Debit</option>
+                                              </select>
+                                        </div>
+                                      </div>
                                   </div>
                               </div>
                               <!-- /.card-body -->
