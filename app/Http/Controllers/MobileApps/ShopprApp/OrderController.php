@@ -61,7 +61,8 @@ class OrderController extends Controller
 
         $user=$request->user;
 
-        $order=Order::where('shoppr_id', $user->id)
+        $order=Order::with('cutomer')
+        ->where('shoppr_id', $user->id)
             ->where('status', 'Confirmed')
             ->findOrFail($order_id);
 
