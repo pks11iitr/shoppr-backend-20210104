@@ -40,7 +40,7 @@ class OrderController extends Controller
     public function details(Request $request, $order_id){
         $user=$request->user;
 
-        $order=Order::with(['details'])
+        $order=Order::with(['details','reviews'])
             ->where('shoppr_id', $user->id)
             ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
             ->findOrFail($order_id);
