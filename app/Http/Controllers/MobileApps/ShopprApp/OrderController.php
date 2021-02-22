@@ -84,6 +84,7 @@ class OrderController extends Controller
             //'price'=>$request->price,
             'quantity'=>0,
             'direction'=>0,
+            'order_id'=>$order->id
         ]);
 
         $order->customer->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
