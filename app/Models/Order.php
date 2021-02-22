@@ -26,7 +26,8 @@ class Order extends Model
 
     public function reviews(){
         return $this->hasMany('App\Models\ChatMessage', 'order_id')
-            ->where('type','rating');
+            ->where('type','rating')
+            ->where('status', 'accepted');
     }
 
 
