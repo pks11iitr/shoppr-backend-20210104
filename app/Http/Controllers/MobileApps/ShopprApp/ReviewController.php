@@ -15,7 +15,7 @@ class ReviewController extends Controller
         $ordersobj=Order::with(['reviews','customer'=>function($customer){
                 $customer->select('id','name','image');
             }])
-            ->where('ratings','>', 0)
+        ->where('ratings','>', 0)
         ->where('shoppr_id', $user->id)
         ->where('status', 'Delivered')
         //->exists('reviews')
@@ -31,10 +31,10 @@ class ReviewController extends Controller
 
         $reviews=[];
         foreach ($ordersobj as $order){
-            if(!empty($order->review->toArray())){
+            if(!empty($order->reviews->toArray())){
                 $reviews[]=[
-                    'reviews'=>$order->review[0]->message??'',
-                    'rating'=>$order->review[0]->quantity??0,
+                    'reviews'=>$order->reviews[0]->message??'',
+                    'rating'=>$order->reviews[0]->quantity??0,
                     'name'=>$order->customer->name,
                     'image'=>$order->customer->image,
                 ];
