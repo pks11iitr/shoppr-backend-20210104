@@ -140,7 +140,7 @@ class ChatController extends Controller
                 'message'=>'Shoppr has been assigned'
             ];
 
-        $shoppr=Shoppr::find(1);
+        $shoppr=Shoppr::active()->inRandomOrder()->first(1);
 
         $chat->shoppr_id=$shoppr->id;
         $chat->save();
