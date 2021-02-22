@@ -81,9 +81,20 @@ class ProfileController extends Controller
 
     public function getProfileCompletionStatus(Request $request){
 
+        if($request->user){
+            $type=Checkin::where('shoppr_id', $request->user->id)
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $type=$type->type??'checkout';
+        }else{
+            $type='checkout';
+        }
+
         return [
             'status'=>'success',
-            'form_step'=>$request->user->form_step??0
+            'form_step'=>$request->user->form_step??0,
+            'type'=>$type
         ];
 
     }
