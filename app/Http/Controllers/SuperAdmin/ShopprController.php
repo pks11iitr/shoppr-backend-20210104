@@ -32,10 +32,10 @@ class ShopprController extends Controller
             'isactive'=>'required',
             'name'=>'required',
             'mobile'=>'required|digits:10|unique:shoppers',
-            'location'=>'required',
-            'lat'=>'required',
-            'lang'=>'required',
-            'status'=>'required',
+            //'location'=>'required',
+            //'lat'=>'required',
+            //'lang'=>'required',
+            //'status'=>'required',
             'image'=>'required|image',
         ]);
 
@@ -57,10 +57,10 @@ class ShopprController extends Controller
             'isactive'=>'required',
             'name'=>'required',
           //  'mobile'=>'required|digits:10|unique:shoppers',
-            'location'=>'required',
-            'lat'=>'required',
-            'lang'=>'required',
-            'status'=>'required',
+            //'location'=>'required',
+            //'lat'=>'required',
+            //'lang'=>'required',
+            //'status'=>'required',
             'image'=>'image',
         ]);
         $data = Shoppr::findOrFail($id);
