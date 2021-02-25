@@ -111,6 +111,22 @@ class ProfileController extends Controller
 
     }
 
+    public function checkinstatus(Request $request){
+
+        $user=$request->user;
+
+        $type=Checkin::where('shoppr_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $type=$type->type??'checkout';
+
+        return [
+            'status'=>'success',
+            'type'=>$type
+        ];
+    }
+
 
     public function checkin(Request $request){
 
