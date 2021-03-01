@@ -14,7 +14,7 @@ class NotificationController extends Controller
 
         Notification::where('user_type', 'CUSTOMER')
             ->where('user_id', $user->id)
-            ->update('seen_at', date('Y-m-d H:i:s'));
+            ->update(['seen_at'=> date('Y-m-d H:i:s')]);
 
         $notifications=Notification::where('user_type', 'CUSTOMER');
 
