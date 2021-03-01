@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Settings;
 use App\Models\ShopprWallet;
@@ -85,6 +86,15 @@ class OrderController extends Controller
             'quantity'=>0,
             'direction'=>0,
             'order_id'=>$order->id
+        ]);
+
+        Notification::create([
+            'user_id'=>$order->user_id,
+            'title'=>'Order Delivered',
+            'description'=>'Order Delivered',
+            'data'=>null,
+            'type'=>'individual',
+            'user_type'=>'CUSTOMER'
         ]);
 
         $order->customer->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));

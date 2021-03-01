@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Checkin;
+use App\Models\Notification;
 use App\Models\State;
 use Illuminate\Http\Request;
 
@@ -121,9 +123,18 @@ class ProfileController extends Controller
 
         $type=$type->type??'checkout';
 
+        $notifications=Notification::where('user_type', 'SHOPPR')
+            ->where('user_id', $user->id)
+            ->where('seen_at', null)
+            ->count();
+
+        $orders=Chat::where('shoppr_id', 0)->count();
+
         return [
             'status'=>'success',
-            'type'=>$type
+            'type'=>$type,
+            'notifications'=>$notifications,
+            'orders'=>$orders
         ];
     }
 

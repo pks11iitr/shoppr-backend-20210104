@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Notification;
 use App\Models\Shoppr;
 use App\Services\Notification\FCMNotification;
 use Illuminate\Bus\Queueable;
@@ -33,10 +34,19 @@ class SendNewOrderNotification implements ShouldQueue
      */
     public function handle()
     {
-        $shopprs=Shoppr::select('notification_token')->get();
+        $shopprs=Shoppr::select('id', 'notification_token')->get();
         foreach($shopprs as $shoppr){
             if($shoppr->notification_token){
-                $shoppr->notify(new FCMNotification('New Order', $message->message??'', array_merge(['message'=>'New Order'], ['type'=>'pending_order', 'chat_id'=>''.$this->chat_id]),'pending_order'));
+
+                Notification::create([
+                    'user_id'=>$shoppr->id,
+                    'type'=>'individual',
+                    'title'=>'New Order',
+                    'description'=>'New Order',
+                    'user_type'=>'SHOPPR'
+                ]);
+
+                $shoppr->notify(new FCMNotification('New Order', 'New Order', array_merge(['message'=>'New Order'], ['type'=>'pending_order', 'chat_id'=>''.$this->chat_id]),'pending_order'));
             }
         }
     }
