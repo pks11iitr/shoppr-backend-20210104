@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Exports\ShopprExport;
+use App\Exports\StoreExport;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Document;
 use App\Models\Store;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StoreController extends Controller
 {
@@ -19,8 +22,18 @@ class StoreController extends Controller
         if($request->ordertype)
             $datas=$datas->orderBy('created_at', $request->ordertype);
 
+        if($request->type=='export')
+            return $this->export($datas);
+
         $datas=$datas->paginate(10);
         return view('admin.store.view',['datas'=>$datas]);
+    }
+
+    public function export($datas)
+    {
+        $datas=$datas->get();
+
+        return Excel::download(new StoreExport($datas), 'store.xlsx');
     }
 
 

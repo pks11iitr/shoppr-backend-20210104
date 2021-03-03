@@ -1,0 +1,32 @@
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Mobile</th>
+        <th>Location</th>
+        <th>Latitude</th>
+        <th>Langitude</th>
+        <th>Isactive</th>
+        <th>Wallet Balance</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($datas as $data)
+        <tr>
+            <td>{{$data->name}}</td>
+            <td>{{$data->mobile}}</td>
+            <td>{{$data->location}}</td>
+            <td>{{$data->lat}}</td>
+            <td>{{$data->lang}}</td>
+            <td>
+                @if($data->isactive==1){{'Yes'}}
+                @else{{'No'}}
+                @endif
+            </td>
+            <td>
+                {{\App\Models\ShopprWallet::balance($data->id)}}
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>

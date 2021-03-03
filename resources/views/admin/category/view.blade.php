@@ -11,8 +11,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
+              <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+              <li class="breadcrumb-item active">Category</li>
             </ol>
           </div>
         </div>
@@ -44,6 +44,9 @@
                       </div>
                     <div class="col-4">
                        <button type="submit" name="save" class="btn btn-primary">Submit</button>
+
+                        <a href="{{route('category.list')}}" class="btn btn-danger">Reset Filters</a>
+
                      </div>
                   </div>
               </form>
