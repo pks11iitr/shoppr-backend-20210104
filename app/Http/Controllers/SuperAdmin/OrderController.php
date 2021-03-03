@@ -78,4 +78,25 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Rider Has Been change');
     }
 
+    public function changeStatus(Request $request, $order_id){
+
+        $order=Order::findOrFail($order_id);
+
+        if($request->status=='Delivered'){
+            if($order->status=='Confirmed'){
+                $order->status='Delivered';
+            }
+        }else if($request->status=='Cancelled'){
+            if($order->status=='Confirmed'){
+                $order->status='Cancelled';
+            }
+        }
+
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order has been updated');
+
+    }
+
+
 }

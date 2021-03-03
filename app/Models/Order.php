@@ -24,6 +24,13 @@ class Order extends Model
             ->where('type','address');
     }
 
+    public function reviews(){
+        return $this->hasMany('App\Models\ChatMessage', 'order_id')
+            ->where('type','rating')
+            ->where('status', 'accepted')
+            ->select('id','quantity','message','order_id');
+    }
+
 
 
     public function grandTotal(){

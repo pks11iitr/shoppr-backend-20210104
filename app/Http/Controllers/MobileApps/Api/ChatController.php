@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendNewOrderNotification;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\Notification;
 use App\Models\Shoppr;
 use App\Models\Store;
 use App\Services\Notification\FCMNotification;
@@ -140,14 +141,29 @@ class ChatController extends Controller
                 'message'=>'Shoppr has been assigned'
             ];
 
-        $shoppr=Shoppr::find(1);
+        $shoppr=Shoppr::active()->inRandomOrder()->first();
 
         $chat->shoppr_id=$shoppr->id;
         $chat->save();
 
-        $chat->customer->notify(new FCMNotification('Shoppr Assigned', $message->message??'', array_merge(['message'=>'Shoppr Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
 
-        $shoppr->notify(new FCMNotification('New Order', $message->message??'', array_merge(['message'=>'New Order'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
+//        Notification::create([
+//            'user_id'=>$chat->customer->id,
+//            'type'=>'individual',
+//            'title'=>'Shoppr Assigned',
+//            'description'=>'Shoppr Assigned',
+//            'user_type'=>'CUSTOMER'
+//        ]);
+        $chat->customer->notify(new FCMNotification('Shoppr Assigned', 'Shoppr Assigned', array_merge(['message'=>'Shoppr Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
+
+        Notification::create([
+            'user_id'=>$shoppr->id,
+            'type'=>'individual',
+            'title'=>'Order Assigned',
+            'description'=>'Order Assigned',
+            'user_type'=>'SHOPPR'
+        ]);
+        $shoppr->notify(new FCMNotification('Order Assigned', 'Order Assigned', array_merge(['message'=>'New Order'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
 
         return [
             'status'=>'success',

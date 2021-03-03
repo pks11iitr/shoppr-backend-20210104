@@ -61,6 +61,7 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Location</th>
@@ -75,6 +76,7 @@
                   <tbody>
 				@foreach($datas as $data)
                   <tr>
+					  <td>SHOPPR{{$data->id}}</td>
 					  <td>{{$data->name}}</td>
 					  <td>{{$data->mobile}}</td>
 					  <td>{{$data->location}}</td>

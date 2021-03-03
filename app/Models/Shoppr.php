@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Models\Traits\Active;
 use App\Models\Traits\DocumentUploadTrait;
+use Illuminate\Contracts\Notifications\Dispatcher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use NotificationChannels\Fcm\Exceptions\CouldNotSendNotification;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Shoppr extends Authenticatable implements JWTSubject
@@ -52,6 +54,17 @@ class Shoppr extends Authenticatable implements JWTSubject
     public function routeNotificationForFcm()
     {
         return $this->notification_token;
+    }
+
+    public function notify($instance)
+    {
+        try{
+            app(Dispatcher::class)->send($this, $instance);
+
+        }catch(CouldNotSendNotification $e){
+
+        }
+
     }
 
     public function getImageAttribute($value){

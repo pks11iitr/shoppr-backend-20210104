@@ -42,9 +42,9 @@
                                         <td>{{$order->created_at}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Rider Name</td>
+                                        <td>Shoppr Name</td>
                                         <td>{{$order->shoppr->name??''}}
-                                            <a href="{{route('order.details',['id'=>$order->id])}}" class="open-RiderChange btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$order->id}}">Change Rider</a>
+{{--                                            <a href="{{route('order.details',['id'=>$order->id])}}" class="open-RiderChange btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$order->id}}">Change Shoppr</a>--}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -75,20 +75,11 @@
                                         <td>Status</td>
                                         <td>{{$order->status}}<br><br>
                                             @if(in_array($order->status, ['Confirmed']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'processing'])}}" name='status' class="btn btn-primary">Processing</a>
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'Delivered'])}}" name='status' class="btn btn-primary">Mark Delivered</a>
                                             @endif
-                                            @if(in_array($order->status, ['Confirmed', 'Pending']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'cancelled'])}}" name='status' class="btn btn-primary">Cancel</a>
+                                            @if(in_array($order->status, ['Confirmed']))
+                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'Cancelled'])}}" name='status' class="btn btn-primary">Mark Cancelled</a>
                                             @endif
-
-                                            @if(in_array($order->status, ['Delivered']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'completed'])}}" name='status' class="btn btn-primary">Completed</a>
-                                            @endif
-
-                                            @if(in_array($order->status, ['Cancelled']))
-                                                <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'reopen'])}}" name='status' class="btn btn-primary">Re-Open</a>
-                                            @endif
-
                                         </td>
                                     </tr>
 
@@ -173,7 +164,7 @@
                                 <select name="riderid" class="form-control" id="riderid" placeholder="" >
                                     @foreach($riders as $rider)
                                         <option value="{{$rider->id}}"
-                                            {{$order->shoppr_id==$rider->id?'selected':''}}>{{$rider->name}}</option>
+                                            {{$order->shoppr_id==$rider->id?'selected':''}}>{{$rider->name}}  (SHOPPR{{$rider->id}})</option>
                                     @endforeach
                                 </select>
                             </div>

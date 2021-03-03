@@ -62,9 +62,9 @@
                                                 <div class="col-4">
 
                                                     <select id="shoppr_id" name="shoppr_id" class="form-control" >
-                                                        <option value="" {{ request('shoppr_id')==''?'selected':''}}>Select Rider</option>
+                                                        <option value="" {{ request('shoppr_id')==''?'selected':''}}>Select Shoppr</option>
                                                         @foreach($riders as $rider)
-                                                            <option value="{{$rider->id}}" {{request('shoppr_id')==$rider->id?'selected':''}}>{{ $rider->name }}</option>                                    @endforeach
+                                                            <option value="{{$rider->id}}" {{request('shoppr_id')==$rider->id?'selected':''}}>{{ $rider->name }} (SHOPPR{{$rider->id}})</option>                                    @endforeach
 
                                                     </select>
                                                 </div><br><br>

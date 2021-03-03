@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Checkin;
+use App\Models\Notification;
 use App\Models\State;
 use Illuminate\Http\Request;
 
@@ -81,9 +83,20 @@ class ProfileController extends Controller
 
     public function getProfileCompletionStatus(Request $request){
 
+        if($request->user){
+            $type=Checkin::where('shoppr_id', $request->user->id)
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $type=$type->type??'checkout';
+        }else{
+            $type='checkout';
+        }
+
         return [
             'status'=>'success',
-            'form_step'=>$request->user->form_step??0
+            'form_step'=>$request->user->form_step??0,
+            'type'=>$type
         ];
 
     }
@@ -98,6 +111,31 @@ class ProfileController extends Controller
         ];
 
 
+    }
+
+    public function checkinstatus(Request $request){
+
+        $user=$request->user;
+
+        $type=Checkin::where('shoppr_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $type=$type->type??'checkout';
+
+        $notifications=Notification::where('user_type', 'SHOPPR')
+            ->where('user_id', $user->id)
+            ->where('seen_at', null)
+            ->count();
+
+        $orders=Chat::where('shoppr_id', 0)->count();
+
+        return [
+            'status'=>'success',
+            'type'=>$type,
+            'notifications'=>$notifications,
+            'orders'=>$orders
+        ];
     }
 
 

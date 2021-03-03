@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChatMessage;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Settings;
 use App\Models\ShopprWallet;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -38,7 +41,7 @@ class OrderController extends Controller
     public function details(Request $request, $order_id){
         $user=$request->user;
 
-        $order=Order::with(['details'])
+        $order=Order::with(['details','reviews'])
             ->where('shoppr_id', $user->id)
             ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
             ->findOrFail($order_id);
@@ -59,7 +62,8 @@ class OrderController extends Controller
 
         $user=$request->user;
 
-        $order=Order::where('shoppr_id', $user->id)
+        $order=Order::with('customer')
+        ->where('shoppr_id', $user->id)
             ->where('status', 'Confirmed')
             ->findOrFail($order_id);
 
@@ -73,6 +77,27 @@ class OrderController extends Controller
         $order->save();
 
         ShopprWallet::updatewallet($user->id,'Order Id:'.$order->refid.' Delivered', 'Debit', $order->total,$order->id);
+
+        $message=ChatMessage::create([
+            'chat_id'=>$order->chat_id,
+            'message'=>'',
+            'type'=>'rating',
+            //'price'=>$request->price,
+            'quantity'=>0,
+            'direction'=>0,
+            'order_id'=>$order->id
+        ]);
+
+        Notification::create([
+            'user_id'=>$order->user_id,
+            'title'=>'Order Delivered',
+            'description'=>'Order Delivered',
+            'data'=>null,
+            'type'=>'individual',
+            'user_type'=>'CUSTOMER'
+        ]);
+
+        $order->customer->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',

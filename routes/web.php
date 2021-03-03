@@ -84,6 +84,10 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::get('edit/{id}','SuperAdmin\CustomerController@edit')->name('customer.edit');
         Route::post('update/{id}','SuperAdmin\CustomerController@update')->name('customer.update');
         Route::get('export{id}','SuperAdmin\CustomerController@export')->name('customer.export');
+
+        Route::post('add-money/{id}','SuperAdmin\CustomerController@addMoney')->name('customer.wallet.add');
+        Route::get('history-list/{id}','SuperAdmin\CustomerController@transaction')->name('customer.tranaction.list');
+
     });
 
     Route::group(['prefix'=>'news'], function(){

@@ -118,31 +118,39 @@ class ChatController extends Controller
     }
 
 
-    public function availableChats(Request $request){
-        $user=$request->user;
+    public function availableChats(Request $request)
+    {
+        $user = $request->user;
 
-        $chats=Chat::with(['customer'=>function($user){
-            $user->select('id', 'name', 'image');
-        }])
-        ->whereDoesntHave('rejectedby', function($rejectedby) use($user){
-            $rejectedby->where('rejected_chats.shoppr_id', $user->id);
-        })
-        ->where('shoppr_id', 0) // unassigned chats
-        ->orderBy('id', 'desc')
-        ->get();
+        if ($user->isactive) {
 
-        $userchats=[];
-        foreach($chats as $userchat){
+            $chats = Chat::with(['customer' => function ($user) {
+                $user->select('id', 'name', 'image');
+            }])
+                ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
+                    $rejectedby->where('rejected_chats.shoppr_id', $user->id);
+                })
+                ->where('shoppr_id', 0) // unassigned chats
+                ->orderBy('id', 'desc')
+                ->get();
 
-            $distance=distance($userchat->lat, $userchat->lang, $user->lat, $user->lang);
+            $userchats = [];
+            foreach ($chats as $userchat) {
 
-            $userchats[]=[
-                'id'=>$userchat->id,
-                'name'=>$userchat->customer->name,
-                'image'=>$userchat->customer->image,
-                'distance'=>round($distance, 2),
-                'date'=>$userchat->created_at
-            ];
+                $distance = distance($userchat->lat, $userchat->lang, $user->lat, $user->lang);
+
+                $userchats[] = [
+                    'id' => $userchat->id,
+                    'name' => $userchat->customer->name,
+                    'image' => $userchat->customer->image,
+                    'distance' => round($distance, 2),
+                    'date' => $userchat->created_at
+                ];
+            }
+        }
+        else
+        {
+            $userchats=[];
         }
 
         $type=Checkin::where('shoppr_id', $user->id)
