@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Exports\CheckinExport;
+use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Shoppr;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -39,8 +42,14 @@ class OrderController extends Controller
         if($request->shoppr_id)
             $orders=$orders->where('shoppr_id', $request->shoppr_id);
 
-        $orders =$orders->where('status', '!=', 'Pending')
-            ->orderBy('id', 'desc')
+        $orders =$orders->where('status', '!=', 'Pending');
+
+        if($request->type=='export'){
+            $orders=$orders->get();
+            return Excel::download(new OrderExport($orders), 'orders.xlsx');
+        }
+
+        $orders =$orders->orderBy('id', 'desc')
             ->paginate(20);
         $riders = Shoppr::active()->get();
 
