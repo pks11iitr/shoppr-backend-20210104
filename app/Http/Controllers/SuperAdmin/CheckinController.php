@@ -13,7 +13,9 @@ class CheckinController extends Controller
 {
     public function index(Request $request){
 
-        $checkins =Checkin::with('shoppr')->where('id', '>=', 0);
+        $checkins =Checkin::with(['shoppr'=>function($shopper){
+            $shopper->select('id','name');
+        }])->where('id', '>=', 0);
 
         if(isset($request->fromdate))
             $checkins = $checkins->where('created_at', '>=', $request->fromdate.' 00:00:00');
@@ -49,7 +51,17 @@ class CheckinController extends Controller
     {
         $checkins=$checkins->get();
 
-        return Excel::download(new CheckinExport($checkins), 'checkins.xlsx');
+        $attendences=[];
+
+        foreach($checkins as $check){
+            if(!isset($attendences[$check->shoppr->name.'**'.date('Y-m-d', strtotime($check->created_at))])){
+                $attendences[$check->shoppr->name.'**'.date('Y-m-d', strtotime($check->created_at))]=[];
+            }
+            $attendences[$check->shoppr->name.'**'.date('Y-m-d', strtotime($check->created_at))][$check->type]['time']=date('h:ia', strtotime($check->created_at));
+            $attendences[$check->shoppr->name.'**'.date('Y-m-d', strtotime($check->created_at))][$check->type]['address']=$check->address;
+        }
+        //var_dump($checkins->toArray());die;
+        return Excel::download(new CheckinExport($attendences), 'checkins.xlsx');
     }
 
 }

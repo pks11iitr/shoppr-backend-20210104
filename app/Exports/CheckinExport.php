@@ -18,6 +18,7 @@ class CheckinExport implements FromView
 
     public function view(): View
     {
+        //var_dump($this->checkins->toArray());die;
         return view('admin.checkin.invoice', [
             'checkins' => $this->checkins
         ]);
