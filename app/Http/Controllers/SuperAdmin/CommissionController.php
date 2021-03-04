@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Exports\CheckinExport;
+use App\Exports\CommissionExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Settings;
@@ -9,6 +11,7 @@ use App\Models\Shoppr;
 use App\Models\Story;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Storage;
 
 class CommissionController extends Controller
@@ -41,6 +44,9 @@ class CommissionController extends Controller
                 $historyobj = $historyobj->where('shoppr_id', $request->shoppr_id);
 
             }
+
+            if($request->type=='export')
+                return $this->export($historyobj);
 
             $historyobj=$historyobj->orderBy('id', 'desc')
                 ->get();
@@ -85,6 +91,13 @@ class CommissionController extends Controller
             return view('admin.commission.view',['commission_transactions'=>$historyobj,'commission'=>$commission,'riders'=>$riders]);
 
         }
+
+    public function export($historyobj)
+    {
+        $historyobj=$historyobj->get();
+
+        return Excel::download(new CommissionExport($historyobj), 'commission.xlsx');
+    }
 
 
 }

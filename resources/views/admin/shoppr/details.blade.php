@@ -11,8 +11,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="">Shoppr</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="{{route('shoppr.list')}}">Shoppr</a></li>
                         </ol>
                     </div>
                 </div>
@@ -36,41 +36,61 @@
                                     <tr>
                                         <td>Pan Card</td>
                                         <td>
-                                            <a href="{{$shoppr->pan_card}}">
-                                                <button type="button" target="_blank" class="btn btn-warning">View</button>
-                                            </a>
+                                            @if($shoppr->pan_card != null)
+                                                <a href="{{$shoppr->pan_card}}">
+                                                    <button type="button" target="_blank" class="btn btn-warning">View</button>
+                                                </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Front Aadhaar Card</td>
                                         <td>
-                                            <a href="{{$shoppr->front_aadhaar_card}}">
-                                                <button type="button" target="_blank" class="btn btn-warning">View</button>
-                                            </a>
+                                            @if($shoppr->front_aadhaar_card != null)
+                                                <a href="{{$shoppr->front_aadhaar_card}}">
+                                                    <button type="button" target="_blank" class="btn btn-warning">View</button>
+                                                </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Back Aadhaar Card</td>
                                         <td>
+                                            @if($shoppr->back_aadhaar_card != null)
                                             <a href="{{$shoppr->back_aadhaar_card}}">
                                                 <button type="button" target="_blank" class="btn btn-warning">View</button>
                                             </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Front DL</td>
                                         <td>
+                                            @if($shoppr->front_dl_no != null)
                                             <a href="{{$shoppr->front_dl_no}}">
                                                 <button type="button" target="_blank" class="btn btn-warning">View</button>
                                             </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Back DL</td>
                                         <td>
+                                            @if($shoppr->back_dl_no != null)
                                             <a href="{{$shoppr->back_dl_no}}">
                                                 <button type="button" target="_blank" class="btn btn-warning">View</button>
                                             </a>
+                                            @else
+                                                No Image
+                                            @endif
                                         </td>
                                     </tr>
 

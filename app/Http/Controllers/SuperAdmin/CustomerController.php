@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Exports\CommissionExport;
+use App\Exports\CustomerExport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\ShopprWallet;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -29,8 +32,19 @@ class CustomerController extends Controller
         if($request->ordertype)
             $customers=$customers->orderBy('created_at', $request->ordertype);
 
+        if($request->type=='export')
+            return $this->export($customers);
+
+
         $customers=$customers->paginate(20);
         return view('admin.customer.view',['customers'=>$customers]);
+    }
+
+    public function export($customers)
+    {
+        $customers=$customers->get();
+
+        return Excel::download(new CustomerExport($customers), 'customers.xlsx');
     }
 
     public function edit(Request $request,$id){

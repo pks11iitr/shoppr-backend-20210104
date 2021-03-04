@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Exports\CustomerExport;
+use App\Exports\ShopprExport;
 use App\Http\Controllers\Controller;
 use App\Models\Shoppr;
 use App\Models\ShopprWallet;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ShopprController extends Controller
 {
@@ -18,8 +21,18 @@ class ShopprController extends Controller
         if($request->ordertype)
             $datas=$datas->orderBy('created_at', $request->ordertype);
 
+        if($request->type=='export')
+            return $this->export($datas);
+
         $datas=$datas->paginate(10);
         return view('admin.shoppr.view',['datas'=>$datas]);
+    }
+
+    public function export($datas)
+    {
+        $datas=$datas->get();
+
+        return Excel::download(new ShopprExport($datas), 'shoppr.xlsx');
     }
 
 

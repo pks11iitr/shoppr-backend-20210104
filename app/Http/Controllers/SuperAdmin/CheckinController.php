@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Exports\CheckinExport;
 use App\Http\Controllers\Controller;
 use App\Models\Checkin;
 use App\Models\Shoppr;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CheckinController extends Controller
 {
@@ -21,6 +23,10 @@ class CheckinController extends Controller
 
         if($request->shoppr_id)
             $checkins=$checkins->where('shoppr_id', $request->shoppr_id);
+
+        //var_dump($request->type);die();
+        if($request->type=='export')
+            return $this->export($checkins);
 
         $checkins =$checkins->orderBy('id', 'desc')->paginate(60);
 
@@ -38,4 +44,12 @@ class CheckinController extends Controller
 
         return view('admin.checkin.view',['attendences'=>$attendences,'riders'=>$riders, 'checkins'=>$checkins]);
     }
+
+    public function export($checkins)
+    {
+        $checkins=$checkins->get();
+
+        return Excel::download(new CheckinExport($checkins), 'checkins.xlsx');
+    }
+
 }

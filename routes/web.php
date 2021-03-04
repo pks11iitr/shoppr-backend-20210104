@@ -39,6 +39,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('add-money/{id}','SuperAdmin\ShopprController@addMoney')->name('shoppr.wallet.add');
         Route::get('history-list/{id}','SuperAdmin\ShopprController@transaction')->name('shoppr.tranaction.list');
         Route::get('details/{id}','SuperAdmin\ShopprController@details')->name('shoppr.details');
+        Route::get('export{id}','SuperAdmin\ShopprController@export')->name('shoppr.export');
 
     });
 
@@ -50,6 +51,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('update/{id}','SuperAdmin\StoreController@update')->name('store.update');
         Route::post('upload-images/{id}','SuperAdmin\StoreController@images')->name('store.images.uploads');
         Route::get('image-delete/{id}','SuperAdmin\StoreController@deleteimage')->name('store.image.delete');
+        Route::get('export{id}','SuperAdmin\StoreController@export')->name('store.export');
 
     });
 
@@ -62,6 +64,9 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     Route::group(['prefix'=>'commission'], function() {
         Route::get('/', 'SuperAdmin\CommissionController@index')->name('commission.list');
+        Route::get('export{id}','SuperAdmin\CommissionController@export')->name('commission.export');
+
+
     });
     //endshoppradmin
 
@@ -78,6 +83,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::get('/','SuperAdmin\CustomerController@index')->name('customer.list');
         Route::get('edit/{id}','SuperAdmin\CustomerController@edit')->name('customer.edit');
         Route::post('update/{id}','SuperAdmin\CustomerController@update')->name('customer.update');
+        Route::get('export{id}','SuperAdmin\CustomerController@export')->name('customer.export');
 
         Route::post('add-money/{id}','SuperAdmin\CustomerController@addMoney')->name('customer.wallet.add');
         Route::get('history-list/{id}','SuperAdmin\CustomerController@transaction')->name('customer.tranaction.list');
@@ -113,6 +119,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     Route::group(['prefix'=>'checkin'], function(){
         Route::get('/','SuperAdmin\CheckinController@index')->name('checkin.list');
+        Route::get('export{id}','SuperAdmin\CheckinController@export')->name('checkin.export');
 
     });
 
