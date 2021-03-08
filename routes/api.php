@@ -94,7 +94,6 @@ $api->get('notifications', 'MobileApps\Api\NotificationController@index');
 $api->group(['prefix' => 'shoppr'], function ($api) {
 
     //$api->post('login', 'MobileApps\Auth\LoginController@login');
-    $api->get('logout', 'MobileApps\ShopprApp\Auth\LoginController@logout');
 
     $api->post('login-with-otp', 'MobileApps\ShopprApp\Auth\LoginController@loginWithOtp');
     $api->post('register', 'MobileApps\ShopprApp\Auth\RegisterController@register');
@@ -109,6 +108,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
     $api->group(['middleware' => ['shoppr-api-auth']], function ($api) {
 
+        $api->get('logout', 'MobileApps\ShopprApp\Auth\LoginController@logout');
         $api->get('profile', 'MobileApps\ShopprApp\ProfileController@getProfile');
 
 
