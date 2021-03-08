@@ -31,6 +31,7 @@ $api->post('gmail-login', 'MobileApps\Auth\LoginController@gmailLogin');
 
 $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
+      $api->get('logout', 'MobileApps\Auth\LoginController@logout');
 
 //    $api->get('get-options', 'MobileApps\ProfileController@getOptions');
 //    $api->post('basic-info', 'MobileApps\ProfileController@updateBasicInfo');
@@ -93,6 +94,8 @@ $api->get('notifications', 'MobileApps\Api\NotificationController@index');
 $api->group(['prefix' => 'shoppr'], function ($api) {
 
     //$api->post('login', 'MobileApps\Auth\LoginController@login');
+    $api->get('logout', 'MobileApps\ShopprApp\Auth\LoginController@logout');
+
     $api->post('login-with-otp', 'MobileApps\ShopprApp\Auth\LoginController@loginWithOtp');
     $api->post('register', 'MobileApps\ShopprApp\Auth\RegisterController@register');
 //$api->post('forgot', 'MobileApps\Auth\ForgotPasswordController@forgot');

@@ -136,4 +136,10 @@ class LoginController extends Controller
 
     }
 
+    public function logout(Request $request){
+        $user=$request->user;
+        $user->notification_token=null;
+        $user->save();
+    }
+
 }

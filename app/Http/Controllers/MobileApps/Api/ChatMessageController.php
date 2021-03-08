@@ -28,11 +28,22 @@ class ChatMessageController extends Controller
         $shoppr=Shoppr::select('name','image','id')
         ->find($chat->shoppr_id);
 
+        $user=$request->user;
+
+        $items_count=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
+            $chat->where('customer_id', $user->id);
+        })
+            ->where('chat_id', $chat_id)
+            ->where('type', 'product')
+            ->where('status', 'accepted')
+            ->where('order_id', null)
+            ->count();
+
         return [
 
             'status'=>'success',
             'message'=>[],
-            'data'=>compact('chats', 'chat_id', 'shoppr')
+            'data'=>compact('chats', 'chat_id', 'shoppr', 'items_count')
 
         ];
 

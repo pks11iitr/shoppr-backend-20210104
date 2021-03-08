@@ -21,6 +21,12 @@ class ShopprApiAuth
                 'status'=>'failed',
                 'message'=>'Please login to continue'
             ], 200);
+
+        if($user->notification_token==null)
+            return response()->json([
+                'status'=>'failed',
+                'message'=>'logout'
+            ], 200);
 //        if(!$user->isactive){
 //            return [
 //                'status'=>'failed',

@@ -22,6 +22,12 @@ class CustomerApiAuth
                 'message'=>'Please login to continue'
             ], 200);
 
+        if($user->notification_token==null)
+            return response()->json([
+                'status'=>'failed',
+                'message'=>'logout'
+            ], 200);
+
         $request->merge(compact('user'));
         return $next($request);
     }
