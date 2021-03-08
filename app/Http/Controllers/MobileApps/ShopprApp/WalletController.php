@@ -63,7 +63,7 @@ class WalletController extends Controller
 
         $user=$request->user;
         $historyobj=Order::where('shoppr_id', $user->id)
-            ->select('refid', 'created_at', 'rider_commission')
+            ->select('refid', 'created_at', 'rider_commission', 'rider_delivery_charge')
             ->where('status', 'Delivered');
 
         if($request->from_date){
@@ -91,7 +91,7 @@ class WalletController extends Controller
 
             $tlist=[];
             foreach($date_transactions as $t){
-                $t->created_at=date('h:iA', strtotime($h->getRawOriginal('created_at')));
+                $t->time=date('h:iA', strtotime($h->getRawOriginal('created_at')));
                 $tlist[]=$t;
             }
 
@@ -113,11 +113,12 @@ class WalletController extends Controller
             $commission=$commission->where('created_at', '<=', $request->to_date.' 23:59:59');
         }
 
+        $delivery_charge=$commission->sum('rider_delivery_charge');
         $commission=$commission->sum('rider_commission');
 
         return [
             'status' => 'success',
-            'data' => compact('commission_transactions', 'commission')
+            'data' => compact('commission_transactions','delivery_charge', 'commission')
         ];
 
     }
