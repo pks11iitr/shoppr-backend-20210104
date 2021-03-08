@@ -16,4 +16,20 @@ class AvailableLocationController extends Controller
         ];
 
     }
+
+    public function checkServiceAvailability(Request $request){
+        $location=$request->location;
+        $location=WorkLocations::where('name', $location)->first();
+        if(!$location){
+            return [
+                'status'=>'failed',
+                'message'=>'Location is not serviceble'
+            ];
+        }
+
+        return [
+            'status'=>'success',
+            'message'=>'Location is serviceble'
+        ];
+    }
 }

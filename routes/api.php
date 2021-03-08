@@ -89,6 +89,7 @@ $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
 $api->post('recharge','MobileApps\Api\WalletController@addMoney');
 $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
 $api->get('notifications', 'MobileApps\Api\NotificationController@index');
+$api->post('check-availability', 'MobileApps\Api\AvailableLocationController@checkServiceAvailability');
 
 //shoppr APIs
 $api->group(['prefix' => 'shoppr'], function ($api) {
@@ -153,7 +154,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
     });
 
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
-
+    $api->get('available-locations', 'MobileApps\Api\AvailableLocationController@locations');
 
 });
 
