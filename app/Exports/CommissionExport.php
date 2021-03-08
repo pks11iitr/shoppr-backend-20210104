@@ -11,7 +11,7 @@ class CommissionExport implements FromView
      * @return \Illuminate\Support\Collection
      */
 
-    public function __construct($historyobj)
+    public function __construct($historyobj,)
     {
         $this->historyobj=$historyobj;
 
