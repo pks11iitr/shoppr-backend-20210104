@@ -13,7 +13,7 @@ class NotificationController extends Controller
         $user=auth()->guard('customerapi')->user();
 
         Notification::where('user_type', 'CUSTOMER')
-            ->where('user_id', $user->id)
+            ->where('user_id', $user->id??0)
             ->update(['seen_at'=> date('Y-m-d H:i:s')]);
 
         $notifications=Notification::where('user_type', 'CUSTOMER');

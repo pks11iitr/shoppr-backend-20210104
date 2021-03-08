@@ -29,9 +29,6 @@ $api->post('fb-login', 'MobileApps\Auth\LoginController@facebookLogin');
 $api->post('gmail-login', 'MobileApps\Auth\LoginController@gmailLogin');
 //test comment again
 
-
-$api->get('configurations', 'MobileApps\ConfigurationController@getFilters');
-
 $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
 
@@ -41,8 +38,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 //    $api->post('personal-details', 'MobileApps\ProfileController@updatePersonalInfo');
 //    $api->post('about', 'MobileApps\ProfileController@updateAboutMe');
 
-    $api->get('home', 'MobileApps\HomeController@home');
-    $api->get('profile-details/{id}', 'MobileApps\ProfileController@details');
+    //$api->get('home', 'MobileApps\HomeController@home');
+    //$api->get('profile-details/{id}', 'MobileApps\ProfileController@details');
 //    $api->get('my-matches', 'MobileApps\ProfileController@findMatches');
 
     $api->get('chats', 'MobileApps\Api\ChatController@chathistory');
@@ -155,5 +152,6 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
 
 
-
 });
+
+$api->get('available-locations', 'MobileApps\Api\AvailableLocationController@locations');
