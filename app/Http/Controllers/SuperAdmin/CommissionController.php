@@ -57,10 +57,10 @@ class CommissionController extends Controller
             $history=[];
             foreach($historyobj as $h){
 
-                if(!isset($history[date('D, M d, Y',strtotime($h->created_at))])){
-                    $history[date('D, M d, Y',strtotime($h->created_at))]=[];
+                if(!isset($history[date('D, M d, Y',strtotime($h->getRawOriginal('created_at')))])){
+                    $history[date('D, M d, Y',strtotime($h->getRawOriginal('created_at')))]=[];
                 }
-                $history[date('D, M d, Y',strtotime($h->created_at))][]=$h;
+                $history[date('D, M d, Y',strtotime($h->getRawOriginal('created_at')))][]=$h;
             }
 
             $commission_transactions=[];
@@ -68,7 +68,7 @@ class CommissionController extends Controller
 
                 $tlist=[];
                 foreach($date_transactions as $t)
-                    $t->created_at=date('h:iA', strtotime($t->created_at));
+                    $t->created_at=date('h:iA', strtotime($h->getRawOriginal('created_at')));
                 $tlist[]=$t;
 
                 $commission_transactions[]=[
