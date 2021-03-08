@@ -69,8 +69,13 @@ class OrderController extends Controller
 
         $commission=Settings::where('name', 'Commission')->first();
         $commission=$commission->value??0;
+        $commission=intval(($order->total*$commission)/100);
+
+        $delivery_charge=Settings::where('name', 'Shoppr Delivery Charge')->first();
+        $delivery_charge=$delivery_charge->value??0;
 
         $order->rider_commission=$commission;
+        $order->rider_delivery_charge=$delivery_charge;
         $order->payment_status='Paid';
         $order->status='Delivered';
         $order->delivered_at=date('Y-m-d H:i:s');

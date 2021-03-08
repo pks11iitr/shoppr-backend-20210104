@@ -70,6 +70,7 @@
                                     <tr>
                                         <th>Shopper Name</th>
                                         <th>OrderId</th>
+                                        <th>Delivery Charges</th>
                                         <th>Commission Amount</th>
                                         <th>Date</th>
                                     </tr>
@@ -79,6 +80,7 @@
                                         <tr>
                                             <td>{{$data->shoppr->name??''}}</td>
                                             <td>{{$data->refid??''}}</td>
+                                            <td>{{$data->rider_delivery_charge??''}}</td>
                                             <td>{{$data->rider_commission??''}}</td>
                                             <td>{{$data->created_at??''}}</td>
                                         </tr>
@@ -88,6 +90,7 @@
                                     <tr>
                                         <th>Shopper Name</th>
                                         <th>OrderId</th>
+                                        <th>Delivery Charge</th>
                                         <th>Commission Amount</th>
                                         <th>Date</th>
                                     </tr>

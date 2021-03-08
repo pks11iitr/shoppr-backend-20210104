@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $table='orders';
 
-    protected $fillable=['user_id','shoppr_id', 'chat_id', 'refid', 'total', 'service_charge', 'status', 'payment_status', 'payment_mode'];
+    protected $fillable=['user_id','shoppr_id', 'chat_id', 'refid', 'total', 'service_charge', 'status', 'payment_status', 'payment_mode','rider_delivery_charge', 'rider_commission'];
 
     public function details(){
         return $this->hasMany('App\Models\ChatMessage', 'order_id')
