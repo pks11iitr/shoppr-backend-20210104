@@ -67,7 +67,11 @@
                                     @foreach($datas as $data)
                                         <tr>
                                             <td>{{$data->name}}</td>
+                                            @if($data->name=='Free delivery Dates')
+                                                <td>{{str_replace('***', ' to ', $data->value)}}</td>
+                                            @else
                                             <td>{{$data->value}}</td>
+                                            @endif
                                             <td><a href="{{route('setting.edit',['id'=>$data->id])}}" class="btn btn-success">Edit</a></td>
                                         </tr>
                                     @endforeach

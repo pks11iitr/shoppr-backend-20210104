@@ -51,12 +51,34 @@ class OrderController extends Controller
         foreach($items as $i){
             $total=$total+$i->price;
         }
-        $service_charge=Settings::where('name', 'Service Fee')->first();
-        $service_charge=$service_charge->value??0;
-
-        $grand_total=$total+$service_charge;
 
         $refid=env('MACHINE_ID').time();
+
+        $settings=Settings::where('name', 'First Delivery Free')->orWhere('name', 'Free Delivery Dates')->get();
+        $is_free_delivery=false;
+        foreach($settings as $s){
+            if($s->name=='First Delivery Free' && $s->value=='yes'){
+                $past=Order::whereIn('status', ['Delivered','Confirmed'])
+                    ->where('user_id', $user->id)->get();
+                if(!count($past))
+                    $is_free_delivery=true;
+            }
+            if($s=='Free Delivery Dates'){
+                $dates=explode('***', $s->value);
+                if($dates[0] >= date('Y-m-d') && $dates[1] <= date('Y-m-d')){
+                    $is_free_delivery=true;
+                }
+            }
+        }
+
+        if($is_free_delivery){
+            $service_charge=0;
+        }else{
+            $service_charge=Settings::where('name', 'Service Fee')->first();
+            $service_charge=$service_charge->value??0;
+        }
+
+        $grand_total=$total+$service_charge;
 
         $order=Order::create([
             'user_id'=>$user->id,
