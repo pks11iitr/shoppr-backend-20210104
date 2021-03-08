@@ -80,7 +80,7 @@
                                         <tr>
                                             <td>{{$data->shoppr->name??''}}</td>
                                             <td>{{$data->refid??''}}</td>
-                                            <td>{{$data->rider_delivery_charge??''}}</td>
+                                            <td>{{$data->rider_delivery_charge??0}}</td>
                                             <td>{{$data->rider_commission??''}}</td>
                                             <td>{{$data->created_at??''}}</td>
                                         </tr>

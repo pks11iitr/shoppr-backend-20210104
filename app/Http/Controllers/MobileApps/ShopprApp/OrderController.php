@@ -67,12 +67,19 @@ class OrderController extends Controller
             ->where('status', 'Confirmed')
             ->findOrFail($order_id);
 
-        $commission=Settings::where('name', 'Commission')->first();
-        $commission=$commission->value??0;
-        $commission=intval(($order->total*$commission)/100);
+        $commission=0;
+        if($user->pay_commission){
+            $commission=Settings::where('name', 'Commission')->first();
+            $commission=$commission->value??0;
+            $commission=intval(($order->total*$commission)/100);
+        }
 
-        $delivery_charge=Settings::where('name', 'Shoppr Delivery Charge')->first();
-        $delivery_charge=$delivery_charge->value??0;
+        $delivery_charge=0;
+        if($user->pay_delivery){
+            $delivery_charge=Settings::where('name', 'Shoppr Delivery Charge')->first();
+            $delivery_charge=$delivery_charge->value??0;
+        }
+
 
         $order->rider_commission=$commission;
         $order->rider_delivery_charge=$delivery_charge;
