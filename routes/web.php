@@ -151,6 +151,11 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
     });
 
 
+    Route::group(['prefix'=>'notification'], function(){
+            Route::get('create','SuperAdmin\NotificationController@create')->name('notification.create');
+            Route::post('store','SuperAdmin\NotificationController@store')->name('notification.store');
+    });
+
 });
 
 require __DIR__.'/auth.php';

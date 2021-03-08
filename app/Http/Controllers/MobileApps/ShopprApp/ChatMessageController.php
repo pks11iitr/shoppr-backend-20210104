@@ -79,6 +79,28 @@ class ChatMessageController extends Controller
                 ]);
                 //$message->saveFile($request->file, 'chats');
                 break;
+            case 'payment':
+                $message=ChatMessage::create([
+                    'chat_id'=>$chat_id,
+                    'message'=>'Pay Now',
+                    'type'=>'payment',
+                    //'price'=>$request->price,
+                    'quantity'=>0,
+                    'direction'=>1,
+                ]);
+                //$message->saveFile($request->file, 'chats');
+                break;
+            case 'add-money':
+                $message=ChatMessage::create([
+                    'chat_id'=>$chat_id,
+                    'message'=>'Please Add '.$request->message.'Rs. to your wallet',
+                    'type'=>'add-money',
+                    //'price'=>$request->price,
+                    'quantity'=>0,
+                    'direction'=>1,
+                ]);
+                //$message->saveFile($request->file, 'chats');
+                break;
         }
 
         //send notification
@@ -112,6 +134,8 @@ class ChatMessageController extends Controller
             ->where('seen_at', null)
             ->where('direction', 0)
             ->update(['seen_at'=>date('Y-m-d H:i:s')]);
+
+
 
         return [
 

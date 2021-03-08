@@ -86,4 +86,8 @@ class Shoppr extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Chat', 'shoppr_id');
     }
 
+    public function locations(){
+        $this->belongsToMany('App\Models\WorkLocations', 'shoppr_id','location_id');
+    }
+
 }

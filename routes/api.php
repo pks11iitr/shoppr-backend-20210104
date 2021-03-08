@@ -29,11 +29,9 @@ $api->post('fb-login', 'MobileApps\Auth\LoginController@facebookLogin');
 $api->post('gmail-login', 'MobileApps\Auth\LoginController@gmailLogin');
 //test comment again
 
-
-$api->get('configurations', 'MobileApps\ConfigurationController@getFilters');
-
 $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
+      $api->get('logout', 'MobileApps\Auth\LoginController@logout');
 
 //    $api->get('get-options', 'MobileApps\ProfileController@getOptions');
 //    $api->post('basic-info', 'MobileApps\ProfileController@updateBasicInfo');
@@ -41,8 +39,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 //    $api->post('personal-details', 'MobileApps\ProfileController@updatePersonalInfo');
 //    $api->post('about', 'MobileApps\ProfileController@updateAboutMe');
 
-    $api->get('home', 'MobileApps\HomeController@home');
-    $api->get('profile-details/{id}', 'MobileApps\ProfileController@details');
+    //$api->get('home', 'MobileApps\HomeController@home');
+    //$api->get('profile-details/{id}', 'MobileApps\ProfileController@details');
 //    $api->get('my-matches', 'MobileApps\ProfileController@findMatches');
 
     $api->get('chats', 'MobileApps\Api\ChatController@chathistory');
@@ -91,11 +89,13 @@ $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
 $api->post('recharge','MobileApps\Api\WalletController@addMoney');
 $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
 $api->get('notifications', 'MobileApps\Api\NotificationController@index');
+$api->post('check-availability', 'MobileApps\Api\AvailableLocationController@checkServiceAvailability');
 
 //shoppr APIs
 $api->group(['prefix' => 'shoppr'], function ($api) {
 
     //$api->post('login', 'MobileApps\Auth\LoginController@login');
+
     $api->post('login-with-otp', 'MobileApps\ShopprApp\Auth\LoginController@loginWithOtp');
     $api->post('register', 'MobileApps\ShopprApp\Auth\RegisterController@register');
 //$api->post('forgot', 'MobileApps\Auth\ForgotPasswordController@forgot');
@@ -109,6 +109,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
     $api->group(['middleware' => ['shoppr-api-auth']], function ($api) {
 
+        $api->get('logout', 'MobileApps\ShopprApp\Auth\LoginController@logout');
         $api->get('profile', 'MobileApps\ShopprApp\ProfileController@getProfile');
 
 
@@ -133,6 +134,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('deliver-order/{order_id}', 'MobileApps\ShopprApp\OrderController@deliverOrder');
 
         $api->post('commission-history', 'MobileApps\ShopprApp\WalletController@commissions');
+        $api->post('time-history', 'MobileApps\ShopprApp\WalletController@kmCommissions');
 
         $api->get('profile-status', 'MobileApps\ShopprApp\ProfileController@getProfileCompletionStatus');
 
@@ -152,7 +154,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
     });
 
     $api->get('notifications', 'MobileApps\ShopprApp\NotificationController@index');
-
-
+    $api->get('available-locations', 'MobileApps\Api\AvailableLocationController@locations');
 
 });
+
+$api->get('available-locations', 'MobileApps\Api\AvailableLocationController@locations');

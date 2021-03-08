@@ -27,9 +27,22 @@ class SettingController extends Controller
     public function update(Request $request,$id){
         $request->validate([
             'name'=>'required',
-            'value'=>'required',
+            //'value'=>'required',
         ]);
         $data = Settings::findOrFail($id);
+
+        if($request->name=='Free delivery Dates'){
+            if($request->from_date && $request->to_date){
+                $date=$request->from_date .'***'. $request->to_date;
+                $data->value=$date;
+                $data->save();
+                return redirect()->route('setting.list')->with('success', 'Setting has been updated');
+            }else{
+                return redirect()->back()->with('error', 'Please enter dates');
+            }
+        }else{
+
+        }
 
         if($data->update($request->only('name','value')))
         {
@@ -40,8 +53,8 @@ class SettingController extends Controller
     }
 
 
-    public function delete(Request $request, $id){
-        Story::where('id', $id)->delete();
-        return redirect()->back()->with('success', 'News has been deleted');
-    }
+//    public function delete(Request $request, $id){
+//        Story::where('id', $id)->delete();
+//        return redirect()->back()->with('success', 'News has been deleted');
+//    }
 }

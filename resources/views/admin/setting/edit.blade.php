@@ -41,12 +41,44 @@
                                                 <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$data->name}}">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Value</label>
-                                                <input type="number" name="value" class="form-control" id="exampleInputEmail1" placeholder="Enter value" value="{{$data->value}}">
+                                        @if($data->name=='Free delivery Dates')
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">From Date</label>
+                                                    <input type="date" name="from_date" class="form-control" id="exampleInputEmail1" value="{{explode('***', $data->value )[0]}}" placeholder="Start Date">
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">To Date</label>
+                                                    <input type="date" name="to_date" class="form-control" id="exampleInputEmail1" value="{{explode('***', $data->value )[1]}}" placeholder="End Date">
+                                                </div>
+                                            </div>
+                                        @elseif($data->name=='First Delivery Free')
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Value</label>
+                                                    <select name="value" class="form-control">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @elseif($data->name=='Commission' || $data->name=='Per Km Charge')
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Value</label>
+                                                    <input type="number" name="value" class="form-control" id="exampleInputEmail1" value="{{$data->value}}" placeholder="End Date" min="0.1">
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Value</label>
+                                                    <input type="number" name="value" class="form-control" id="exampleInputEmail1" value="{{$data->value}}" placeholder="End Date">
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
