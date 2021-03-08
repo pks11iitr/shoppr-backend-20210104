@@ -190,6 +190,13 @@
                             <p>Checkin Checkout</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('notification.create')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Notifications</p>
+                        </a>
+                    </li>
                    {{-- <li class="nav-item">
                         <a href="{{route('news.list')}}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>

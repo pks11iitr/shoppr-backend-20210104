@@ -56,6 +56,13 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="card-header">
+                                <div class="row">
+                                    <b>Checkins Total: {{$checkin_count}} /  Checkout Total: {{$checkout_count}}</b>
+                                </div>
+                            </div>
+
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">

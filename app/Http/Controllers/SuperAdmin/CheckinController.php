@@ -31,6 +31,14 @@ class CheckinController extends Controller
             return $this->export($checkins);
 
         $checkins =$checkins->orderBy('id', 'desc')->paginate(60);
+        $checkin_count=0;
+        $checkout_count=0;
+        foreach($checkins as $check){
+            if($check->type=='checkin')
+                $checkin_count=$checkin_count+1;
+            if($check->type=='checkout')
+                $checkout_count++;
+        }
 
         $attendences=[];
 
@@ -44,7 +52,7 @@ class CheckinController extends Controller
 
         $riders = Shoppr::active()->get();
 
-        return view('admin.checkin.view',['attendences'=>$attendences,'riders'=>$riders, 'checkins'=>$checkins]);
+        return view('admin.checkin.view',['attendences'=>$attendences,'riders'=>$riders, 'checkins'=>$checkins, 'checkin_count'=>$checkin_count, 'checkout_count'=>$checkout_count]);
     }
 
     public function export($checkins)
