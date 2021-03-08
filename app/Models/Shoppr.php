@@ -19,7 +19,7 @@ class Shoppr extends Authenticatable implements JWTSubject
 
     protected $table='shoppers';
 
-    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image','address','password','pan_card'.'sendbird_token','front_aadhaar_card','front_dl_no','account_no','ifsc_code','account_holder','bank_name','form_step','state','city','back_aadhaar_card','back_dl_no'];
+    protected $fillable = ['mobile', 'name', 'status', 'lat','lang', 'isactive','location', 'notification_token','image','address','password','pan_card'.'sendbird_token','front_aadhaar_card','front_dl_no','account_no','ifsc_code','account_holder','bank_name','form_step','state','city','back_aadhaar_card','back_dl_no','pay_per_km','pay_commission','pay_delivery'];
 
     protected $hidden = ['deleted_at','updated_at','created_at'];
 

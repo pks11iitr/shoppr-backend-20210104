@@ -144,7 +144,45 @@
                                 <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" >
 
                             </div>
-                            <img src="{{$data->image}}" height="100" width="200">
+                            <img src="{{$data->image}}" height="100" width="100">
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Select (Pay)</label><br>
+                                <div class="form-group clearfix">
+                                    <div class="icheck-danger d-inline">
+                                        @if($data->pay_per_km==1)
+                                        <input type="checkbox" id="checkboxDanger1" name="pay_per_km" value="0" {{$data->pay_per_km==1?'checked':''}}>
+                                            <label for="checkboxDanger1" class="form-check-label">Pay Per Km</label>
+
+                                        @elseif($data->pay_per_km==0)
+                                            <input type="checkbox" id="checkboxDanger1" name="pay_per_km" value="1">
+                                        <label for="checkboxDanger1" class="form-check-label">Pay Per Km</label>
+                                        @endif
+                                    </div><br><br>
+
+                                    <div class="icheck-danger d-inline">
+                                        @if($data->pay_commission==1)
+                                        <input type="checkbox" id="checkboxDanger2" name="pay_commission" value="0" {{$data->pay_commission==1?'checked':''}}>
+                                        <label for="checkboxDanger2" class="form-check-label">Pay Commission</label>
+                                        @elseif($data->pay_commission==0)
+                                            <input type="checkbox" id="checkboxDanger2" name="pay_commission" value="1">
+                                            <label for="checkboxDanger2" class="form-check-label">Pay Commission</label>
+                                        @endif
+                                    </div><br><br>
+
+                                    <div class="icheck-danger d-inline">
+                                        @if($data->pay_delivery==1)
+                                        <input type="checkbox" id="checkboxDanger3" name="pay_delivery" value="0" {{$data->pay_delivery==1?'checked':''}}>
+                                        <label for="checkboxDanger3" class="form-check-label">Pay Delivery</label>
+                                        @elseif($data->pay_delivery==0)
+                                            <input type="checkbox" id="checkboxDanger3" name="pay_delivery" value="1">
+                                            <label for="checkboxDanger3" class="form-check-label">Pay Delivery</label>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -132,6 +132,25 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     });
 
+    Route::group(['prefix'=>'dailytravel'], function(){
+        Route::get('/','SuperAdmin\ShopprDailyTravelController@index')->name('dailytravel.list');
+        Route::get('create','SuperAdmin\ShopprDailyTravelController@create')->name('dailytravel.create');
+        Route::post('store','SuperAdmin\ShopprDailyTravelController@store')->name('dailytravel.store');
+        Route::get('edit/{id}','SuperAdmin\ShopprDailyTravelController@edit')->name('dailytravel.edit');
+        Route::post('update/{id}','SuperAdmin\ShopprDailyTravelController@update')->name('dailytravel.update');
+
+    });
+
+    Route::group(['prefix'=>'worklocation'], function(){
+        Route::get('/','SuperAdmin\WorkLocationController@index')->name('worklocation.list');
+        Route::get('create','SuperAdmin\WorkLocationController@create')->name('worklocation.create');
+        Route::post('store','SuperAdmin\WorkLocationController@store')->name('worklocation.store');
+        Route::get('edit/{id}','SuperAdmin\WorkLocationController@edit')->name('worklocation.edit');
+        Route::post('update/{id}','SuperAdmin\WorkLocationController@update')->name('worklocation.update');
+
+    });
+
+
 });
 
 require __DIR__.'/auth.php';
