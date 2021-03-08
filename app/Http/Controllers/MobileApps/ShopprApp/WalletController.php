@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\ShopprDailyTravel;
 use App\Models\ShopprWallet;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
@@ -121,6 +122,69 @@ class WalletController extends Controller
             'data' => compact('commission_transactions','delivery_charge', 'commission')
         ];
 
+    }
+
+    public function kmCommissions(Request $request){
+        $user=$request->user;
+        $historyobj=ShopprDailyTravel::where('shoppr_id', $user->id)
+            ->select('date', 'shoppr_id', 'rider_commission');
+            //->where('status', 'Delivered');
+
+        if($request->from_date){
+            $historyobj=$historyobj->where('date', '>=', $request->from_date.' 00:00:00');
+        }
+
+        if($request->to_date){
+            $historyobj=$historyobj->where('date', '<=', $request->to_date.' 23:59:59');
+        }
+
+        $historyobj=$historyobj->orderBy('id', 'desc')
+            ->get();
+
+        $history=[];
+        foreach($historyobj as $h){
+
+            if(!isset($history[date('D, M d, Y',strtotime($h->getRawOriginal('date')))])){
+                $history[date('D, M d, Y',strtotime($h->getRawOriginal('date')))]=[];
+            }
+            $history[date('D, M d, Y',strtotime($h->getRawOriginal('date')))][]=$h;
+        }
+
+        $commission_transactions=[];
+        foreach($history as $date=>$date_transactions){
+
+            $tlist=[];
+            foreach($date_transactions as $t){
+                $t->time=date('h:iA', strtotime($h->getRawOriginal('date')));
+                $tlist[]=$t;
+            }
+
+
+            $commission_transactions[]=[
+                'date'=>$date,
+                'transactions'=>$tlist,
+            ];
+        }
+
+        $historyobj=ShopprDailyTravel::where('shoppr_id', $user->id)
+            ->select('date', 'shoppr_id', 'rider_commission');
+            //->where('status', 'Delivered');
+
+        if($request->from_date){
+            $historyobj=$historyobj->where('date', '>=', $request->from_date.' 00:00:00');
+        }
+
+        if($request->to_date){
+            $historyobj=$historyobj->where('date', '<=', $request->to_date.' 23:59:59');
+        }
+
+        $total_km=$historyobj->sum('km');
+        $commission=$historyobj->sum('rider_commission');
+
+        return [
+            'status' => 'success',
+            'data' => compact('commission_transactions','total_km', 'commission')
+        ];
     }
 
 

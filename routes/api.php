@@ -133,6 +133,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('deliver-order/{order_id}', 'MobileApps\ShopprApp\OrderController@deliverOrder');
 
         $api->post('commission-history', 'MobileApps\ShopprApp\WalletController@commissions');
+        $api->post('time-history', 'MobileApps\ShopprApp\WalletController@kmCommissions');
 
         $api->get('profile-status', 'MobileApps\ShopprApp\ProfileController@getProfileCompletionStatus');
 
