@@ -48,6 +48,9 @@ class CommissionController extends Controller
             if($request->type=='export')
                 return $this->export($historyobj);
 
+            $total_commission=$historyobj->sum('rider_commission');
+            $delivery_charge=$historyobj->sum('rider_delivery_charge');
+
             $historyobj=$historyobj->orderBy('id', 'desc')
                 ->get();
 
@@ -88,7 +91,7 @@ class CommissionController extends Controller
 
             $riders = Shoppr::active()->get();
 
-            return view('admin.commission.view',['commission_transactions'=>$historyobj,'commission'=>$commission,'riders'=>$riders]);
+            return view('admin.commission.view',['commission_transactions'=>$historyobj,'commission'=>$commission,'riders'=>$riders, 'delivery_charge'=>$delivery_charge, 'total_commission'=>$total_commission]);
 
         }
 

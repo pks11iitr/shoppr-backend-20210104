@@ -62,7 +62,11 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="card-header">
+                                <div class="row">
+                                    <b>Total: {{$delivery_charge}}(Delivery Charge) + {{$total_commission}}(Total Commission) = {{$delivery_charge+$total_commission}}</b>
+                                </div>
+                            </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
@@ -72,6 +76,7 @@
                                         <th>OrderId</th>
                                         <th>Delivery Charges</th>
                                         <th>Commission Amount</th>
+                                        <th>Total</th>
                                         <th>Date</th>
                                     </tr>
                                     </thead>
@@ -82,6 +87,7 @@
                                             <td>{{$data->refid??''}}</td>
                                             <td>{{$data->rider_delivery_charge??0}}</td>
                                             <td>{{$data->rider_commission??''}}</td>
+                                            <td>{{($data->rider_commission??0)+($data->rider_delivery_charge??0)}}</td>
                                             <td>{{$data->created_at??''}}</td>
                                         </tr>
                                     @endforeach
@@ -92,6 +98,7 @@
                                         <th>OrderId</th>
                                         <th>Delivery Charge</th>
                                         <th>Commission Amount</th>
+                                        <th>Total</th>
                                         <th>Date</th>
                                     </tr>
                                     </tfoot>
