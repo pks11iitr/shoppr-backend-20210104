@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\RechargeConfirmed;
+use App\Models\Chat;
+use App\Models\ChatMessage;
 use App\Models\Notification;
 use App\Services\Notification\FCMNotification;
 use Illuminate\Queue\InteractsWithQueue;
@@ -53,5 +55,26 @@ class RechargeConfirmListner
         $user->notify(new FCMNotification($title, $message, [
             'type'=>'recharge'
         ]));
+
+        //send notification to shoppr if any
+        if(!empty($wallet->chat_id)){
+            $chat=Chat::with(['shoppr', 'customer'])->find($wallet->chat_id);
+            if(!$chat){
+                $chat->shoppr->notify(new FCMNotification('Recharge Done', $wallet->customer->name.' has made a recharge of Rs.'.$wallet->amount, [
+                    'type'=>'recharge'
+                ], 'notification_screen'));
+
+                ChatMessage::create([
+                    'chat_id'=>$wallet->chat_id,
+                    'message'=>'Wallet recharge of Rs.'.$wallet->amount.' is successful',
+                    'type'=>'recharge',
+                    //'price'=>$request->price,
+                    'quantity'=>0,
+                    'direction'=>0,
+                ]);
+
+            }
+        }
+
     }
 }
