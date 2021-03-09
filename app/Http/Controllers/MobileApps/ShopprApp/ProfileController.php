@@ -159,12 +159,13 @@ class ProfileController extends Controller
 
         $user->locations()->sync($request->locations);
         $user->work_type=$request->work_type;
-        $user->form_step=6;
+        $user->form_step=5;
         $user->save();
 
         return [
             'status'=>'success',
-            'message'=>'Locations have been updated'
+            'message'=>'Locations have been updated',
+            'form_step' => '5',
         ];
 
     }
@@ -181,12 +182,13 @@ class ProfileController extends Controller
         $user=$request->user;
 
         $user->update($request->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile'));
-        $user->form_step=5;
+        $user->form_step=4;
         $user->save();
 
         return [
             'status'=>'success',
-            'message'=>'Personal details have been updated'
+            'message'=>'Personal details have been updated',
+            'form_step' => '4',
         ];
 
 
