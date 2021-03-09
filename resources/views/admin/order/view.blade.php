@@ -106,7 +106,8 @@
                                             <td>{{$order->payment_status}}</td>
                                             <td>{{$order->payment_mode}}</td>
                                             <td>
-                                                <a href="{{route('order.details',['id'=>$order->id])}}" class="btn btn-info">Details</a>
+                                                <a href="{{route('order.details',['id'=>$order->id])}}" class="btn btn-info">Details</a><br><br>
+                                                <a href="{{route('order.chats',['id'=>$order->id])}}" class="btn btn-success">Chats</a>
                                             </td>
                                         </tr>
                                     @endforeach

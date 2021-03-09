@@ -114,6 +114,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('changeRider/{id}','SuperAdmin\OrderController@changeRider')->name('rider.change');
         Route::get('change-payment-status/{id}','SuperAdmin\OrderController@changePaymentStatus')->name('payment.status.change');
         Route::get('change-status/{id}','SuperAdmin\OrderController@changeStatus')->name('order.status.change');
+        Route::get('chats/{id}','SuperAdmin\OrderController@chats')->name('order.chats');
 
     });
 

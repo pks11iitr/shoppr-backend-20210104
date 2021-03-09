@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Exports\CheckinExport;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Order;
 use App\Models\Shoppr;
 use Illuminate\Http\Request;
@@ -105,6 +106,11 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order has been updated');
 
+    }
+
+    public function chats(Request $request,$id){
+
+        return view('admin.order.chats');
     }
 
 
