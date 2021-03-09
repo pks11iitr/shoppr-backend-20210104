@@ -93,7 +93,7 @@ class ChatMessageController extends Controller
             case 'add-money':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
-                    'message'=>'Please Add '.$request->message.'Rs. to your wallet',
+                    'message'=>'Please Add Rs.'.$request->message.' to your wallet',
                     'type'=>'add-money',
                     //'price'=>$request->price,
                     'quantity'=>0,
