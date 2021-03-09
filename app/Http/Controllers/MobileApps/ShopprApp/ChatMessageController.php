@@ -14,7 +14,7 @@ class ChatMessageController extends Controller
     public function send(Request $request, $chat_id){
 
         $request->validate([
-            'type'=>'required|in:text,audio,image,product,payment,address-request,address,review',
+            'type'=>'required|in:text,audio,image,product,payment,address-request,address,review,add-money,payment',
             'message'=>'string',
             'file'=>'file'
         ]);
