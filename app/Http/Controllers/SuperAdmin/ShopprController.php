@@ -78,11 +78,24 @@ class ShopprController extends Controller
         ]);
         $data = Shoppr::findOrFail($id);
 
+        //var_dump($request->pay_per_km);
+        //var_dump($request->pay_commission);die();
+
         if($data->update($request->only('name','lat','lang','isactive','location','status')))
         {
             if($request->image){
                 $data->saveImage($request->image, 'customers');
             }
+            $per_km = $request->pay_per_km??0;
+            $commission = $request->pay_commission??0;
+            $delivery = $request->pay_delivery??0;
+//            var_dump($delivery);die();
+//            var_dump($commission);die();
+                $data->pay_per_km=$per_km;
+                $data->pay_commission=$commission;
+                $data->pay_delivery=$delivery;
+            $data->save();
+
             return redirect()->route('shoppr.list')->with('success', 'Data has been updated');
         }
         return redirect()->back()->with('error', 'Data update failed');
