@@ -12,4 +12,9 @@ class ShopprDailyTravel extends Model
     protected $table='shoppr_daily_travel';
 
     protected $fillable=['shoppr_id', 'date', 'km'];
+
+    public function shoppr(){
+        return $this->belongsTo('App\Models\Shoppr', 'shoppr_id');
+    }
+
 }

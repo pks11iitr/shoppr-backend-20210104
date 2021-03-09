@@ -197,6 +197,20 @@
                             <p>Notifications</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('dailytravel.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Shoppr Daily Travel</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('worklocation.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Work Location</p>
+                        </a>
+                    </li>
                    {{-- <li class="nav-item">
                         <a href="{{route('news.list')}}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
