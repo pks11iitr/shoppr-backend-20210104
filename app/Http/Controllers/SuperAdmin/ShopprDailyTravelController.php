@@ -17,10 +17,10 @@ class ShopprDailyTravelController extends Controller
         //var_dump($request->fromdate);die();
 
         if(isset($request->fromdate))
-            $dailytravels = $dailytravels->where('created_at', '>=', $request->fromdate.' 00:00:00');
+            $dailytravels = $dailytravels->where('date', '>=', $request->fromdate.' 00:00:00');
 
         if(isset($request->todate))
-            $dailytravels = $dailytravels->where('created_at', '<=', $request->todate.' 23:59:59');
+            $dailytravels = $dailytravels->where('date', '<=', $request->todate.' 23:59:59');
 
         if($request->shoppr_id)
             $dailytravels=$dailytravels->where('shoppr_id', $request->shoppr_id);
