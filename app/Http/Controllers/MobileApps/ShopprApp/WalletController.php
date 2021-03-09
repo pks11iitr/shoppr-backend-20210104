@@ -127,7 +127,7 @@ class WalletController extends Controller
     public function kmCommissions(Request $request){
         $user=$request->user;
         $historyobj=ShopprDailyTravel::where('shoppr_id', $user->id)
-            ->select('date', 'shoppr_id', 'rider_commission');
+            ->select('date', 'shoppr_id', 'rider_commission', 'km');
             //->where('status', 'Delivered');
 
         if($request->from_date){
