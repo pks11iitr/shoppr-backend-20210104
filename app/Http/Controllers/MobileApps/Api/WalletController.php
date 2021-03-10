@@ -118,7 +118,7 @@ class WalletController extends Controller
             Wallet::where('user_id', $user->id)->where('iscomplete', false)->delete();
 
             //start new attempt
-            $wallet=Wallet::create(['refid'=>env('MACHINE_ID').time(), 'type'=>'Credit', 'amount_type'=>'CASH', 'amount'=>$request->amount, 'description'=>'Wallet Recharge','user_id'=>$user->id]);
+            $wallet=Wallet::create(['refid'=>env('MACHINE_ID').time(), 'type'=>'Credit', 'amount_type'=>'CASH', 'amount'=>$request->amount, 'description'=>'Wallet Recharge','user_id'=>$user->id, 'chat_id'=>$request->chat_id]);
 
             $response=$this->pay->generateorderid([
                 "amount"=>$wallet->amount*100,

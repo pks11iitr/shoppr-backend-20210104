@@ -105,6 +105,7 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
     $api->post('fb-login', 'MobileApps\ShopprApp\Auth\LoginController@facebookLogin');
     $api->post('gmail-login', 'MobileApps\ShopprApp\Auth\LoginController@gmailLogin');
     $api->get('state-list', 'MobileApps\ShopprApp\StateController@state');
+    $api->get('work-locations', 'MobileApps\ShopprApp\StateController@worklocations');
 //test comment again
 
     $api->group(['middleware' => ['shoppr-api-auth']], function ($api) {
@@ -127,6 +128,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('orders', 'MobileApps\ShopprApp\OrderController@index');
         $api->post('upload-document', 'MobileApps\ShopprApp\ProfileController@uploaddocument');
         $api->post('update-details', 'MobileApps\ShopprApp\ProfileController@bankdetails');
+        $api->post('update-work-details', 'MobileApps\ShopprApp\ProfileController@updateworklocation');
+        $api->post('update-personal-details', 'MobileApps\ShopprApp\ProfileController@updatePersonalDetails');
 
         $api->get('wallet-history', 'MobileApps\ShopprApp\WalletController@index');
         $api->get('wallet-balance', 'MobileApps\ShopprApp\WalletController@getWalletBalance');

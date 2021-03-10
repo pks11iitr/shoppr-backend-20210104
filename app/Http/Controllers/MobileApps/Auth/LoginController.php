@@ -140,6 +140,9 @@ class LoginController extends Controller
         $user=$request->user;
         $user->notification_token=null;
         $user->save();
+        return [
+            'status'=>'success'
+        ];
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\State;
+use App\Models\WorkLocations;
 use Illuminate\Http\Request;
 
 class StateController extends Controller
@@ -19,4 +20,13 @@ class StateController extends Controller
         ];
 
     }
+
+    public function worklocations(Request $request){
+        $locations=WorkLocations::active()->select('id','name')->orderBy('name','asc')->get();
+        return [
+            'status'=>'success',
+            'data'=>compact('locations')
+        ];
+    }
+
 }

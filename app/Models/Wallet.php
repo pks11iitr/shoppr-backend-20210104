@@ -10,7 +10,7 @@ class Wallet extends Model
 {
     protected $table='wallet';
 
-    protected $fillable=['refid','type','amount','description','iscomplete', 'order_id', 'order_id_response', 'payment_id', 'payment_id_response','user_id', 'amount_type','created_at'];
+    protected $fillable=['refid','type','amount','description','iscomplete', 'order_id', 'order_id_response', 'payment_id', 'payment_id_response','user_id', 'amount_type','created_at','chat_id'];
 
     protected $hidden=[ 'updated_at', 'deleted_at','iscomplete', 'order_id_response', 'payment_id', 'payment_id_response', 'order_id'];
 

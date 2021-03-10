@@ -76,4 +76,23 @@ trait DocumentUploadTrait {
         $this->back_dl_no=$path;
         $this->save();
     }
+
+    public function saveBikeFront($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->bike_front=$path;
+        $this->save();
+    }
+
+    public function saveBikeBack($file, $urlprefix){
+        $name = $file->getClientOriginalName();
+        $contents = file_get_contents($file);
+        $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
+        \Storage::put($path, $contents, 'public');
+        $this->bike_back=$path;
+        $this->save();
+    }
+
 }

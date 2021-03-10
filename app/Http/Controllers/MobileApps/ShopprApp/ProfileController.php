@@ -19,7 +19,9 @@ class ProfileController extends Controller
             'front_aadhaar_card' => 'required|image',
             'back_aadhaar_card' => 'required|image',
             'front_dl_no' => 'required|image',
-            'back_dl_no' => 'required|image'
+            'back_dl_no' => 'required|image',
+            'bike_front'=>'required|image',
+            'bike_back'=>'required|image'
         ]);
         $user = $request->user;
         if ($request->pan_card) {
@@ -38,6 +40,15 @@ class ProfileController extends Controller
         if ($request->back_dl_no) {
             $user->saveBackDlNo($request->back_dl_no, 'shopper');
         }
+
+        if($request->bike_front){
+            $user->saveBikeFront($request->bike_front, 'shopper');
+        }
+
+        if($request->bike_back){
+            $user->saveBikeBack($request->bike_back, 'shopper');
+        }
+
         $user->form_step = 2;
         if ($user->save()) {
             return [
@@ -136,6 +147,52 @@ class ProfileController extends Controller
             'notifications'=>$notifications,
             'orders'=>$orders
         ];
+    }
+
+    public function updateworklocation(Request $request){
+        $request->validate([
+            'locations'=>'array|required',
+            'work_type'=>'required|in:permanent,part-time'
+        ]);
+
+        $user=$request->user;
+
+        $user->locations()->sync($request->locations);
+        $user->work_type=$request->work_type;
+        $user->form_step=5;
+        $user->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Locations have been updated',
+            'form_step' => '5',
+        ];
+
+    }
+
+    public function updatePersonalDetails(Request $request){
+        $request->validate([
+            'permanent_address'=>'required|string',
+            'permanent_city'=>'required|integer',
+            'permanent_state'=>'required|integer',
+            'permanent_pin'=>'required|integer',
+            'secondary_mobile'=>'required|string',
+            'emergency_mobile'=>'required|string',
+        ]);
+
+        $user=$request->user;
+
+        $user->update($request->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile', 'permanent_state'));
+        $user->form_step=4;
+        $user->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Personal details have been updated',
+            'form_step' => '4',
+        ];
+
+
     }
 
 

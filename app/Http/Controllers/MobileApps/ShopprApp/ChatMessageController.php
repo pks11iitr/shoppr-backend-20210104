@@ -14,7 +14,7 @@ class ChatMessageController extends Controller
     public function send(Request $request, $chat_id){
 
         $request->validate([
-            'type'=>'required|in:text,audio,image,product,payment,address-request,address,review',
+            'type'=>'required|in:text,audio,image,product,payment,address-request,address,review,add-money,payment',
             'message'=>'string',
             'file'=>'file'
         ]);
@@ -93,7 +93,7 @@ class ChatMessageController extends Controller
             case 'add-money':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
-                    'message'=>'Please Add '.$request->message.'Rs. to your wallet',
+                    'message'=>'Please Add Rs.'.$request->message.' to your wallet',
                     'type'=>'add-money',
                     //'price'=>$request->price,
                     'quantity'=>0,
