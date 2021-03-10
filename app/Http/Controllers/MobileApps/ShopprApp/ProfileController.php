@@ -182,7 +182,7 @@ class ProfileController extends Controller
 
         $user=$request->user;
 
-        $user->update($request->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile'));
+        $user->update($request->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile', 'permanent_state'));
         $user->form_step=4;
         $user->save();
 
