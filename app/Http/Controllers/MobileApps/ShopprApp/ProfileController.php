@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\Checkin;
 use App\Models\Notification;
 use App\Models\State;
+use App\Models\WorkLocations;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -338,6 +339,49 @@ class ProfileController extends Controller
         ];
 
     }
+
+    public function getWorkInfo(Request $request){
+        $user=$request->user;
+
+        $locations=$user->locations;
+
+        $user=$user->only('work_type');
+
+        $work_locations=WorkLocations::active()->select('id','name')->orderBy('name','asc')->get();
+
+        return [
+            'status'=>'success',
+            'data'=>compact('user', 'locations','work_locations'),
+        ];
+    }
+
+
+    public function getBankInfo(Request $request){
+        $user=$request->user;
+
+        $user=$user->only('account_no', 'ifsc_code','account_holder', 'bank_name');
+
+        return [
+            'status'=>'success',
+            'data'=>compact('user')
+        ];
+    }
+
+
+    public function getPersonalInfo(Request $request){
+        $user=$request->user;
+
+        $user=$user->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile', 'permanent_state');
+
+        $states=State::with('cities')->orderBy('id','desc')->get();
+
+        return [
+            'status'=>'success',
+            'data'=>compact('user', 'states')
+        ];
+    }
+
+
 
 
 }

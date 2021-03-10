@@ -131,6 +131,9 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->post('update-work-details', 'MobileApps\ShopprApp\ProfileController@updateworklocation');
         $api->post('update-personal-details', 'MobileApps\ShopprApp\ProfileController@updatePersonalDetails');
         $api->get('get-documents', 'MobileApps\ShopprApp\ProfileController@getDocuments');
+        $api->get('get-work-info', 'MobileApps\ShopprApp\ProfileController@getWorkInfo');
+        $api->get('get-personal-info', 'MobileApps\ShopprApp\ProfileController@getPersonalInfo');
+        $api->get('get-bank-info', 'MobileApps\ShopprApp\ProfileController@getBankInfo');
         $api->post('update-documents', 'MobileApps\ShopprApp\ProfileController@updateDocument');
 
         $api->get('wallet-history', 'MobileApps\ShopprApp\WalletController@index');
