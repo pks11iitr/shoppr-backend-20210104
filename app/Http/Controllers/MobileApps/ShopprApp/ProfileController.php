@@ -173,8 +173,9 @@ class ProfileController extends Controller
     public function updatePersonalDetails(Request $request){
         $request->validate([
             'permanent_address'=>'required|string',
-            'permanent_city'=>'required|string',
-            'permanent_pin'=>'required|string',
+            'permanent_city'=>'required|integer',
+            'permanent_state'=>'required|integer',
+            'permanent_pin'=>'required|integer',
             'secondary_mobile'=>'required|string',
             'emergency_mobile'=>'required|string',
         ]);
