@@ -85,6 +85,7 @@ class OtpController extends Controller
 
                 $user->notification_token=$request->notification_token;
                 $user->status=1;
+                $user->form_step=($user->form_step??1);
                 $user->save();
 
                 return [
