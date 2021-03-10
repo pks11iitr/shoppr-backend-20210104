@@ -107,11 +107,35 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="exampleInputEmail1">Email</label>
+                                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email" value="{{$data->email}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Current Address</label>
+                                <input type="text" name="address" class="form-control" id="exampleInputEmail1" placeholder="Enter Address" value="{{$data->address}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Current City</label>
+                                <input type="text" name="city" class="form-control" id="exampleInputEmail1" placeholder="Enter City" value="{{$data->city}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Current State</label>
+                                <input type="text" name="state" class="form-control" id="exampleInputEmail1" placeholder="Enter State" value="{{$data->state}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Location</label>
-                                <select class="form-control" name="location_id" required>
+                                <select class="form-control" name="location_id">
                                     <option value="">Please Select Location</option>
                                     @foreach($locations as $location)
-                                        <option value="{{$location->id}}" {{$data->location_id==$location->id?'selected':''}}>
+                                        <option value="{{$location->id}}" {{$data->locations[0]->id==$location->id?'selected':''}}>
                                             {{$location->name}}</option>
                                     @endforeach
                                 </select>
@@ -174,7 +198,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">State</label>
+                                <label for="exampleInputEmail1">Permanent State</label>
                                 <select class="form-control" name="permanent_state" required>
                                     <option value="">Please Select State</option>
                                     @foreach($States as $State)
@@ -186,7 +210,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">City</label>
+                                <label for="exampleInputEmail1">Permanent City</label>
                                 <select class="form-control" name="permanent_city" required>
                                     <option value="{{$data->permanent_city}}">
                                         {{$data->cityname->name??''}}</option>
@@ -195,7 +219,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Pin Code</label>
+                                <label for="exampleInputEmail1">Permanent Pin Code</label>
                                 <input type="text" name="permanent_pin" class="form-control" id="exampleInputEmail1" placeholder="Enter Pin Code" value="{{$data->permanent_pin}}">
                             </div>
                         </div>
@@ -230,7 +254,7 @@
                                 <div class="form-group clearfix">
                                     <div class="icheck-danger d-inline">
                                         @if($data->pay_per_km==1)
-                                        <input type="checkbox" id="checkboxDanger1" name="pay_per_km" value="0" {{$data->pay_per_km==1?'checked':''}}>
+                                        <input type="checkbox" id="checkboxDanger1" name="pay_per_km" value="@if($data->pay_per_km==1)1@else 0 @endif" {{$data->pay_per_km==1?'checked':''}}>
                                             <label for="checkboxDanger1" class="form-check-label">Pay Per Km</label>
 
                                         @elseif($data->pay_per_km==0)
@@ -241,7 +265,7 @@
 
                                     <div class="icheck-danger d-inline">
                                         @if($data->pay_commission==1)
-                                        <input type="checkbox" id="checkboxDanger2" name="pay_commission" value="0" {{$data->pay_commission==1?'checked':''}}>
+                                        <input type="checkbox" id="checkboxDanger2" name="pay_commission" value="@if($data->pay_commission==1)1@else 0 @endif" {{$data->pay_commission==1?'checked':''}}>
                                         <label for="checkboxDanger2" class="form-check-label">Pay Commission</label>
                                         @elseif($data->pay_commission==0)
                                             <input type="checkbox" id="checkboxDanger2" name="pay_commission" value="1">
@@ -251,7 +275,7 @@
 
                                     <div class="icheck-danger d-inline">
                                         @if($data->pay_delivery==1)
-                                        <input type="checkbox" id="checkboxDanger3" name="pay_delivery" value="0" {{$data->pay_delivery==1?'checked':''}}>
+                                        <input type="checkbox" id="checkboxDanger3" name="pay_delivery" value="@if($data->pay_delivery==1)1@else 0 @endif" {{$data->pay_delivery==1?'checked':''}}>
                                         <label for="checkboxDanger3" class="form-check-label">Pay Delivery</label>
                                         @elseif($data->pay_delivery==0)
                                             <input type="checkbox" id="checkboxDanger3" name="pay_delivery" value="1">

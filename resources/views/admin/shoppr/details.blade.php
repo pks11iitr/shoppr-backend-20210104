@@ -140,6 +140,44 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
+                                        <th>Current Address Details</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>{{$shoppr->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile</td>
+                                        <td>{{$shoppr->mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>{{$shoppr->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>{{$shoppr->address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>{{$shoppr->city}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>{{$shoppr->state}}</td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
                                         <th>Permanent Address Details</th>
                                         <th></th>
                                     </tr>
@@ -159,7 +197,7 @@
                                     </tr>
                                     <tr>
                                         <td>City</td>
-                                        <td>{{$shoppr->permanent_city}}</td>
+                                        <td>{{$shoppr->cityname->name??''}}</td>
                                     </tr>
                                     <tr>
                                         <td>Pin Code</td>
@@ -167,7 +205,7 @@
                                     </tr>
                                     <tr>
                                         <td>State</td>
-                                        <td>{{$shoppr->permanent_state}}</td>
+                                        <td>{{$shoppr->statename->name??''}}</td>
                                     </tr>
 
                                     </tbody>

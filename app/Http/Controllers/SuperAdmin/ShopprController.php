@@ -64,9 +64,8 @@ class ShopprController extends Controller
     }
 
     public function edit(Request $request,$id){
-
-        $data = Shoppr::with(['cityname','state'])->findOrFail($id);
-
+        $data = Shoppr::with(['cityname','statename','locations'])->findOrFail($id);
+//       return $data->locations[0]->id;
         $States = State::active()->get();
         $locations = WorkLocation::active()->get();
 
@@ -77,7 +76,7 @@ class ShopprController extends Controller
         $request->validate([
             'isactive'=>'required',
             'name'=>'required',
-          //  'mobile'=>'required|digits:10|unique:shoppers',
+            'mobile'=>'required|digits:10|unique:shoppers',
             //'status'=>'required',
             'image'=>'image',
         ]);
@@ -86,19 +85,23 @@ class ShopprController extends Controller
         //var_dump($request->pay_per_km);
         //var_dump($request->pay_commission);die();
 
-        if($data->update($request->only('name','isactive','status','permanent_address', 'permanent_pin','permanent_city','permanent_state', 'secondary_mobile','emergency_mobile','work_type','account_no','ifsc_code','account_holder','bank_name')))
+        if($data->update($request->only('name','isactive','status','permanent_address', 'permanent_pin','permanent_city','permanent_state', 'secondary_mobile','emergency_mobile','work_type','account_no','ifsc_code','account_holder','bank_name','address','state','city','email')))
         {
             if($request->image){
                 $data->saveImage($request->image, 'customers');
             }
-            $per_km = $request->pay_per_km??0;
-            $commission = $request->pay_commission??0;
-            $delivery = $request->pay_delivery??0;
-//            var_dump($delivery);die();
-//            var_dump($commission);die();
-                $data->pay_per_km=$per_km;
-                $data->pay_commission=$commission;
-                $data->pay_delivery=$delivery;
+            if($request->location_id){
+                $data->locations()->sync($request->location_id);
+            }
+
+            $per_km = (int)$request->pay_per_km??0;
+            $commission = (int)$request->pay_commission??0;
+            $delivery = (int)$request->pay_delivery??0;
+           // var_dump($per_km);die();
+//            var_dump($per_km);die();
+            $data->pay_per_km=$per_km;
+            $data->pay_commission=$commission;
+            $data->pay_delivery=$delivery;
             $data->save();
 
             return redirect()->route('shoppr.list')->with('success', 'Data has been updated');
