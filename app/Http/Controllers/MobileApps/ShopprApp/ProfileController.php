@@ -294,5 +294,50 @@ class ProfileController extends Controller
 
     }
 
+    public function getDocuments(Request $request){
+        $user=$request->user;
+
+        $user=$user->only('pan_card','front_aadhaar_card', 'front_dl_no', 'back_aadhaar_card', 'back_dl_no', 'bike_front', 'bike_back');
+
+        return [
+            'status'=>'success',
+            'data'=>compact('user')
+        ];
+    }
+
+    public function updateDocument(Request $request){
+        $user=$request->user;
+
+        if ($request->pan_card) {
+            $user->savePanCard($request->pan_card, 'shopper');
+        }
+        if ($request->front_aadhaar_card) {
+            $user->saveFrontAadhaarCard($request->front_aadhaar_card, 'shopper');
+        }
+        if ($request->back_aadhaar_card) {
+            $user->saveBackAadhaarCard($request->back_aadhaar_card, 'shopper');
+        }
+        if ($request->front_dl_no) {
+            $user->saveFrontDlNo($request->front_dl_no, 'shopper');
+        }
+
+        if ($request->back_dl_no) {
+            $user->saveBackDlNo($request->back_dl_no, 'shopper');
+        }
+
+        if($request->bike_front){
+            $user->saveBikeFront($request->bike_front, 'shopper');
+        }
+
+        if($request->bike_back){
+            $user->saveBikeBack($request->bike_back, 'shopper');
+        }
+
+        return [
+            'status'=>'success'
+        ];
+
+    }
+
 
 }

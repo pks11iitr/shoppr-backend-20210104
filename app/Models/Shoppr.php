@@ -78,6 +78,36 @@ class Shoppr extends Authenticatable implements JWTSubject
         return Storage::url('customers/default.jpeg');
     }
 
+    public function getFrontAadhaarCardAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return Storage::url('customers/default.jpeg');
+    }
+
+    public function getBackAadhaarCardAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return Storage::url('customers/default.jpeg');
+    }
+
+    public function getFrontDlNoAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return Storage::url('customers/default.jpeg');
+    }
+
+    public function getBikeFrontAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return Storage::url('customers/default.jpeg');
+    }
+
+    public function getBikeBackAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return Storage::url('customers/default.jpeg');
+    }
+
     public function order(){
         return $this->hasMany('App\Models\Order', 'shoppr_id');
     }
