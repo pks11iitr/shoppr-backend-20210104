@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Active;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    use HasFactory;
+    use HasFactory ,Active;
     protected $table='states';
     protected $hidden = ['created_at','deleted_at','updated_at'];
 

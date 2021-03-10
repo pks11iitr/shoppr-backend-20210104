@@ -5,8 +5,11 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Exports\CustomerExport;
 use App\Exports\ShopprExport;
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Shoppr;
 use App\Models\ShopprWallet;
+use App\Models\State;
+use App\Models\WorkLocation;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -61,8 +64,13 @@ class ShopprController extends Controller
     }
 
     public function edit(Request $request,$id){
-        $data = Shoppr::findOrFail($id);
-        return view('admin.shoppr.edit',['data'=>$data]);
+
+        $data = Shoppr::with(['cityname','state'])->findOrFail($id);
+
+        $States = State::active()->get();
+        $locations = WorkLocation::active()->get();
+
+        return view('admin.shoppr.edit',['data'=>$data,'States'=>$States,'locations'=>$locations]);
     }
 
     public function update(Request $request,$id){
@@ -70,9 +78,6 @@ class ShopprController extends Controller
             'isactive'=>'required',
             'name'=>'required',
           //  'mobile'=>'required|digits:10|unique:shoppers',
-            //'location'=>'required',
-            //'lat'=>'required',
-            //'lang'=>'required',
             //'status'=>'required',
             'image'=>'image',
         ]);
@@ -81,7 +86,7 @@ class ShopprController extends Controller
         //var_dump($request->pay_per_km);
         //var_dump($request->pay_commission);die();
 
-        if($data->update($request->only('name','lat','lang','isactive','location','status')))
+        if($data->update($request->only('name','isactive','status','permanent_address', 'permanent_pin','permanent_city','permanent_state', 'secondary_mobile','emergency_mobile','work_type','account_no','ifsc_code','account_holder','bank_name')))
         {
             if($request->image){
                 $data->saveImage($request->image, 'customers');
@@ -127,6 +132,14 @@ class ShopprController extends Controller
     public function details(Request $request,$id){
         $shoppr =Shoppr::findOrFail($id);
         return view('admin.shoppr.details',['shoppr'=>$shoppr]);
+    }
+
+    public function stateAjax(Request $request){
+        $citys = City::active()
+            ->where('state_id',$request->permanent_state)
+            ->pluck("name","id");
+
+        return json_encode($citys);
     }
 }
 

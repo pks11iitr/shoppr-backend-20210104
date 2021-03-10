@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -105,7 +108,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Location</label>
-                                <input type="text" name="location" class="form-control" id="exampleInputEmail1" placeholder="Enter Location" value="{{$data->location}}">
+                                <select class="form-control" name="location_id" required>
+                                    <option value="">Please Select Location</option>
+                                    @foreach($locations as $location)
+                                        <option value="{{$location->id}}" {{$data->location_id==$location->id?'selected':''}}>
+                                            {{$location->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -117,18 +126,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                            <label for="exampleInputEmail1">Latitude</label><br>
-                                <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude" value="{{$data->lat}}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="exampleInputEmail1">Langitude</label><br>
-                              <input type="text" name="lang" class="form-control" id="exampleInputEmail1" placeholder="Enter Lang" value="{{$data->lang}}">
-                          </div>
-                        </div>
+
 {{--                        <div class="col-md-6">--}}
 {{--                            <div class="form-group">--}}
 {{--                                <label>Is Status</label>--}}
@@ -145,6 +143,85 @@
 
                             </div>
                             <img src="{{$data->image}}" height="100" width="100">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Work Time</label>
+                                <select class="form-control" name="work_type" required>
+                                    <option  selected="selected" value="permanent" {{$data->work_type=='permanent'?'selected':''}}>Permanent</option>
+                                    <option value="part-time" {{$data->work_type=='part-time'?'selected':''}}>Part-Time</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Secondary Mobile </label>
+                                <input type="number" maxlength="10" minlength="10" name="secondary_mobile" class="form-control" id="exampleInputEmail1" placeholder="Enter Secondary Mobile" value="{{$data->secondary_mobile}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Emergency Mobile </label>
+                                <input type="number" maxlength="10" minlength="10" name="emergency_mobile" class="form-control" id="exampleInputEmail1" placeholder="Enter Emergency Mobile" value="{{$data->emergency_mobile}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Permanent Address</label>
+                                <input type="text" name="permanent_address" class="form-control" id="exampleInputEmail1" placeholder="Enter Permanent Address" value="{{$data->permanent_address}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">State</label>
+                                <select class="form-control" name="permanent_state" required>
+                                    <option value="">Please Select State</option>
+                                    @foreach($States as $State)
+                                        <option value="{{$State->id}}" {{$data->permanent_state==$State->id?'selected':''}}>
+                                            {{$State->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">City</label>
+                                <select class="form-control" name="permanent_city" required>
+                                    <option value="{{$data->permanent_city}}">
+                                        {{$data->cityname->name??''}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Pin Code</label>
+                                <input type="text" name="permanent_pin" class="form-control" id="exampleInputEmail1" placeholder="Enter Pin Code" value="{{$data->permanent_pin}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Account Holder Name</label>
+                                <input type="text" name="account_holder" class="form-control" id="exampleInputEmail1" placeholder="Enter Account Holder Name" value="{{$data->account_holder}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Bank Name</label>
+                                <input type="text" name="bank_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Bank Name" value="{{$data->bank_name}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Account No</label>
+                                <input type="text" name="account_no" class="form-control" id="exampleInputEmail1" placeholder="Enter Account No" value="{{$data->account_no}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">IFSC Code</label>
+                                <input type="text" name="ifsc_code" class="form-control" id="exampleInputEmail1" placeholder="Enter IFSC Code" value="{{$data->ifsc_code}}">
+                            </div>
                         </div>
 
                         <div class="col-md-6">
@@ -203,4 +280,37 @@
 </div>
 <!-- ./wrapper -->
 @endsection
+
+@section('scripts')
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select[name="permanent_state"]').on('change', function() {
+                var stateID = $(this).val();
+                var data ='permanent_state='+stateID;
+                //alert(stateID)
+                if(stateID) {
+                    $.ajax({
+                        url: "{{route('shoppr.state.ajax')}}",
+                        type: "GET",
+                        dataType: "json",
+                        data: data,
+                        success:function(data) {
+
+                            $('select[name="permanent_city"]').empty();
+                            $.each(data, function(key, value) {
+                                $('select[name="permanent_city"]').append('<option value="'+ key +'">'+ value +'</option>');
+                            });
+                        }
+                    });
+                }else{
+                    $('select[name="permanent_city"]').empty();
+                }
+            });
+        });
+    </script>
+
+@endsection
+
+
 

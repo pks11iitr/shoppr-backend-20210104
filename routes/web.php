@@ -40,6 +40,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::get('history-list/{id}','SuperAdmin\ShopprController@transaction')->name('shoppr.tranaction.list');
         Route::get('details/{id}','SuperAdmin\ShopprController@details')->name('shoppr.details');
         Route::get('export{id}','SuperAdmin\ShopprController@export')->name('shoppr.export');
+        Route::get('state-city','SuperAdmin\ShopprController@stateAjax')->name('shoppr.state.ajax');
 
     });
 
