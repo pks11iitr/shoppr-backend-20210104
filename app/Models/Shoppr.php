@@ -95,6 +95,11 @@ class Shoppr extends Authenticatable implements JWTSubject
             return Storage::url($value);
         return Storage::url('customers/default.jpeg');
     }
+    public function getBackDlNoAttribute($value){
+        if($value)
+            return Storage::url($value);
+        return Storage::url('customers/default.jpeg');
+    }
 
     public function getBikeFrontAttribute($value){
         if($value)

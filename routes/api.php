@@ -130,6 +130,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->post('update-details', 'MobileApps\ShopprApp\ProfileController@bankdetails');
         $api->post('update-work-details', 'MobileApps\ShopprApp\ProfileController@updateworklocation');
         $api->post('update-personal-details', 'MobileApps\ShopprApp\ProfileController@updatePersonalDetails');
+        $api->get('get-documents', 'MobileApps\ShopprApp\ProfileController@getDocuments');
+        $api->post('update-documents', 'MobileApps\ShopprApp\ProfileController@updateDocument');
 
         $api->get('wallet-history', 'MobileApps\ShopprApp\WalletController@index');
         $api->get('wallet-balance', 'MobileApps\ShopprApp\WalletController@getWalletBalance');
@@ -152,6 +154,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->get('attendences', 'MobileApps\ShopprApp\ProfileController@attendencelist');
 
         $api->get('reviews', 'MobileApps\ShopprApp\ReviewController@index');
+
+
 
 
     });
