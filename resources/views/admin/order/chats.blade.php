@@ -96,7 +96,6 @@
                                                             @elseif($chat->type=='image')
                                                                 <image src="{{$chat->file_path}}">
                                                     @endif
-                                                    @endif
                                                 </div>
                                                 <!-- /.direct-chat-text -->
                                             </div>
