@@ -153,7 +153,7 @@ class ProfileController extends Controller
     public function updateworklocation(Request $request){
         $request->validate([
             'locations'=>'array|required',
-            'work_type'=>'required|in:permanent,part-time'
+            'work_type'=>'required|in:0,1'
         ]);
 
         $user=$request->user;
