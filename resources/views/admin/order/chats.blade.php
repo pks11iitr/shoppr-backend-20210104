@@ -27,23 +27,23 @@
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <div class="card direct-chat direct-chat-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Direct Chat</h3>
+{{--                                <div class="card direct-chat direct-chat-primary">--}}
+{{--                                    <div class="card-header">--}}
+{{--                                        <h3 class="card-title">Direct Chat</h3>--}}
 
-                                        <div class="card-tools">
-                                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Contacts"
-                                                    data-widget="chat-pane-toggle">
-                                                <i class="fas fa-comments"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+{{--                                        <div class="card-tools">--}}
+{{--                                            <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>--}}
+{{--                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">--}}
+{{--                                                <i class="fas fa-minus"></i>--}}
+{{--                                            </button>--}}
+{{--                                            <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Contacts"--}}
+{{--                                                    data-widget="chat-pane-toggle">--}}
+{{--                                                <i class="fas fa-comments"></i>--}}
+{{--                                            </button>--}}
+{{--                                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <!-- /.card-header -->
                                     <div class="card-body">
                                         <!-- Conversations are loaded here -->
@@ -63,8 +63,13 @@
                                                 <div class="direct-chat-text">
                                                     @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
                                                         {{$chat->message}}
-                                                    @else
-                                                        []
+                                                    @elseif($chat->type=='product')
+                                                        <image src="{{$chat->file_path}}" height="100" width="100">
+                                                            <span>{{$chat->message}}: Rs.{{$chat->price}}/{{$chat->quantity}}</span>
+                                                    @elseif($chat->type=='audio')
+                                                                Audio Message: <a href="{{$chat->file_path}}"></a>
+                                                    @elseif($chat->type=='image')
+                                                        <image src="{{$chat->file_path}}">
                                                     @endif
                                                 </div>
                                                 <!-- /.direct-chat-text -->
@@ -83,8 +88,14 @@
                                                 <div class="direct-chat-text">
                                                     @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
                                                     {{$chat->message}}
-                                                    @else
-                                                        []
+                                                    @elseif($chat->type=='product')
+                                                        <image src="{{$chat->file_path}}" height="100" width="100">
+                                                            <span>{{$chat->message}}: Rs.{{$chat->price}}/{{$chat->quantity}}</span>
+                                                            @elseif($chat->type=='audio')
+                                                                Audio Message: <a href="{{$chat->file_path}}"></a>
+                                                            @elseif($chat->type=='image')
+                                                                <image src="{{$chat->file_path}}">
+                                                    @endif
                                                     @endif
                                                 </div>
                                                 <!-- /.direct-chat-text -->
