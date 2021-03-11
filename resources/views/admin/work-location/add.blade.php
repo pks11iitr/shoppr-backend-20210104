@@ -42,6 +42,15 @@
                                                 <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Is Active</label>
+                                                <select class="form-control" name="isactive" required>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>

@@ -58,6 +58,7 @@
                                     <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Isactive</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -65,6 +66,11 @@
                                     @foreach($worklocations as $worklocation)
                                         <tr>
                                             <td>{{$worklocation->name}}</td>
+                                            <td>
+                                                @if($worklocation->isactive==1){{'Yes'}}
+                                                @else{{'No'}}
+                                                @endif
+                                            </td>
 
                                             <td><a href="{{route('worklocation.edit',['id'=>$worklocation->id])}}" class="btn btn-success">Edit</a>&nbsp;
 

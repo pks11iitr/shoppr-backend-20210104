@@ -12,5 +12,5 @@ class WorkLocation extends Model
 
     protected $table='work_locations';
 
-    protected $fillable=['name'];
+    protected $fillable=['name','isactive'];
 }

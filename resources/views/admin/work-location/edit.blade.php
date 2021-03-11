@@ -42,6 +42,15 @@
                                                 <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" value="{{$worklocation->name}}">
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Is Active</label>
+                                                <select class="form-control" name="isactive" required>
+                                                    <option  selected="selected" value="1" {{$worklocation->isactive==1?'selected':''}}>Yes</option>
+                                                    <option value="0" {{$worklocation->isactive==0?'selected':''}}>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
