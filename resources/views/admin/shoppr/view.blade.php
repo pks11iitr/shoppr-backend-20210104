@@ -64,10 +64,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Mobile</th>
-                    <th>Location</th>
-                    <th>Latitude</th>
-                   <th>Langitude</th>
-                   <th>Image</th>
+                    <th>Image</th>
                     <th>Isactive</th>
                     <th>Wallet Balance</th>
                    <th>Action</th>
@@ -79,9 +76,6 @@
 					  <td>SHOPPR{{$data->id}}</td>
 					  <td>{{$data->name}}</td>
 					  <td>{{$data->mobile}}</td>
-					  <td>{{$data->location}}</td>
-					  <td>{{$data->lat}}</td>
-					  <td>{{$data->lang}}</td>
                       <td><img src="{{$data->image}}" height="80px" width="80px"/></td>
                        <td>
                         @if($data->isactive==1){{'Yes'}}
@@ -100,14 +94,12 @@
                   </tbody>
                   <tfoot>
                   <tr>
+                      <th>ID</th>
                       <th>Name</th>
                       <th>Mobile</th>
-                      <th>Location</th>
-                      <th>Latitude</th>
-                      <th>Langitude</th>
                       <th>Image</th>
                       <th>Isactive</th>
-                      <th>Status</th>
+                      <th>Wallet Balance</th>
                       <th>Action</th>
                   </tr>
                   </tfoot>

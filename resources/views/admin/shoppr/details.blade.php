@@ -97,6 +97,122 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Bike Document Details</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Bike Front</td>
+                                        <td>
+                                            @if($shoppr->bike_front != null)
+                                                <a href="{{$shoppr->bike_front}}">
+                                                    <button type="button" target="_blank" class="btn btn-warning">View</button>
+                                                </a>
+                                            @else
+                                                No Image
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bike Back</td>
+                                        <td>
+                                            @if($shoppr->bike_back != null)
+                                                <a href="{{$shoppr->bike_back}}">
+                                                    <button type="button" target="_blank" class="btn btn-warning">View</button>
+                                                </a>
+                                            @else
+                                                No Image
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Current Address Details</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>{{$shoppr->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile</td>
+                                        <td>{{$shoppr->mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>{{$shoppr->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>{{$shoppr->address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>{{$shoppr->city}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>{{$shoppr->state}}</td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Permanent Address Details</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Secondary Mobile</td>
+                                        <td>{{$shoppr->secondary_mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Emergency Mobile</td>
+                                        <td>{{$shoppr->emergency_mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>{{$shoppr->permanent_address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>{{$shoppr->cityname->name??''}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pin Code</td>
+                                        <td>{{$shoppr->permanent_pin}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>{{$shoppr->statename->name??''}}</td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
