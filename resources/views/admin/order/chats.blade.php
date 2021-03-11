@@ -3,21 +3,21 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Chats</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">DataTables</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
+{{--        <section class="content-header">--}}
+{{--            <div class="container-fluid">--}}
+{{--                <div class="row mb-2">--}}
+{{--                    <div class="col-sm-6">--}}
+{{--                        <h1>Chats</h1>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-sm-6">--}}
+{{--                        <ol class="breadcrumb float-sm-right">--}}
+{{--                            <li class="breadcrumb-item"><a href="#">Home</a></li>--}}
+{{--                            <li class="breadcrumb-item active">DataTables</li>--}}
+{{--                        </ol>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div><!-- /.container-fluid -->--}}
+{{--        </section>--}}
 
         <!-- Main content -->
         <section class="content">
@@ -48,12 +48,11 @@
                                     <div class="card-body">
                                         <!-- Conversations are loaded here -->
                                         <div class="direct-chat-messages">
-                                            <!-- Message. Default to the left -->
-                                            {{--                                            @foreach($chats as $chat)--}}
-                                            {{--                                                @if($chat->type=='user')--}}
+                                            @foreach($chats as $chat)
+                                                @if($chat->direction==0)
                                             <div class="direct-chat-msg">
                                                 <div class="direct-chat-infos clearfix">
-                                                    <span class="direct-chat-name float-left">user</span>
+                                                    <span class="direct-chat-name float-left">{{$chat->chat->customer->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-right">
 {{--                                                        {{$chats->created_at}}--}}
                                                     </span>
@@ -66,14 +65,10 @@
                                                 </div>
                                                 <!-- /.direct-chat-text -->
                                             </div>
-                                            {{--                                                @endif--}}
-                                        <!-- /.direct-chat-msg -->
-
-                                            <!-- Message to the right -->
-                                            {{--                                                @if($chat->type=='admin')--}}
+                                                @else
                                             <div class="direct-chat-msg right">
                                                 <div class="direct-chat-infos clearfix">
-                                                    <span class="direct-chat-name float-right">matchon</span>
+                                                    <span class="direct-chat-name float-right">{{$chat->chat->shoppr->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-left">
 {{--                                                        {{$chats->created_at}}--}}
                                                     </span>
@@ -86,10 +81,7 @@
                                                 </div>
                                                 <!-- /.direct-chat-text -->
                                             </div>
-                                        {{--                                            @endif--}}
-                                        {{--                                        @endforeach--}}
-                                        <!-- /.direct-chat-msg -->
-
+                                                @endif
                                         </div>
                                         <!--/.direct-chat-messages-->
                                     </div>

@@ -6,6 +6,7 @@ use App\Exports\CheckinExport;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
+use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Shoppr;
 use Illuminate\Http\Request;
@@ -110,7 +111,11 @@ class OrderController extends Controller
 
     public function chats(Request $request,$id){
 
-        return view('admin.order.chats');
+
+        $chats=ChatMessage::with(['chat.customer','chat.shoppr'])->where('order_id', $id)
+            ->orderBy('id', 'asc')
+            ->get();
+        return view('admin.order.chats', compact('chats'));
     }
 
 
