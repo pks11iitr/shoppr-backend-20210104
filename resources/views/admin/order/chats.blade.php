@@ -54,7 +54,7 @@
                                                 <div class="direct-chat-infos clearfix">
                                                     <span class="direct-chat-name float-left">{{$chat->chat->customer->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-right">
-                                                        {{date('d-m-Y h:a',strtotime($chats->created_at))}}
+                                                        {{date('d-m-Y h:a',strtotime($chat->created_at))}}
                                                     </span>
                                                 </div>
                                                 <!-- /.direct-chat-infos -->
@@ -62,7 +62,7 @@
                                                 <!-- /.direct-chat-img -->
                                                 <div class="direct-chat-text">
                                                     @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
-                                                        {{$chats->message}}
+                                                        {{$chat->message}}
                                                     @else
                                                         []
                                                     @endif
@@ -74,7 +74,7 @@
                                                 <div class="direct-chat-infos clearfix">
                                                     <span class="direct-chat-name float-right">{{$chat->chat->shoppr->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-left">
-                                                        {{date('d-m-Y h:a',strtotime($chats->created_at))}}
+                                                        {{date('d-m-Y h:a',strtotime($chat->created_at))}}
                                                     </span>
                                                 </div>
                                                 <!-- /.direct-chat-infos -->
@@ -82,7 +82,7 @@
                                                 <!-- /.direct-chat-img -->
                                                 <div class="direct-chat-text">
                                                     @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
-                                                    {{$chats->message}}
+                                                    {{$chat->message}}
                                                     @else
                                                         []
                                                     @endif
