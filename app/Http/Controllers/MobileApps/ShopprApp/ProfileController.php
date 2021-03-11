@@ -371,10 +371,12 @@ class ProfileController extends Controller
     public function getPersonalInfo(Request $request){
         $user=$request->user;
 
-        $user=$user->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile', 'permanent_state');
 
         $city=$user->city;
         $state=$user->state;
+
+        $user=$user->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile', 'permanent_state');
+
 
         $states=State::with('cities')->orderBy('id','desc')->get();
 
