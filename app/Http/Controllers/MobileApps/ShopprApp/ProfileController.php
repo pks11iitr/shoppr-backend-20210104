@@ -373,11 +373,14 @@ class ProfileController extends Controller
 
         $user=$user->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile', 'permanent_state');
 
+        $city=$user->city;
+        $state=$user->state;
+
         $states=State::with('cities')->orderBy('id','desc')->get();
 
         return [
             'status'=>'success',
-            'data'=>compact('user', 'states')
+            'data'=>compact('user', 'states','city','state')
         ];
     }
 
