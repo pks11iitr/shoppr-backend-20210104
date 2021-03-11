@@ -54,14 +54,18 @@
                                                 <div class="direct-chat-infos clearfix">
                                                     <span class="direct-chat-name float-left">{{$chat->chat->customer->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-right">
-{{--                                                        {{$chats->created_at}}--}}
+                                                        {{date('d-m-Y h:a',strtotime($chats->created_at))}}
                                                     </span>
                                                 </div>
                                                 <!-- /.direct-chat-infos -->
-                                                <img class="direct-chat-img" src="{{asset('admin-theme/img/user1-128x128.jpg')}}" alt="message user image">
+                                                <img class="direct-chat-img" src="{{$chat->chat->customer->image??''}}" alt="message user image">
                                                 <!-- /.direct-chat-img -->
                                                 <div class="direct-chat-text">
-{{--                                                    {{$chats->message}}--}}
+                                                    @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
+                                                        {{$chats->message}}
+                                                    @else
+                                                        []
+                                                    @endif
                                                 </div>
                                                 <!-- /.direct-chat-text -->
                                             </div>
@@ -70,14 +74,18 @@
                                                 <div class="direct-chat-infos clearfix">
                                                     <span class="direct-chat-name float-right">{{$chat->chat->shoppr->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-left">
-{{--                                                        {{$chats->created_at}}--}}
+                                                        {{date('d-m-Y h:a',strtotime($chats->created_at))}}
                                                     </span>
                                                 </div>
                                                 <!-- /.direct-chat-infos -->
-                                                <img class="direct-chat-img" src="{{asset('admin-theme/img/user1-128x128.jpg')}}" alt="message user image">
+                                                <img class="direct-chat-img" src="{{$chat->chat->shoppr->image??''}}" alt="message user image">
                                                 <!-- /.direct-chat-img -->
                                                 <div class="direct-chat-text">
-{{--                                                    {{$chats->message}}--}}
+                                                    @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
+                                                    {{$chats->message}}
+                                                    @else
+                                                        []
+                                                    @endif
                                                 </div>
                                                 <!-- /.direct-chat-text -->
                                             </div>
@@ -87,17 +95,6 @@
                                         <!--/.direct-chat-messages-->
                                     </div>
                                     <!-- /.card-body -->
-                                    <div class="card-footer">
-                                        <form  role="form" onsubmit=" return verifySubmit()" enctype="multipart/form-data" >
-                                            <div class="input-group">
-                                                <input type="text" id="message" name="message" placeholder="Type message ..." class="form-control">
-                                                <span class="input-group-append">
-                      <button type="submit" class="btn btn-primary" >Send</button>
-                    </span>
-                                            </div>
-                                            <input type="hidden" id="compid" name="compid" placeholder="Type Message ..." class="form-control" value="">
-                                        </form>
-                                    </div>
                                     <!-- /.card-footer-->
                                 </div>
                                 <!--/.direct-chat -->
