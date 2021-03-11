@@ -82,6 +82,7 @@
                                                 <!-- /.direct-chat-text -->
                                             </div>
                                                 @endif
+                                            @endif
                                         </div>
                                         <!--/.direct-chat-messages-->
                                     </div>
