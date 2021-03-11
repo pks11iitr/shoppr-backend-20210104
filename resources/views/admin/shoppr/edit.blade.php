@@ -172,8 +172,8 @@
                             <div class="form-group">
                                 <label>Work Time</label>
                                 <select class="form-control" name="work_type" required>
-                                    <option  selected="selected" value="permanent" {{$data->work_type=='permanent'?'selected':''}}>Permanent</option>
-                                    <option value="part-time" {{$data->work_type=='part-time'?'selected':''}}>Part-Time</option>
+                                    <option  selected="selected" value="1" {{$data->work_type==1?'selected':''}}>Full Time</option>
+                                    <option value="0" {{$data->work_type==0?'selected':''}}>Part-Time</option>
                                 </select>
                             </div>
                         </div>
