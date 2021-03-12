@@ -232,7 +232,7 @@ class ChatMessageController extends Controller
         $message->order->ratings=$request->ratings;
         $message->order->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Ratings Given', 'Customer rated your service', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',
