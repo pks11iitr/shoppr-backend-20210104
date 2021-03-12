@@ -59,7 +59,7 @@ class RechargeConfirmListner
         //send notification to shoppr if any
         if(!empty($wallet->chat_id)){
             $chat=Chat::with(['shoppr', 'customer'])->find($wallet->chat_id);
-            if(!$chat){
+            if($chat){
                 $chat->shoppr->notify(new FCMNotification('Recharge Done', $wallet->customer->name.' has made a recharge of Rs.'.$wallet->amount, [
                     'type'=>'recharge'
                 ], 'notification_screen'));
