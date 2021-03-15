@@ -54,7 +54,7 @@
                                                 <div class="direct-chat-infos clearfix">
                                                     <span class="direct-chat-name float-left">{{$chat->chat->customer->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-right">
-                                                        {{date('d-m-Y h:a',strtotime($chat->created_at))}}
+                                                        {{date('d-m-Y h:i a',strtotime($chat->created_at))}}
                                                     </span>
                                                 </div>
                                                 <!-- /.direct-chat-infos -->
@@ -65,7 +65,7 @@
                                                         {{$chat->message}}
                                                     @elseif($chat->type=='product')
                                                         <image src="{{$chat->file_path}}" height="100" width="100">
-                                                            <span>{{$chat->message}}: Rs.{{$chat->price}}/{{$chat->quantity}}</span>
+                                                            <span>{{$chat->message}}: Rs.{{$chat->price}}/{{$chat->quantity}} Status:{{$chat->status}}</span>
                                                     @elseif($chat->type=='audio')
                                                                 Audio Message: <a href="{{$chat->file_path}}">View</a>
                                                     @elseif($chat->type=='image')
@@ -79,7 +79,7 @@
                                                 <div class="direct-chat-infos clearfix">
                                                     <span class="direct-chat-name float-right">{{$chat->chat->shoppr->name??''}}</span>
                                                     <span class="direct-chat-timestamp float-left">
-                                                        {{date('d-m-Y h:a',strtotime($chat->created_at))}}
+                                                        {{date('d-m-Y h:ia',strtotime($chat->created_at))}}
                                                     </span>
                                                 </div>
                                                 <!-- /.direct-chat-infos -->
