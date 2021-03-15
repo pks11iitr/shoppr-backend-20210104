@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <a href="{{url()->current()}}?type=export">Download</a>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 {{--        <section class="content-header">--}}
@@ -25,6 +24,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        <a class='btn btn-info' href="{{url()->current()}}?type=export">Download</a>
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body" style="height:500px">
