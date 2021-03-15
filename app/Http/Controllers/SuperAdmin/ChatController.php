@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Exports\ChatDetailExport;
+use App\Exports\ChatExport;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
@@ -44,7 +46,7 @@ class ChatController extends Controller
 
         if($request->type=='export'){
             $chats=$chats->get();
-            return Excel::download(new OrderExport($chats), 'orders.xlsx');
+            return Excel::download(new ChatExport($chats), 'chats.xlsx');
         }
 
         $chats=$chats->paginate(20);
@@ -60,6 +62,9 @@ class ChatController extends Controller
         $chats=ChatMessage::with(['chat.customer','chat.shoppr'])->where('chat_id', $id)
             ->orderBy('id', 'asc')
             ->get();
+        if($request->type=='export')
+            return Excel::download(new ChatDetailExport($chats), 'chats-details.xlsx');
+
         return view('admin.chat.chats', compact('chats'));
     }
 }
