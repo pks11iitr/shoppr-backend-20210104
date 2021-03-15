@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
+    <a href="{{url()->current()}}?type=export">Download</a>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 {{--        <section class="content-header">--}}
