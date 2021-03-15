@@ -58,6 +58,7 @@
                                     <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -65,6 +66,7 @@
                                     @foreach($worklocations as $worklocation)
                                         <tr>
                                             <td>{{$worklocation->name}}</td>
+                                            <td>{{$worklocation->isactive?'Active':'Inactive'}}</td>
 
                                             <td><a href="{{route('worklocation.edit',['id'=>$worklocation->id])}}" class="btn btn-success">Edit</a>&nbsp;
 

@@ -22,11 +22,12 @@ class WorkLocationController extends Controller
     public function store(Request $request){
         $request->validate([
             'name'=>'required',
+            'isactive'=>'required'
         ]);
 
         if($worklocation=WorkLocation::create([
             'name'=>$request->name,
-
+            'isactive'=>$request->isactive
         ]))
         {
             return redirect()->route('worklocation.list')->with('success', 'Work Location has been created');
@@ -44,13 +45,14 @@ class WorkLocationController extends Controller
     public function update(Request $request,$id){
         $request->validate([
             'name'=>'required',
+            'isactive'=>'required'
         ]);
 
         $worklocation =WorkLocation::findOrFail($id);
 
         if($worklocation->update([
             'name'=>$request->name,
-
+            'isactive'=>$request->isactive
         ]))
         {
             return redirect()->route('worklocation.list')->with('success', 'Work Location has been updated');
