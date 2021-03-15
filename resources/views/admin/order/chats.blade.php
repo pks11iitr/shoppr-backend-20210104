@@ -61,7 +61,7 @@
                                                 <img class="direct-chat-img" src="{{$chat->chat->customer->image??''}}" alt="message user image">
                                                 <!-- /.direct-chat-img -->
                                                 <div class="direct-chat-text">
-                                                    @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
+                                                    @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment', 'paid', 'track']))
                                                         {{$chat->message}}
                                                     @elseif($chat->type=='product')
                                                         <image src="{{$chat->file_path}}" height="100" width="100">
@@ -86,7 +86,7 @@
                                                 <img class="direct-chat-img" src="{{$chat->chat->shoppr->image??''}}" alt="message user image">
                                                 <!-- /.direct-chat-img -->
                                                 <div class="direct-chat-text">
-                                                    @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment']))
+                                                    @if(in_array($chat->type, ['text','address-request', 'rating','address', 'total', 'add-money', 'recharge', 'payment', 'paid', 'track']))
                                                     {{$chat->message}}
                                                     @elseif($chat->type=='product')
                                                         <image src="{{$chat->file_path}}" height="100" width="100">
