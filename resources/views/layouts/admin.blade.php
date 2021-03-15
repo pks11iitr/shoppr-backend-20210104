@@ -185,6 +185,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{route('chat.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Chats</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{route('checkin.list')}}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
                             <p>Checkin Checkout</p>
