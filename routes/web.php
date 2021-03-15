@@ -115,8 +115,13 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('changeRider/{id}','SuperAdmin\OrderController@changeRider')->name('rider.change');
         Route::get('change-payment-status/{id}','SuperAdmin\OrderController@changePaymentStatus')->name('payment.status.change');
         Route::get('change-status/{id}','SuperAdmin\OrderController@changeStatus')->name('order.status.change');
-        Route::get('chats/{id}','SuperAdmin\OrderController@chats')->name('order.chats');
 
+    });
+
+
+    Route::group(['prefix'=>'chats'], function(){
+        Route::get('/','SuperAdmin\ChatController@index')->name('chat.list');
+        Route::get('chats/{id}','SuperAdmin\ChatController@chats')->name('order.chats.details');
     });
 
     Route::group(['prefix'=>'checkin'], function(){
@@ -151,6 +156,9 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::post('update/{id}','SuperAdmin\WorkLocationController@update')->name('worklocation.update');
 
     });
+
+
+
 
 
     Route::group(['prefix'=>'notification'], function(){

@@ -109,14 +109,5 @@ class OrderController extends Controller
 
     }
 
-    public function chats(Request $request,$id){
-
-
-        $chats=ChatMessage::with(['chat.customer','chat.shoppr'])->where('order_id', $id)
-            ->orderBy('id', 'asc')
-            ->get();
-        return view('admin.order.chats', compact('chats'));
-    }
-
 
 }
