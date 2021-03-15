@@ -26,7 +26,7 @@
                     <div class="col-12">
                         <div class="card">
                             <!-- /.card-header -->
-                            <div class="card-body">
+                            <div class="card-body" style="height:1000px">
 {{--                                <div class="card direct-chat direct-chat-primary">--}}
 {{--                                    <div class="card-header">--}}
 {{--                                        <h3 class="card-title">Direct Chat</h3>--}}
@@ -45,9 +45,9 @@
 {{--                                        </div>--}}
 {{--                                    </div>--}}
                                     <!-- /.card-header -->
-                                    <div class="card-body">
+
                                         <!-- Conversations are loaded here -->
-                                        <div class="direct-chat-messages">
+                                        <div class="direct-chat-messages" style="height:950px">
                                             @foreach($chats as $chat)
                                                 @if($chat->direction==0)
                                             <div class="direct-chat-msg">
@@ -103,7 +103,7 @@
                                             @endforeach
                                         </div>
                                         <!--/.direct-chat-messages-->
-                                    </div>
+
                                     <!-- /.card-body -->
                                     <!-- /.card-footer-->
                                 </div>
