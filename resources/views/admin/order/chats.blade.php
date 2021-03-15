@@ -90,7 +90,7 @@
                                                     {{$chat->message}}
                                                     @elseif($chat->type=='product')
                                                         <image src="{{$chat->file_path}}" height="100" width="100">
-                                                            <span>{{$chat->message}}: Rs.{{$chat->price}}/{{$chat->quantity}}</span>
+                                                            <span>{{$chat->message}}: Rs.{{$chat->price}}/{{$chat->quantity}} Status:{{$chat->status}}</span>
                                                             @elseif($chat->type=='audio')
                                                                 Audio Message: <a href="{{$chat->file_path}}">View</a>
                                                             @elseif($chat->type=='image')
