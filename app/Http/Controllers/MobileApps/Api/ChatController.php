@@ -9,6 +9,7 @@ use App\Models\ChatMessage;
 use App\Models\Notification;
 use App\Models\Shoppr;
 use App\Models\Store;
+use App\Models\WorkLocations;
 use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,6 +77,18 @@ class ChatController extends Controller
 //        }else{
 //            $shoppr=Shoppr::find(1);
 //        }
+        if(!$request->location)
+            return [
+                'status'=>'failed',
+                'message'=>'Please provide location'
+            ];
+
+        $location=WorkLocations::extractlocationfromjson($request->location);
+        if(!$location)
+            return [
+                'status'=>'failed',
+                'message'=>'Location is not servicable'
+            ];
 
         $chat=Chat::create([
             'customer_id'=>$user->id,
@@ -119,7 +132,7 @@ class ChatController extends Controller
             'chat_id'=>$chat->id
         ]);
 
-        dispatch(new SendNewOrderNotification($chat->id));
+        dispatch(new SendNewOrderNotification($chat->id, $location));
 
         return [
             'status'=>'success',
@@ -141,7 +154,28 @@ class ChatController extends Controller
                 'message'=>'Shoppr has been assigned'
             ];
 
-        $shoppr=Shoppr::active()->inRandomOrder()->first();
+        if(!$request->location)
+            return [
+                'status'=>'failed',
+                'message'=>'Please provide location'
+            ];
+
+        $location=WorkLocations::extractlocationfromjson($request->location);
+        if(!$location)
+            return [
+                'status'=>'failed',
+                'message'=>'Location is not servicable'
+            ];
+
+        $shoppr=Shoppr::active()->whereHas('locations', function($query) {
+            $query->where('name', $this->location->name);
+        })->inRandomOrder()->first();
+
+        if(!$shoppr)
+            return [
+                'status'=>'failed',
+                'message'=>'Currently no shoppr is available'
+            ];
 
         $chat->shoppr_id=$shoppr->id;
         $chat->save();
