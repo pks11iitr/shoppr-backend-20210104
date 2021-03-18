@@ -76,7 +76,7 @@ class ShopprController extends Controller
         $request->validate([
             'isactive'=>'required',
             'name'=>'required',
-            'mobile'=>'required|digits:10|unique:shoppers',
+            'mobile'=>'required|digits:10|unique:shoppers,mobile,'.$id,
             //'status'=>'required',
             'image'=>'image',
         ]);
