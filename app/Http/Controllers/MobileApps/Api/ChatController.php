@@ -168,8 +168,8 @@ class ChatController extends Controller
                 'message'=>'Location is not servicable'
             ];
 
-        $shoppr=Shoppr::active()->whereHas('locations', function($query) {
-            $query->where('name', $this->location->name);
+        $shoppr=Shoppr::active()->whereHas('locations', function($query)use($location) {
+            $query->where('name', $location->name);
         })->inRandomOrder()->first();
 
         if(!$shoppr)
