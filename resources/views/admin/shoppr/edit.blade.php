@@ -135,7 +135,7 @@
                                 <select class="form-control" name="location_id">
                                     <option value="">Please Select Location</option>
                                     @foreach($locations as $location)
-                                        <option value="{{$location->id}}" {{$data->locations[0]->id==$location->id?'selected':''}}>
+                                        <option value="{{$location->id}}" {{($data->locations[0]->id??'')==$location->id?'selected':''}}>
                                             {{$location->name}}</option>
                                     @endforeach
                                 </select>
