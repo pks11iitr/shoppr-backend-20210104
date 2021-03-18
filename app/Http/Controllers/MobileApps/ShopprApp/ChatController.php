@@ -124,29 +124,42 @@ class ChatController extends Controller
 
         if ($user->isactive) {
 
-            $chats = Chat::with(['customer' => function ($user) {
-                $user->select('id', 'name', 'image');
-            }])
-                ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
-                    $rejectedby->where('rejected_chats.shoppr_id', $user->id);
-                })
-                ->where('shoppr_id', 0) // unassigned chats
-                ->orderBy('id', 'desc')
-                ->get();
+            $shopper_locations_obj=$user->locations;
+            $shopper_locations=[];
+            foreach($shopper_locations_obj as $l){
+                $shopper_locations[]=$l->id;
+            }
 
             $userchats = [];
-            foreach ($chats as $userchat) {
 
-                $distance = distance($userchat->lat, $userchat->lang, $user->lat, $user->lang);
+            if(!empty($shopper_locations)){
+                $chats = Chat::with(['customer' => function ($user) {
+                    $user->select('id', 'name', 'image');
+                }])
+                    ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
+                        $rejectedby->where('rejected_chats.shoppr_id', $user->id);
+                    })
+                    ->where('shoppr_id', 0) // unassigned chats
+                    ->orderBy('id', 'desc')
+                    ->whereIn('location_id', $shopper_locations)
+                    ->get();
 
-                $userchats[] = [
-                    'id' => $userchat->id,
-                    'name' => $userchat->customer->name,
-                    'image' => $userchat->customer->image,
-                    'distance' => round($distance, 2),
-                    'date' => $userchat->created_at
-                ];
+
+                foreach ($chats as $userchat) {
+
+                    $distance = distance($userchat->lat, $userchat->lang, $user->lat, $user->lang);
+
+                    $userchats[] = [
+                        'id' => $userchat->id,
+                        'name' => $userchat->customer->name,
+                        'image' => $userchat->customer->image,
+                        'distance' => round($distance, 2),
+                        'date' => $userchat->created_at
+                    ];
+                }
             }
+
+
         }
         else
         {

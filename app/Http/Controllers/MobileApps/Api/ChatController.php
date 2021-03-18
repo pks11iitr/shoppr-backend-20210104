@@ -94,7 +94,8 @@ class ChatController extends Controller
             'customer_id'=>$user->id,
             'shoppr_id'=>0,
             'lat'=>$request->lat,
-            'lang'=>$request->lang
+            'lang'=>$request->lang,
+            'location_id'=>$location->id
         ]);
 
         if($store_id){
