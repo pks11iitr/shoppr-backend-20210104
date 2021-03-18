@@ -67,7 +67,7 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->post('register-as-merchant','MobileApps\Api\PartnerController@register');
     $api->get('view-application','MobileApps\Api\PartnerController@view');
 
-    $api->get('auto-assign/{chat_id}', 'MobileApps\Api\ChatController@autoassign');
+    $api->post('auto-assign/{chat_id}', 'MobileApps\Api\ChatController@autoassign');
 
     $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
     $api->post('recharge','MobileApps\Api\WalletController@addMoney');
