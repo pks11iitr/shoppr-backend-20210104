@@ -64,6 +64,7 @@
                                         <th>Date</th>
                                         <th>Rating</th>
                                         <th>Review</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -72,6 +73,7 @@
                                             <td>{{date('d/m/Y', strtotime($review->getRawOriginal('created_at')))}}</td>
                                             <td>{{$review->quantity}}</td>
                                             <td>{{$review->message}}</td>
+                                            <td><a href="{{route('order.details', ['id'=>$review->order_id])}}">View Order</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
