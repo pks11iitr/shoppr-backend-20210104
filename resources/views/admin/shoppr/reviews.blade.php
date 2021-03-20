@@ -76,15 +76,7 @@
                                     @endforeach
                                     </tbody>
                                     <tfoot>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Mobile</th>
-                                        <th>Image</th>
-                                        <th>Isactive</th>
-                                        <th>Wallet Balance</th>
-                                        <th>Action</th>
-                                    </tr>
+
                                     </tfoot>
                                 </table>
                             </div>
