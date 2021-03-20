@@ -154,7 +154,7 @@ class ChatController extends Controller
                         'name' => $userchat->customer->name,
                         'image' => $userchat->customer->image,
                         'distance' => round($distance, 2),
-                        'date' => $userchat->created_at
+                        'date' => date('d M', strtotime($userchat->getRawOriginal('created_at')))
                     ];
                 }
             }
