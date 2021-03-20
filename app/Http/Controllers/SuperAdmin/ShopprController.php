@@ -57,7 +57,14 @@ class ShopprController extends Controller
 
         if($data=Shoppr::create($request->only('name','lat','lang','isactive','mobile','location','status')))
         {
-            $data->saveImage($request->image, 'customers');
+            if($request->image){
+                $data->saveImage($request->image, 'customers');
+            }
+
+            if($request->location_id){
+                $data->locations()->sync($request->location_id);
+            }
+
             return redirect()->route('shoppr.list')->with('success', 'Data has been created');
         }
         return redirect()->back()->with('error', 'Data create failed');
