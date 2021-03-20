@@ -40,8 +40,8 @@ class StoreController extends Controller
 
     public function create(Request $request){
         $categories=Category::active()->get();
-        $worklocation=WorkLocations::active()->get();
-        return view('admin.store.add', compact('categories', 'worklocation'));
+        $worklocations=WorkLocations::active()->get();
+        return view('admin.store.add', compact('categories', 'worklocations'));
     }
 
     public function store(Request $request){
@@ -73,7 +73,8 @@ class StoreController extends Controller
     public function edit(Request $request,$id){
         $data = Store::with('images')->findOrFail($id);
         $categories=Category::active()->get();
-        return view('admin.store.edit',['data'=>$data, 'categories'=>$categories]);
+        $worklocations=WorkLocations::active()->get();
+        return view('admin.store.edit',['data'=>$data, 'categories'=>$categories, 'worklocations'=>$worklocations]);
     }
 
     public function update(Request $request,$id){
