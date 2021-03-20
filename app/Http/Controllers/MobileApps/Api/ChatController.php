@@ -58,7 +58,7 @@ class ChatController extends Controller
                 'name'=>$userchat->shoppr->name,
                 'image'=>$userchat->shoppr->image,
                 'chat'=>$messagelist[$userchat->id]->message??('['.$messagelist[$userchat->id]->type.']'),
-                'date'=>$messagelist[$userchat->id]->created_at
+                'date'=>date('d M', strtotime($messagelist[$userchat->id]->getRawOriginal('created_at'))),
             ];
         }
 
