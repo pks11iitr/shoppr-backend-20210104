@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <label>Select Location</label>
                                 <select class="form-control" name="location_id" required>
-                                    @foreach($woklocations as $location)
+                                    @foreach($worklocations as $location)
                                     <option value="{{$location->id}}">{{$location->name}}</option>
                                     @endforeach
                                 </select>
