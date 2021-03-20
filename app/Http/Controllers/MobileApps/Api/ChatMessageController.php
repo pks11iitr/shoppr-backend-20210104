@@ -236,7 +236,7 @@ class ChatMessageController extends Controller
 
         return [
             'status'=>'success',
-            'message'=>'Ratings has been submitted'
+            'message'=>'Ratings have been submitted'
         ];
     }
 

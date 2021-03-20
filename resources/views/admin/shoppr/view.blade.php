@@ -88,6 +88,7 @@
                       <td>
                           <a href="{{route('shoppr.edit',['id'=>$data->id])}}" class="btn btn-success">Edit</a><br><br>
                           <a href="{{route('shoppr.details',['id'=>$data->id])}}" class="btn btn-info">Details</a>
+                          <a href="{{route('shoppr.reviews',['id'=>$data->id])}}" class="btn btn-info">Reviews</a>
                       </td>
                  </tr>
                  @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Exports\CustomerExport;
 use App\Exports\ShopprExport;
 use App\Http\Controllers\Controller;
+use App\Models\ChatMessage;
 use App\Models\City;
 use App\Models\Shoppr;
 use App\Models\ShopprWallet;
@@ -151,6 +152,17 @@ class ShopprController extends Controller
             ->pluck("name","id");
 
         return json_encode($citys);
+    }
+
+    public function reviews(Request $request, $id){
+
+        $reviews=ChatMessage::whereHas('chat', function($chat)use($id){
+            $chat->where('shoppr_id', $id);
+        })->where('chatmessages.type', 'rating')
+            ->orderBy('chatmessages.id', 'desc')
+            ->paginate(10);
+
+        return view('admin.shoppr.reviews', compact('reviews'));
     }
 }
 
