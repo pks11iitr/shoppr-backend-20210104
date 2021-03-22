@@ -37,18 +37,13 @@ class HomeController extends Controller
             ->where('seen_at', null)
             ->count();
 
-       if($shopper[0]['shopper_count']??''){
-           return [
-               'status'=>'success',
-               'message'=>'success',
-               'data'=>compact('shopper', 'notifications')
-           ];
-       }else{
-           return [
-               'status'=>'failed',
-               'message'=>'No Record Found'
-           ];
-       }
+
+       return [
+           'status'=>'success',
+           'message'=>'success',
+           'data'=>compact('shopper', 'notifications')
+       ];
+
 
     }
 }
