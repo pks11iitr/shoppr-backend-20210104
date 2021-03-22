@@ -14,17 +14,17 @@ class HomeController extends Controller
     public function index(Request $request){
         $user=auth()->guard('customerapi')->user();
         $location=WorkLocations::extractlocationfromjson($request->location);
-        if(!$location)
-            return [
-                'status'=>'failed',
-                'message'=>'Location is not servicable'
-            ];
+//        if(!$location)
+//            return [
+//                'status'=>'failed',
+//                'message'=>'Location is not servicable'
+//            ];
 
 //       $shopper= Shoppr::groupBy('location')->select(DB::raw('count(*) as shoppr_count, location'))->where('isactive',1)->get();
 
         $shopprs=Shoppr::active()
             ->whereHas('locations', function($query)use($location) {
-                $query->where('name', $location->name);
+                $query->where('name', $location->name??0);
             })->count();
 
         $shopper[0]=[
