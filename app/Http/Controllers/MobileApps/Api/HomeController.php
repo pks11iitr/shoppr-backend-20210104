@@ -27,7 +27,7 @@ class HomeController extends Controller
                 $query->where('name', $location->name);
             })->count();
 
-        $shopper=[
+        $shopper[0]=[
             'shopper_count'=>$shopprs??0,
             'location'=>''
         ];
