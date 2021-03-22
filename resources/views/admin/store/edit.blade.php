@@ -106,7 +106,7 @@
                                 <label>Select Location</label>
                                 <select class="form-control" name="location_id" required>
                                     @foreach($worklocations as $location)
-                                        <option value="{{$location->id}}">{{$location->name}}</option>
+                                        <option value="{{$location->id}}" @if($location->id==$data->location_id){{'selected'}}@endif>{{$location->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
