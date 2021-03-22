@@ -17,7 +17,7 @@ class WorkLocations extends Model
 
     public static function extractlocationfromjson($json){
         $json=json_decode($json, true);
-        if(count($json)>=4){
+        if($json && count($json)>=4){
             $json=array_reverse($json);
             $locality1=$json[3]['value']??'';
             $locality2=$json[4]['value']??'';
