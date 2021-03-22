@@ -37,7 +37,7 @@ class HomeController extends Controller
             ->where('seen_at', null)
             ->count();
 
-       if($shopper['shopper_count']){
+       if($shopper[0]['shopper_count']??''){
            return [
                'status'=>'success',
                'message'=>'success',
