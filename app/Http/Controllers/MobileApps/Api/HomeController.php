@@ -28,7 +28,7 @@ class HomeController extends Controller
             })->count();
 
         $shopper[0]=[
-            'shopper_count'=>$shopprs??0,
+            'shoppr_count'=>$shopprs??0,
             'location'=>''
         ];
 
