@@ -20,7 +20,13 @@ class ShopperTrackController extends Controller
 
             'status'=>'success',
             'data'=>[
-                'customer'=>$chat->customer,
+                'customer'=>[
+                    'id'=>$chat->customer->id,
+                    'name'=>$chat->customer->name,
+                    'mobile'=>$chat->customer->mobile,
+                    'lat'=>$chat->lat,
+                    'lang'=>$chat->lang,
+                ],
                 'shoppr'=>$chat->shoppr
             ]
 
