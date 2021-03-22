@@ -33,8 +33,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
     $api->get('logout', 'MobileApps\Auth\LoginController@logout');
 
-    $api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
-    $api->get('stores-list', 'MobileApps\Api\StoreController@index');
+    $api->post('shoppr-list', 'MobileApps\Api\HomeController@index');
+    $api->post('stores-list', 'MobileApps\Api\StoreController@index');
     $api->get('get-profile', 'MobileApps\Api\ProfileController@index');
     $api->post('update-profile', 'MobileApps\Api\ProfileController@update');
     $api->get('store-details/{id}', 'MobileApps\Api\StoreController@details');
