@@ -14,8 +14,8 @@ class VersionController extends Controller
         return [
             'status'=>'success',
             'data'=>[
-                'android_version'=>$version->android_version??'',
-                'ios_version'=>$version->ios_version??''
+                'customer_version'=>$version->customer_version??'',
+                'rider_version'=>$version->rider_version??''
             ]
         ];
     }
