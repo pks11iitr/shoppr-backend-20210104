@@ -18,6 +18,8 @@ $api->get('chat', function(){
     return view('chat');
 });
 
+$api->get('app-version', 'MobileApps\Api\VersionController@version');
+
 //$api->post('login', 'MobileApps\Auth\LoginController@login');
 $api->post('login-with-otp', 'MobileApps\Auth\LoginController@loginWithOtp');
 $api->post('register', 'MobileApps\Auth\RegisterController@register');
