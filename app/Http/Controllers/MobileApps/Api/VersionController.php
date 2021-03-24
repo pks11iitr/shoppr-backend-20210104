@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppVersion;
 use Illuminate\Http\Request;
 
 class VersionController extends Controller
