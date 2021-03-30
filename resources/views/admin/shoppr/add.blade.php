@@ -48,12 +48,12 @@
                                 <input type="number" name="mobile" maxlength="10" minlength="10" class="form-control" id="exampleInputEmail1" placeholder="Enter Mobile">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Location</label>
-                                <input type="text" name="location" class="form-control" id="exampleInputEmail1" placeholder="Enter location">
-                            </div>
-                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="exampleInputEmail1">Location</label>--}}
+{{--                                <input type="text" name="location" class="form-control" id="exampleInputEmail1" placeholder="Enter location">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Is Active</label>
@@ -63,19 +63,28 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="display:none">
                             <div class="form-group">
                                <label for="exampleInputEmail1">Latitude</label><br>
-                                    <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude">
+                                    <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude" >
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="display:none">
                           <div class="form-group">
                            <label for="exampleInputEmail1">Langitude</label><br>
                               <input type="text" name="lang" class="form-control" id="exampleInputEmail1" placeholder="Enter Langitude">
                           </div>
                         </div>
-
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select Location</label>
+                                <select class="form-control" name="location_id[]" required multiple>
+                                    @foreach($worklocations as $location)
+                                    <option value="{{$location->id}}">{{$location->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                        {{-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Is Status</label>
@@ -87,7 +96,7 @@
                         </div>--}}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputFile">File input</label>
+                                <label for="exampleInputFile">Shoppr Image</label>
                                 <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" required>
                             </div>
                         </div>

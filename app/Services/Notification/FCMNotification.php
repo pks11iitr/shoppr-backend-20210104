@@ -33,7 +33,8 @@ class FCMNotification extends Notification
             ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
                 ->setTitle($this->title)
                 ->setBody($this->body)
-                ->setImage('https://images.freekaamaal.com/common-images/fkm-logo.png'))
+            //    ->setImage('https://images.freekaamaal.com/common-images/fkm-logo.png')
+            )
             ->setAndroid(
                 AndroidConfig::create()
                     ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))

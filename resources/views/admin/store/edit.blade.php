@@ -89,17 +89,27 @@
                                 <textarea class="form-control" name="about_store" rows="3">  {{$data->about_store}}</textarea>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="display: none">
                             <div class="form-group">
                             <label for="exampleInputEmail1">Latitude</label><br>
                                 <input type="text" name="lat" class="form-control" id="exampleInputEmail1" placeholder="Enter Latitude" value="{{$data->lat}}">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="display: none">
                           <div class="form-group">
                             <label for="exampleInputEmail1">Langitude</label><br>
                               <input type="text" name="lang" class="form-control" id="exampleInputEmail1" placeholder="Enter Lang" value="{{$data->lang}}">
                           </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select Location</label>
+                                <select class="form-control" name="location_id" required>
+                                    @foreach($worklocations as $location)
+                                        <option value="{{$location->id}}" @if($location->id==$data->location_id){{'selected'}}@endif>{{$location->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">

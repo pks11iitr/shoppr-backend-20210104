@@ -9,6 +9,7 @@ use App\Models\ChatMessage;
 use App\Models\Notification;
 use App\Models\Shoppr;
 use App\Models\Store;
+use App\Models\WorkLocations;
 use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +58,7 @@ class ChatController extends Controller
                 'name'=>$userchat->shoppr->name,
                 'image'=>$userchat->shoppr->image,
                 'chat'=>$messagelist[$userchat->id]->message??('['.$messagelist[$userchat->id]->type.']'),
-                'date'=>$messagelist[$userchat->id]->created_at
+                'date'=>date('d M', strtotime($messagelist[$userchat->id]->getRawOriginal('created_at'))),
             ];
         }
 
@@ -76,12 +77,25 @@ class ChatController extends Controller
 //        }else{
 //            $shoppr=Shoppr::find(1);
 //        }
+        if(!$request->location)
+            return [
+                'status'=>'failed',
+                'message'=>'Please provide location'
+            ];
+
+        $location=WorkLocations::extractlocationfromjson($request->location);
+        if(!$location)
+            return [
+                'status'=>'failed',
+                'message'=>'Location is not servicable'
+            ];
 
         $chat=Chat::create([
             'customer_id'=>$user->id,
             'shoppr_id'=>0,
             'lat'=>$request->lat,
-            'lang'=>$request->lang
+            'lang'=>$request->lang,
+            'location_id'=>$location->id
         ]);
 
         if($store_id){
@@ -119,7 +133,7 @@ class ChatController extends Controller
             'chat_id'=>$chat->id
         ]);
 
-        dispatch(new SendNewOrderNotification($chat->id));
+        dispatch(new SendNewOrderNotification($chat->id, $location));
 
         return [
             'status'=>'success',
@@ -141,7 +155,28 @@ class ChatController extends Controller
                 'message'=>'Shoppr has been assigned'
             ];
 
-        $shoppr=Shoppr::active()->inRandomOrder()->first();
+        if(!$request->location)
+            return [
+                'status'=>'failed',
+                'message'=>'Please provide location'
+            ];
+
+        $location=WorkLocations::extractlocationfromjson($request->location);
+        if(!$location)
+            return [
+                'status'=>'failed',
+                'message'=>'Location is not servicable'
+            ];
+
+        $shoppr=Shoppr::active()->whereHas('locations', function($query)use($location) {
+            $query->where('name', $location->name);
+        })->inRandomOrder()->first();
+
+        if(!$shoppr)
+            return [
+                'status'=>'failed',
+                'message'=>'Currently no shoppr is available'
+            ];
 
         $chat->shoppr_id=$shoppr->id;
         $chat->save();

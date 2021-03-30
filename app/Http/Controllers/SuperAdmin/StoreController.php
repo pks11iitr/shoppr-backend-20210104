@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Document;
 use App\Models\Store;
+use App\Models\WorkLocations;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -39,7 +40,8 @@ class StoreController extends Controller
 
     public function create(Request $request){
         $categories=Category::active()->get();
-        return view('admin.store.add', compact('categories'));
+        $worklocations=WorkLocations::active()->get();
+        return view('admin.store.add', compact('categories', 'worklocations'));
     }
 
     public function store(Request $request){
@@ -52,13 +54,14 @@ class StoreController extends Controller
             'opening_time'=>'required',
             'address'=>'string',
             'about_store'=>'string',
-            'lat'=>'required',
-            'lang'=>'required',
+            //'lat'=>'required',
+            //'lang'=>'required',
             'is_sale'=>'required',
             'image'=>'required|image',
+            'location_id'=>'required|integer'
         ]);
 
-        if($data=Store::create($request->only('store_name','store_type','email','lat','lang','isactive','mobile','opening_time','address','about_store','is_sale')))
+        if($data=Store::create($request->only('store_name','store_type','email','lat','lang','isactive','mobile','opening_time','address','about_store','is_sale', 'location_id')))
         {
             $data->saveImage($request->image, 'stores');
             $data->categories()->sync($request->categories);
@@ -70,7 +73,8 @@ class StoreController extends Controller
     public function edit(Request $request,$id){
         $data = Store::with('images')->findOrFail($id);
         $categories=Category::active()->get();
-        return view('admin.store.edit',['data'=>$data, 'categories'=>$categories]);
+        $worklocations=WorkLocations::active()->get();
+        return view('admin.store.edit',['data'=>$data, 'categories'=>$categories, 'worklocations'=>$worklocations]);
     }
 
     public function update(Request $request,$id){
@@ -83,14 +87,15 @@ class StoreController extends Controller
             'opening_time'=>'required',
             'address'=>'string',
             'about_store'=>'string',
-            'lat'=>'required',
-            'lang'=>'required',
+            //'lat'=>'required',
+            //'lang'=>'required',
             'is_sale'=>'required',
             'image'=>'image',
+            'location_id'=>'required|integer'
         ]);
         $data = Store::with('categories')->findOrFail($id);
 
-        if($data->update($request->only('store_name','store_type','email','lat','lang','isactive','mobile','opening_time','address','about_store','is_sale')))
+        if($data->update($request->only('store_name','store_type','email','lat','lang','isactive','mobile','opening_time','address','about_store','is_sale', 'location_id')))
         {
             $data->categories()->sync($request->categories);
             if($request->image){

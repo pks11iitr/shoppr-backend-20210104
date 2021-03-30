@@ -18,6 +18,8 @@ $api->get('chat', function(){
     return view('chat');
 });
 
+$api->get('app-version', 'MobileApps\Api\VersionController@version');
+
 //$api->post('login', 'MobileApps\Auth\LoginController@login');
 $api->post('login-with-otp', 'MobileApps\Auth\LoginController@loginWithOtp');
 $api->post('register', 'MobileApps\Auth\RegisterController@register');
@@ -31,20 +33,17 @@ $api->post('gmail-login', 'MobileApps\Auth\LoginController@gmailLogin');
 
 $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 
-      $api->get('logout', 'MobileApps\Auth\LoginController@logout');
+    $api->get('logout', 'MobileApps\Auth\LoginController@logout');
 
-//    $api->get('get-options', 'MobileApps\ProfileController@getOptions');
-//    $api->post('basic-info', 'MobileApps\ProfileController@updateBasicInfo');
-//    $api->post('work-education', 'MobileApps\ProfileController@updateWorkInfo');
-//    $api->post('personal-details', 'MobileApps\ProfileController@updatePersonalInfo');
-//    $api->post('about', 'MobileApps\ProfileController@updateAboutMe');
-
-    //$api->get('home', 'MobileApps\HomeController@home');
-    //$api->get('profile-details/{id}', 'MobileApps\ProfileController@details');
-//    $api->get('my-matches', 'MobileApps\ProfileController@findMatches');
+    $api->post('shoppr-list', 'MobileApps\Api\HomeController@index');
+    $api->post('stores-list', 'MobileApps\Api\StoreController@index');
+    $api->get('get-profile', 'MobileApps\Api\ProfileController@index');
+    $api->post('update-profile', 'MobileApps\Api\ProfileController@update');
+    $api->get('store-details/{id}', 'MobileApps\Api\StoreController@details');
+    $api->get('customer-balance', 'MobileApps\Api\WalletController@userbalance');
 
     $api->get('chats', 'MobileApps\Api\ChatController@chathistory');
-    $api->get('start-chat/{store_id?}', 'MobileApps\Api\ChatController@startChat');
+    $api->post('start-chat/{store_id?}', 'MobileApps\Api\ChatController@startChat');
 
     $api->get('chat-messages/{id}', 'MobileApps\Api\ChatMessageController@chatDetails');
     $api->post('send-message/{id}', 'MobileApps\Api\ChatMessageController@send');
@@ -70,7 +69,11 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->post('register-as-merchant','MobileApps\Api\PartnerController@register');
     $api->get('view-application','MobileApps\Api\PartnerController@view');
 
-    $api->get('auto-assign/{chat_id}', 'MobileApps\Api\ChatController@autoassign');
+    $api->post('auto-assign/{chat_id}', 'MobileApps\Api\ChatController@autoassign');
+
+    $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
+    $api->post('recharge','MobileApps\Api\WalletController@addMoney');
+
 
 });
 
@@ -79,14 +82,7 @@ $api->get('download-invoice/{order_refid}', ['as'=>'download.invoice', 'uses'=>'
 
 $api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
 
-$api->get('shoppr-list', 'MobileApps\Api\HomeController@index');
-$api->get('stores-list', 'MobileApps\Api\StoreController@index');
-$api->get('get-profile', 'MobileApps\Api\ProfileController@index');
-$api->post('update-profile', 'MobileApps\Api\ProfileController@update');
-$api->get('store-details/{id}', 'MobileApps\Api\StoreController@details');
-$api->get('customer-balance', 'MobileApps\Api\WalletController@userbalance');
-$api->get('wallet-history', 'MobileApps\Api\WalletController@index');
-$api->post('recharge','MobileApps\Api\WalletController@addMoney');
+
 $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
 $api->get('notifications', 'MobileApps\Api\NotificationController@index');
 $api->post('check-availability', 'MobileApps\Api\AvailableLocationController@checkServiceAvailability');

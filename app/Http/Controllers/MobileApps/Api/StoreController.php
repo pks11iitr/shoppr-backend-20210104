@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Store;
+use App\Models\WorkLocations;
 use Illuminate\Http\Request;
 use DB;
 
@@ -21,6 +22,15 @@ class StoreController extends Controller
         }
         $search=$request->search;
         $sortby=$request->sortby??'name';
+
+        $location=WorkLocations::extractlocationfromjson($request->location);
+//        if(!$location)
+//            return [
+//                'status'=>'failed',
+//                'message'=>'Location is not servicable'
+//            ];
+
+
         $stores = Store::active()
             ->select(DB::raw('*, ROUND(( 6367 * acos( cos( radians(' . $latitude . ') ) * cos( radians( stores.lat ) ) * cos( radians( stores.lang ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( stores.lat ) ) ) ),2) AS distance'));
 
@@ -37,6 +47,9 @@ class StoreController extends Controller
                 });
             });
         }
+
+        $stores=$stores->where('location_id', $location->id??0);
+
 
         if($sortby){
             if($request->sortby=='name')

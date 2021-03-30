@@ -140,7 +140,11 @@ class ProfileController extends Controller
             ->where('seen_at', null)
             ->count();
 
-        $orders=Chat::where('shoppr_id', 0)->count();
+        $orders=Chat::where('shoppr_id', 0)
+            ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
+                $rejectedby->where('rejected_chats.shoppr_id', $user->id);
+            })
+            ->count();
 
         return [
             'status'=>'success',
@@ -153,7 +157,7 @@ class ProfileController extends Controller
     public function updateworklocation(Request $request){
         $request->validate([
             'locations'=>'array|required',
-            'work_type'=>'required|in:permanent,part-time'
+            'work_type'=>'required|in:0,1'
         ]);
 
         $user=$request->user;
@@ -371,13 +375,18 @@ class ProfileController extends Controller
     public function getPersonalInfo(Request $request){
         $user=$request->user;
 
+
+        $city=$user->city;
+        $state=$user->state;
+
         $user=$user->only('permanent_address','permanent_city','permanent_pin','secondary_mobile','emergency_mobile', 'permanent_state');
+
 
         $states=State::with('cities')->orderBy('id','desc')->get();
 
         return [
             'status'=>'success',
-            'data'=>compact('user', 'states')
+            'data'=>compact('user', 'states','city','state')
         ];
     }
 

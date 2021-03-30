@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Exports\CustomerExport;
 use App\Exports\ShopprExport;
 use App\Http\Controllers\Controller;
+use App\Models\ChatMessage;
 use App\Models\City;
 use App\Models\Shoppr;
 use App\Models\ShopprWallet;
@@ -40,7 +41,8 @@ class ShopprController extends Controller
 
 
     public function create(Request $request){
-        return view('admin.shoppr.add');
+        $worklocations=WorkLocation::active()->get();
+        return view('admin.shoppr.add', compact('worklocations'));
     }
 
     public function store(Request $request){
@@ -57,7 +59,14 @@ class ShopprController extends Controller
 
         if($data=Shoppr::create($request->only('name','lat','lang','isactive','mobile','location','status')))
         {
-            $data->saveImage($request->image, 'customers');
+            if($request->image){
+                $data->saveImage($request->image, 'customers');
+            }
+
+            if($request->location_id){
+                $data->locations()->sync($request->location_id);
+            }
+
             return redirect()->route('shoppr.list')->with('success', 'Data has been created');
         }
         return redirect()->back()->with('error', 'Data create failed');
@@ -67,16 +76,17 @@ class ShopprController extends Controller
         $data = Shoppr::with(['cityname','statename','locations'])->findOrFail($id);
 //       return $data->locations[0]->id;
         $States = State::active()->get();
+        $cities=City::get();
         $locations = WorkLocation::active()->get();
 
-        return view('admin.shoppr.edit',['data'=>$data,'States'=>$States,'locations'=>$locations]);
+        return view('admin.shoppr.edit',['data'=>$data,'States'=>$States,'locations'=>$locations, 'cities'=>$cities]);
     }
 
     public function update(Request $request,$id){
         $request->validate([
             'isactive'=>'required',
             'name'=>'required',
-            'mobile'=>'required|digits:10|unique:shoppers',
+            'mobile'=>'required|digits:10|unique:shoppers,mobile,'.$id,
             //'status'=>'required',
             'image'=>'image',
         ]);
@@ -143,6 +153,17 @@ class ShopprController extends Controller
             ->pluck("name","id");
 
         return json_encode($citys);
+    }
+
+    public function reviews(Request $request, $id){
+
+        $reviews=ChatMessage::whereHas('chat', function($chat)use($id){
+            $chat->where('shoppr_id', $id);
+        })->where('chatmessages.type', 'rating')
+            ->orderBy('chatmessages.id', 'desc')
+            ->paginate(10);
+
+        return view('admin.shoppr.reviews', compact('reviews'));
     }
 }
 

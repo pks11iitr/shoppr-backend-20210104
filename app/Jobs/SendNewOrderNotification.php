@@ -16,15 +16,16 @@ class SendNewOrderNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $chat_id;
+    protected $chat_id,$location;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($chat_id)
+    public function __construct($chat_id,$location)
     {
         $this->chat_id=$chat_id;
+        $this->location=$location;
     }
 
     /**
@@ -34,10 +35,13 @@ class SendNewOrderNotification implements ShouldQueue
      */
     public function handle()
     {
-        $shopprs=Shoppr::select('id', 'notification_token')->get();
+        $shopprs=Shoppr::whereHas('locations', function($query) {
+            $query->where('name', $this->location->name);
+        })
+        ->select('id', 'notification_token')->get();
+
         foreach($shopprs as $shoppr){
             if($shoppr->notification_token){
-
                 Notification::create([
                     'user_id'=>$shoppr->id,
                     'type'=>'individual',

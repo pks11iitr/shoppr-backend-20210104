@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Settings;
 use App\Models\Shoppr;
 use App\Models\ShopprDailyTravel;
 use Illuminate\Http\Request;
@@ -48,10 +49,13 @@ class ShopprDailyTravelController extends Controller
             'km'=>'required',
         ]);
 
+        $settings=Settings::where('name', 'Per Km Charge')->first();
+
         if($dailytravel=ShopprDailyTravel::create([
             'shoppr_id'=>$request->shoppr_id,
             'date'=>$request->date,
             'km'=>$request->km,
+            'rider_commission'=>$request->km*($settings->value??0.0)
 
         ]))
         {
@@ -76,10 +80,13 @@ class ShopprDailyTravelController extends Controller
 
         $dailytravel =ShopprDailyTravel::findOrFail($id);
 
+        $settings=Settings::where('name', 'Per Km Charge')->first();
+
         if($dailytravel->update([
             'shoppr_id'=>$request->shoppr_id,
             'date'=>$request->date,
             'km'=>$request->km,
+            'rider_commission'=>$request->km*($settings->value??0.0)
 
         ]))
         {

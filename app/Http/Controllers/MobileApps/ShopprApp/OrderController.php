@@ -90,6 +90,16 @@ class OrderController extends Controller
 
         ShopprWallet::updatewallet($user->id,'Order Id:'.$order->refid.' Delivered', 'Debit', $order->total,$order->id);
 
+        ChatMessage::create([
+            'chat_id'=>$order->chat_id,
+            'message'=>'Order has been delivered',
+            'type'=>'text',
+            //'price'=>$request->price,
+            'quantity'=>0,
+            'direction'=>0,
+            'order_id'=>$order->id
+        ]);
+
         $message=ChatMessage::create([
             'chat_id'=>$order->chat_id,
             'message'=>'',
@@ -100,10 +110,11 @@ class OrderController extends Controller
             'order_id'=>$order->id
         ]);
 
+
         Notification::create([
             'user_id'=>$order->user_id,
             'title'=>'Order Delivered',
-            'description'=>'Order Delivered',
+            'description'=>'Order has been delivered',
             'data'=>null,
             'type'=>'individual',
             'user_type'=>'CUSTOMER'

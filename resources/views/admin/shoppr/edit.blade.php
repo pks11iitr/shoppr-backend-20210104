@@ -120,22 +120,33 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Current City</label>
-                                <input type="text" name="city" class="form-control" id="exampleInputEmail1" placeholder="Enter City" value="{{$data->city}}">
+                                <select class="form-control" name="city" required>
+                                    <option value="0" >Select</option>
+                                    @foreach($cities as $city)
+                                    <option value="{{$city->id}}" {{$city->id==$data->city?'selected':''}}>{{$city->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Current State</label>
-                                <input type="text" name="state" class="form-control" id="exampleInputEmail1" placeholder="Enter State" value="{{$data->state}}">
+
+                                <select class="form-control" name="city" required>
+                                    <option value="0" >Select</option>
+                                    @foreach($States as $state)
+                                        <option value="{{$state->id}}" {{$state->id==$data->state?'selected':''}}>{{$state->name}}</option>
+                                        @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Location</label>
-                                <select class="form-control" name="location_id">
+                                <select class="form-control" name="location_id[]" multiple>
                                     <option value="">Please Select Location</option>
                                     @foreach($locations as $location)
-                                        <option value="{{$location->id}}" {{$data->locations[0]->id==$location->id?'selected':''}}>
+                                        <option value="{{$location->id}}" @foreach($data->locations as $l){{($l->id??'')==$location->id?'selected':''}}@endforeach>
                                             {{$location->name}}</option>
                                     @endforeach
                                 </select>
@@ -172,8 +183,8 @@
                             <div class="form-group">
                                 <label>Work Time</label>
                                 <select class="form-control" name="work_type" required>
-                                    <option  selected="selected" value="permanent" {{$data->work_type=='permanent'?'selected':''}}>Permanent</option>
-                                    <option value="part-time" {{$data->work_type=='part-time'?'selected':''}}>Part-Time</option>
+                                    <option  selected="selected" value="1" {{$data->work_type==1?'selected':''}}>Full Time</option>
+                                    <option value="0" {{$data->work_type==0?'selected':''}}>Part-Time</option>
                                 </select>
                             </div>
                         </div>
@@ -212,8 +223,10 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Permanent City</label>
                                 <select class="form-control" name="permanent_city" required>
-                                    <option value="{{$data->permanent_city}}">
-                                        {{$data->cityname->name??''}}</option>
+                                    <option value="0" >Select</option>
+                                    @foreach($cities as $city)
+                                        <option value="{{$city->id}}" {{$city->id==$data->permanent_city?'selected':''}}>{{$city->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
