@@ -44,6 +44,17 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label>City</label>
+                                                <select class="form-control" name="city_id" required>
+                                                    <option value="">Select</option>
+                                                    @foreach($cities as $city)
+                                                    <option value="{{$city->id}}">{{$city->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label>Is Active</label>
                                                 <select class="form-control" name="isactive" required>
                                                     <option value="1">Yes</option>
