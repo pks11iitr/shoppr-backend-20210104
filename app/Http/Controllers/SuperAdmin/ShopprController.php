@@ -76,9 +76,10 @@ class ShopprController extends Controller
         $data = Shoppr::with(['cityname','statename','locations'])->findOrFail($id);
 //       return $data->locations[0]->id;
         $States = State::active()->get();
+        $cities=City::get();
         $locations = WorkLocation::active()->get();
 
-        return view('admin.shoppr.edit',['data'=>$data,'States'=>$States,'locations'=>$locations]);
+        return view('admin.shoppr.edit',['data'=>$data,'States'=>$States,'locations'=>$locations, 'cities'=>$cities]);
     }
 
     public function update(Request $request,$id){

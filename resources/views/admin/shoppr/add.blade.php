@@ -78,7 +78,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Select Location</label>
-                                <select class="form-control" name="location_id" required>
+                                <select class="form-control" name="location_id[]" required multiple>
                                     @foreach($worklocations as $location)
                                     <option value="{{$location->id}}">{{$location->name}}</option>
                                     @endforeach
@@ -96,7 +96,7 @@
                         </div>--}}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputFile">File input</label>
+                                <label for="exampleInputFile">Shoppr Image</label>
                                 <input type="file" name="image" class="form-control"  id="exampleInputFile" accept="image/*" required>
                             </div>
                         </div>
