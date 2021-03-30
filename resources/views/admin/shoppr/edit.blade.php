@@ -143,7 +143,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Location</label>
-                                <select class="form-control" name="location_id">
+                                <select class="form-control" name="location_id[]" multiple>
                                     <option value="">Please Select Location</option>
                                     @foreach($locations as $location)
                                         <option value="{{$location->id}}" {{($data->locations[0]->id??'')==$location->id?'selected':''}}>
