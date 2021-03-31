@@ -62,6 +62,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
+                                <h3>Total KM:{{$total_km}}/ Total Commission: {{$total_commission}}</h3>
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>

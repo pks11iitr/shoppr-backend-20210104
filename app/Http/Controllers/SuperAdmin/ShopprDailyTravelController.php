@@ -26,11 +26,14 @@ class ShopprDailyTravelController extends Controller
         if($request->shoppr_id)
             $dailytravels=$dailytravels->where('shoppr_id', $request->shoppr_id);
 
+        $total_km=$dailytravels->sum('km');
+        $total_commission=$dailytravels->sum('rider_commission');
+
         $dailytravels =$dailytravels->orderBy('id', 'desc')->paginate(20);
 
         $riders = Shoppr::active()->get();
 
-        return view('admin.shoppr-daily-travel.view',['dailytravels'=>$dailytravels,'riders'=>$riders]);
+        return view('admin.shoppr-daily-travel.view',['dailytravels'=>$dailytravels,'riders'=>$riders, 'total_km'=>$total_km, 'total_commission'=>$total_commission]);
 
     }
 
