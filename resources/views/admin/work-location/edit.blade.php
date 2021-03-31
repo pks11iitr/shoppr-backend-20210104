@@ -44,6 +44,17 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label>City</label>
+                                                <select class="form-control" name="city_id" required>
+                                                    <option value="">Select</option>
+                                                    @foreach($cities as $city)
+                                                        <option value="{{$city->id}}" @if($worklocation->city_id==$city->id){{'selected'}}@endif>{{$city->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label>Is Active</label>
                                                 <select class="form-control" name="isactive" required>
                                                     <option  selected="selected" value="1" {{$worklocation->isactive==1?'selected':''}}>Yes</option>

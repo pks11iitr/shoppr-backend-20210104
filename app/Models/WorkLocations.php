@@ -12,7 +12,7 @@ class WorkLocations extends Model
 
     protected $table='work_locations';
 
-    protected $fillable=['name', 'isactive'];
+    protected $fillable=['name', 'isactive', 'city_id'];
 
 
     public static function extractlocationfromjson($json){
@@ -33,6 +33,11 @@ class WorkLocations extends Model
         }
 
         return null;
+    }
+
+
+    public function city(){
+        return $this->belongsTo('App\Models\City', 'city_id');
     }
 
 }
