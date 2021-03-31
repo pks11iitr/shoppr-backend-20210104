@@ -165,5 +165,44 @@ class ShopprController extends Controller
 
         return view('admin.shoppr.reviews', compact('reviews'));
     }
+
+    public function uploads(Request $request,$id){
+        $document = Shoppr::findOrFail($id);
+        return view('admin.shoppr.document-upload',['document'=>$document]);
+    }
+
+    public function uploadsUpdate(Request $request,$id){
+
+        $document = Shoppr::findOrFail($id);
+
+        if($request->pan_card){
+            $document->savePanCard($request->pan_card, 'shopper');
+        }
+        if($request->front_aadhaar_card){
+            $document->saveFrontAadhaarCard($request->front_aadhaar_card, 'shopper');
+        }
+        if($request->back_aadhaar_card){
+            $document->saveBackAadhaarCard($request->back_aadhaar_card, 'shopper');
+        }
+        if($request->front_dl_no){
+            $document->saveFrontDlNo($request->front_dl_no, 'shopper');
+        }
+        if($request->back_dl_no){
+            $document->saveBackDlNo($request->back_dl_no, 'shopper');
+        }
+        if($request->bike_front){
+            $document->saveBikeFront($request->bike_front, 'shopper');
+        }
+        if($request->bike_back){
+            $document->saveBikeBack($request->bike_back, 'shopper');
+        }
+        $document->save();
+
+        if($document)
+        {
+            return redirect()->route('shoppr.details',['id'=>$document->id])->with('success', 'Document has been updated');
+        }
+        return redirect()->back()->with('error', 'Document update failed');
+    }
 }
 
