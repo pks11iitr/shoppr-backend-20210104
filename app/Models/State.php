@@ -10,6 +10,9 @@ class State extends Model
 {
     use HasFactory ,Active;
     protected $table='states';
+
+    protected $fillable=['name', 'isactive'];
+
     protected $hidden = ['created_at','deleted_at','updated_at'];
 
     public function cities(){

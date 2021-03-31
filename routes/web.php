@@ -59,6 +59,16 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     });
 
+    Route::group(['prefix' => 'city'], function () {
+
+        Route::get('/','SuperAdmin\CityController@index')->name('city.list');
+        Route::get('create','SuperAdmin\CityController@create')->name('city.create');
+        Route::post('store','SuperAdmin\CityController@store')->name('city.store');
+        Route::get('edit/{id}','SuperAdmin\CityController@edit')->name('city.edit');
+        Route::post('update/{id}', 'SuperAdmin\CityController@update')->name('city.update');
+    });
+
+
     Route::group(['prefix' => 'setting'], function () {
 
         Route::get('/','SuperAdmin\SettingController@index')->name('setting.list');
