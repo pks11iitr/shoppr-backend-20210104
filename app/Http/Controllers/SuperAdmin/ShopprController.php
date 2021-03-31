@@ -112,6 +112,7 @@ class ShopprController extends Controller
             $data->pay_per_km=$per_km;
             $data->pay_commission=$commission;
             $data->pay_delivery=$delivery;
+            $data->form_step=5;
             $data->save();
 
             return redirect()->route('shoppr.list')->with('success', 'Data has been updated');
