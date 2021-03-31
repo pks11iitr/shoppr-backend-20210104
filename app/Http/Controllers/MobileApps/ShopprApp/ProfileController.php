@@ -353,12 +353,12 @@ class ProfileController extends Controller
 
         $work_locationsobj=WorkLocations::active()->with('city')->select('id','name','city_id')->orderBy('name','asc')->get();
         $work_locations=[];
-        foreach($work_locationsobj as $l){
-            $work_locations[]=[
-                'id'=>$l->id,
-                'name'=>$l->name.'-'.($l->city->name??'')
+        foreach($work_locationsobj as $l) {
+            $work_locations[] = [
+                'id' => $l->id,
+                'name' => $l->name . '-' . ($l->city->name ?? '')
             ];
-
+        }
 
             return [
             'status'=>'success',
