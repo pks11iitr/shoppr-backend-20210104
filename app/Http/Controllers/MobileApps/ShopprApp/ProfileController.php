@@ -351,7 +351,11 @@ class ProfileController extends Controller
 
         $user=$user->only('work_type');
 
-        $work_locationsobj=WorkLocations::active()->with('city')->select('id','name','city_id')->orderBy('name','asc')->get();
+        $work_locationsobj=WorkLocations::active()
+            ->with('city')
+            ->select('id','name','city_id')
+            ->orderBy('name','asc')->get();
+
         $work_locations=[];
         foreach($work_locationsobj as $l) {
             $work_locations[] = [
