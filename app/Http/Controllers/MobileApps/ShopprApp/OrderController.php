@@ -120,7 +120,7 @@ class OrderController extends Controller
             'user_type'=>'CUSTOMER'
         ]);
 
-        $order->customer->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $order->customer->notify(new FCMNotification('Order Delivered', 'Order ID: '.$order->refid.' has been delivered. Please rate our service.', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',
