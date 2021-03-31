@@ -10,7 +10,13 @@ use Illuminate\Http\Request;
 class AvailableLocationController extends Controller
 {
     public function locations(Request $request){
-        $locations=WorkLocations::active()->select('id','name')->get();
+        $locationsobj=WorkLocations::active()->with('city')->select('id','name')->get();
+        foreach($locationsobj as $l){
+            $locations[]=[
+                'id'=>$l->id,
+                'name'=>$l->name.'-'.($l->city->name??'')
+            ];
+        }
         return [
             'status'=>'success',
             'data'=>compact('locations')
