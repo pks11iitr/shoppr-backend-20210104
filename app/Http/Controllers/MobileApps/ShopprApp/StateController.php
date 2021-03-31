@@ -22,7 +22,16 @@ class StateController extends Controller
     }
 
     public function worklocations(Request $request){
-        $locations=WorkLocations::active()->select('id','name')->orderBy('name','asc')->get();
+        $locationsobj=WorkLocations::active()->with('city')->select('id','name', 'city_id')->orderBy('name','asc')->get();
+
+        $locations=[];
+        foreach($locationsobj as $l) {
+            $locations[] = [
+                'id' => $l->id,
+                'name' => $l->name . '-' . ($l->city->name ?? '')
+            ];
+        }
+
         return [
             'status'=>'success',
             'data'=>compact('locations')
