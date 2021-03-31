@@ -42,6 +42,8 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
         Route::get('reviews/{id}','SuperAdmin\ShopprController@reviews')->name('shoppr.reviews');
         Route::get('export{id}','SuperAdmin\ShopprController@export')->name('shoppr.export');
         Route::get('state-city','SuperAdmin\ShopprController@stateAjax')->name('shoppr.state.ajax');
+        Route::get('uploads/{id}','SuperAdmin\ShopprController@uploads')->name('shoppr.uploads');
+        Route::post('image-uploads/{id}','SuperAdmin\ShopprController@uploadsUpdate')->name('shoppr.uploads.update');
 
     });
 

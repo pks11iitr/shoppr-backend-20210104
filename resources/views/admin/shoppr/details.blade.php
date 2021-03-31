@@ -24,9 +24,16 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card card-primary">
+                        <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Document Details</h3>
+                                <div class="card-tools">
+                                    <ul class="nav nav-pills ml-auto">
+                                        <li class="nav-item">
+                                            <a class="btn btn-success" href="{{route('shoppr.uploads',['id'=>$shoppr->id])}}">Edit</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
                             <!-- /.card-header -->
