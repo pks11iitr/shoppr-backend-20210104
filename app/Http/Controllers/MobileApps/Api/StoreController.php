@@ -79,7 +79,9 @@ class StoreController extends Controller
                 'message'=>'Store Id parameter Missing',
             ];
         }
-        $stores_details=Store::active()->with('images')->where('id',$id)->first();
+        $stores_details=Store::active()->with(['images'=>function($images){
+            $images->where('documents.id', 'desc');
+        }])->where('id',$id)->first();
         if($stores_details){
             return [
                 'status'=>'success',
