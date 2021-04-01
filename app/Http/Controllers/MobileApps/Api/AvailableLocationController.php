@@ -26,12 +26,12 @@ class AvailableLocationController extends Controller
 
     public function checkServiceAvailability(Request $request){
         $location=$request->location;
-        $city=City::active()->where('name', $request->city)->get();
+        $city=City::active()->where('name', $request->city)->first();
 
         if(!$city)
             return [
-                'status'=>'success',
-                'message'=>'Location is serviceble'
+                'status'=>'failed',
+                'message'=>'Location is not servicable'
             ];
 
         $json=json_decode($location, true);
