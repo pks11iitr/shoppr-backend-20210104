@@ -22,12 +22,14 @@ class WorkLocation extends Model
             return null;
         if($json && count($json)>=4){
             $json=array_reverse($json);
-            $locality1=$json[3]['value']??'';
-            $locality2=$json[4]['value']??'';
+            $locality1=$json[2]['value']??'';
+            $locality2=$json[3]['value']??'';
+            $locality3=$json[4]['value']??'';
 
-            $location=WorkLocations::active()->where(function($query)use($locality1,$locality2){
+            $location=WorkLocations::active()->where(function($query)use($locality1,$locality2, $locality3){
                 $query->where('name', $locality1)
-                    ->orWhere('name',$locality2);
+                    ->orWhere('name',$locality2)
+                    ->orWhere('name',$locality3);
             })
                 ->where('city_id', $city->id)
                 ->first();
