@@ -31,7 +31,7 @@ class NotificationController extends Controller
 
         $notifications=$notifications->select('id','title', 'description', 'created_at')
             ->orderBy('id', 'desc')
-            ->paginate(1000);
+            ->paginate(50);
 
         return [
             'status'=>'success',
