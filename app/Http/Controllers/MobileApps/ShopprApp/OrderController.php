@@ -96,7 +96,7 @@ class OrderController extends Controller
             'type'=>'text',
             //'price'=>$request->price,
             'quantity'=>0,
-            'direction'=>0,
+            'direction'=>1,
             'order_id'=>$order->id
         ]);
 
@@ -121,6 +121,10 @@ class OrderController extends Controller
         ]);
 
         $order->customer->notify(new FCMNotification('Order Delivered', 'Order ID: '.$order->refid.' has been delivered. Please rate our service.', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+
+        $order->shoppr->notify(new FCMNotification('Order Delivered', 'Good Job! Order ID: '.$order->refid.' has been delivered.', array_merge(['message'=>'Good Job! Order ID: '.$order->refid.' has been delivered.'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+
+
 
         return [
             'status'=>'success',

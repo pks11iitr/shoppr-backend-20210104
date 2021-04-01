@@ -94,17 +94,17 @@ class ChatMessageController extends Controller
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
-            case 'product':
-                $message=ChatMessage::create([
-                    'chat_id'=>$chat_id,
-                    'message'=>$request->name,
-                    'type'=>'product',
-                    'price'=>$request->price,
-                    'quantity'=>$request->quantity,
-                    'direction'=>0,
-                ]);
-                $message->saveFile($request->file, 'chats');
-                break;
+//            case 'product':
+//                $message=ChatMessage::create([
+//                    'chat_id'=>$chat_id,
+//                    'message'=>$request->name,
+//                    'type'=>'product',
+//                    'price'=>$request->price,
+//                    'quantity'=>$request->quantity,
+//                    'direction'=>0,
+//                ]);
+//                $message->saveFile($request->file, 'chats');
+//                break;
 //            case 'rating':
 //                $message=ChatMessage::create([
 //                    'chat_id'=>$chat_id,
@@ -139,7 +139,10 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->shoppr->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
+
+        $displaymessage=$message??(in_array($message->type, ['audio', 'image'])?('['.$message->type.']'):($message->type=='address'?'Address shared by customer':'New Message'));
+
+        $chat->shoppr->notify(new FCMNotification('New Message', $displaymessage, array_merge(['message'=>$displaymessage], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
 
         return [
             'status'=>'success',
@@ -161,7 +164,7 @@ class ChatMessageController extends Controller
         $message->status='accepted';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Item Accepted', $message->message??'', array_merge(['message'=>'Item Accepted'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Item Accepted', ($message->message??'Product').' has been accepted by customer', array_merge(['message'=>($message->message??'Product').' has been accepted by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
 
         return [
             'status'=>'success',
@@ -180,7 +183,7 @@ class ChatMessageController extends Controller
         $message->status='rejected';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Item Rejected', $message->message??'', array_merge(['message'=>'Item Rejected'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Item Rejected', ($message->message??'Product').' has been rejected by customer', array_merge(['message'=>($message->message??'Product').' has been rejected by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
         return [
             'status'=>'success',
             'message'=>'Product has been rejected'
@@ -203,7 +206,7 @@ class ChatMessageController extends Controller
         $message->status='cancelled';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Product Cancelled', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Product Cancelled', ($message->message??'Product').' has been cancelled by customer', array_merge(['message'=>($message->message??'Product').' has been cancelled by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',
@@ -240,49 +243,49 @@ class ChatMessageController extends Controller
         ];
     }
 
-    public function calculateTotal(Reqest $request, $chat_id){
-        $request->validate([
-            'ratings'=>'integer|required|in:1,2,3,4,5'
-        ]);
-
-        $user=$request->user;
-
-        Chat::where('type', 'total')
-            ->where('chat_id',$chat_id)
-            ->delete();
-
-        $items=ChatMessage::where('chat_id', $chat_id)
-            ->where('shoppr_id', $user->id)
-            ->where('type', 'product')
-            ->where('status', 'accepted')
-            ->get();
-        if(!count($items))
-            return [
-                'status'=>'failed',
-                'message'=>'No items in the cart'
-            ];
-        $total=0;
-        foreach($items as $i){
-            $total=$total+$i->price;
-        }
-        $service_charge=100;
-
-        $grand_total=$total+$service_charge;
-
-        $message=ChatMessage::create([
-            'chat_id'=>$chat_id,
-            'message'=>$total.','.$service_charge.','.$grand_total,
-            'type'=>'total',
-            'quantity'=>0,
-            'direction'=>0,
-            'price'=>$grand_total
-        ]);
-
-        return [
-            'status'=>'success',
-            'message'=>'Ratings has been submitted',
-            'data'=>compact('message')
-        ];
-    }
+//    public function calculateTotal(Reqest $request, $chat_id){
+//        $request->validate([
+//            'ratings'=>'integer|required|in:1,2,3,4,5'
+//        ]);
+//
+//        $user=$request->user;
+//
+//        Chat::where('type', 'total')
+//            ->where('chat_id',$chat_id)
+//            ->delete();
+//
+//        $items=ChatMessage::where('chat_id', $chat_id)
+//            ->where('shoppr_id', $user->id)
+//            ->where('type', 'product')
+//            ->where('status', 'accepted')
+//            ->get();
+//        if(!count($items))
+//            return [
+//                'status'=>'failed',
+//                'message'=>'No items in the cart'
+//            ];
+//        $total=0;
+//        foreach($items as $i){
+//            $total=$total+$i->price;
+//        }
+//        $service_charge=100;
+//
+//        $grand_total=$total+$service_charge;
+//
+//        $message=ChatMessage::create([
+//            'chat_id'=>$chat_id,
+//            'message'=>$total.','.$service_charge.','.$grand_total,
+//            'type'=>'total',
+//            'quantity'=>0,
+//            'direction'=>0,
+//            'price'=>$grand_total
+//        ]);
+//
+//        return [
+//            'status'=>'success',
+//            'message'=>'Ratings has been submitted',
+//            'data'=>compact('message')
+//        ];
+//    }
 
 }

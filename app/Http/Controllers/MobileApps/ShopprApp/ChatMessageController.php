@@ -68,17 +68,17 @@ class ChatMessageController extends Controller
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
-            case 'rating':
-                $message=ChatMessage::create([
-                    'chat_id'=>$chat_id,
-                    'message'=>'',
-                    'type'=>'rating',
-                    //'price'=>$request->price,
-                    'quantity'=>0,
-                    'direction'=>1,
-                ]);
-                //$message->saveFile($request->file, 'chats');
-                break;
+//            case 'rating':
+//                $message=ChatMessage::create([
+//                    'chat_id'=>$chat_id,
+//                    'message'=>'',
+//                    'type'=>'rating',
+//                    //'price'=>$request->price,
+//                    'quantity'=>0,
+//                    'direction'=>1,
+//                ]);
+//                //$message->saveFile($request->file, 'chats');
+//                break;
             case 'payment':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
@@ -106,7 +106,9 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $chat->customer->notify(new FCMNotification('New Message', $message->message??'', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $displaymessage=$message??(in_array($message->type, ['audio', 'image', 'product'])?('['.$message->type.']'):($message->type=='add-money'?'Add Money To Wallet':($message->type=='payment'?'Please make payment for your order':'New Message')));
+
+        $chat->customer->notify(new FCMNotification('New Message from Shopr', $displaymessage??'', array_merge(['message'=>$displaymessage], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',

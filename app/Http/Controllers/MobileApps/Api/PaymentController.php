@@ -102,7 +102,7 @@ class PaymentController extends Controller
                     'total'=>$order->grandTotalForPayment()*100,
                     'email'=>$user->email??'',
                     'mobile'=>$user->mobile??'',
-                    'description'=>'Product Purchase at Shoppr',
+                    'description'=>'Product Purchase at Shopr',
                     'name'=>$user->name??'',
                     'currency'=>'INR',
                     //'merchantid'=>$this->pay->merchantkey,
@@ -157,7 +157,7 @@ class PaymentController extends Controller
         $this->sendTrackNotification($order);
         return [
             'status'=>'success',
-            'message'=>'Congratulations! Your order at Shoppr is successful',
+            'message'=>'Congratulations! Your order at Shopr is successful',
             'data'=>[
                 'payment_done'=>'yes',
                 'refid'=>$order->refid
@@ -291,7 +291,7 @@ class PaymentController extends Controller
 
             return [
                 'status'=>'success',
-                'message'=> 'Congratulations! Your order at Hallobasket is successful',
+                'message'=> 'Congratulations! Your order at Shopr is successful',
                 'data'=>[
                     'ref_id'=>$order->refid,
                     'order_id'=>$order->id,
