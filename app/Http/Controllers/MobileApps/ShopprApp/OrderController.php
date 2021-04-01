@@ -114,7 +114,7 @@ class OrderController extends Controller
         Notification::create([
             'user_id'=>$order->user_id,
             'title'=>'Order Delivered',
-            'description'=>'Order has been delivered',
+            'description'=>'Order ID: '.$order->refid.' has been delivered',
             'data'=>null,
             'type'=>'individual',
             'user_type'=>'CUSTOMER'

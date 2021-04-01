@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\OrderConfirmed;
 use App\Mail\SendMail;
+use App\Models\ChatMessage;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Services\Notification\FCMNotification;
@@ -40,12 +41,11 @@ class OrderConfirmListner
 
     public function sendNotifications($order){
 
-        $message='Congratulations! Your order of Rs. '.$order->grandTotal().' at Shoppr is successfull. Order Reference ID: '.$order->refid;
+        $message='Congratulations! Your order of Rs. '.$order->grandTotal().' at Shopr is successfull. Order Reference ID: '.$order->refid;
 
         $title='Order Confirmed';
 
         $user=$order->customer;
-
 
         //customer notification
         Notification::create([
@@ -55,6 +55,16 @@ class OrderConfirmListner
             'data'=>null,
             'type'=>'individual',
             'user_type'=>'CUSTOMER'
+        ]);
+
+        $message=ChatMessage::create([
+            'chat_id'=>$order->chat_id,
+            'message'=>$message,
+            'type'=>'text',
+            //'price'=>$request->price,
+            'quantity'=>0,
+            'direction'=>1,
+            'order_id'=>$order->id
         ]);
 
         $user->notify(new FCMNotification($title, $message . $user->name, [

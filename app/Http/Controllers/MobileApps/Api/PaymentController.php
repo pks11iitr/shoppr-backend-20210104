@@ -311,13 +311,13 @@ class PaymentController extends Controller
 
     private function sendTrackNotification($order){
 
-        ChatMessage::create([
+        $message=ChatMessage::create([
             'message'=>'Track My Location',
-           'type'=>'track',
+            'type'=>'track',
             'chat_id'=>$order->chat_id,
             'order_id'=>$order->id
         ]);
 
-        $order->customer->notify(new FCMNotification('New Chat', 'New Chat From Shoppr', ['message'=>'']));
+        $order->customer->notify(new FCMNotification('Track location', 'Track our delivery boy location', ['message'=>'Track our delivery boy location', 'chat', 'chat_id'=>''.$message->chat_id],'chat_screen'));
     }
 }
