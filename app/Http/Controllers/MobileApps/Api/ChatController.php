@@ -83,7 +83,7 @@ class ChatController extends Controller
                 'message'=>'Please provide location'
             ];
 
-        $location=WorkLocations::extractlocationfromjson($request->location);
+        $location=WorkLocations::extractlocationfromjson($request->location, $request->city);
         if(!$location)
             return [
                 'status'=>'failed',
@@ -161,7 +161,7 @@ class ChatController extends Controller
                 'message'=>'Please provide location'
             ];
 
-        $location=WorkLocations::extractlocationfromjson($request->location);
+        $location=WorkLocations::extractlocationfromjson($request->location, $request->city);
         if(!$location)
             return [
                 'status'=>'failed',

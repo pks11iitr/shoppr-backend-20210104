@@ -23,7 +23,7 @@ class StoreController extends Controller
         $search=$request->search;
         $sortby=$request->sortby??'name';
 
-        $location=WorkLocations::extractlocationfromjson($request->location);
+        $location=WorkLocations::extractlocationfromjson($request->location, $request->city);
 //        if(!$location)
 //            return [
 //                'status'=>'failed',

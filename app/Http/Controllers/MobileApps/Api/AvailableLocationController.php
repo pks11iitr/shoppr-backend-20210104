@@ -40,10 +40,11 @@ class AvailableLocationController extends Controller
             $locality1=$json[3]['value']??'';
             $locality2=$json[4]['value']??'';
 
-            $location=WorkLocations::active()->where(function($query)use($locality1,$locality2){
-                $query->where('name', $locality1)
-                    ->orWhere('name',$locality2);
-            })
+            $location=WorkLocations::active()
+                ->where(function($query)use($locality1,$locality2){
+                        $query->where('name', $locality1)
+                            ->orWhere('name',$locality2);
+                    })
                 ->where('city_id', $city->id)
                 ->first();
             if($location){
