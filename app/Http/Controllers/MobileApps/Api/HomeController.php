@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index(Request $request){
         $user=auth()->guard('customerapi')->user();
-        $location=WorkLocations::extractlocationfromjson($request->location);
+        $location=WorkLocations::extractlocationfromjson($request->location, $request->city);
 //        if(!$location)
 //            return [
 //                'status'=>'failed',

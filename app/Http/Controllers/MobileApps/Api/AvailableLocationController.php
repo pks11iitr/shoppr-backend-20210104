@@ -44,6 +44,7 @@ class AvailableLocationController extends Controller
                 $query->where('name', $locality1)
                     ->orWhere('name',$locality2);
             })
+                ->where('city_id', $city->id)
                 ->first();
             if($location){
                 return [

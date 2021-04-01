@@ -15,8 +15,12 @@ class WorkLocations extends Model
     protected $fillable=['name', 'isactive', 'city_id'];
 
 
-    public static function extractlocationfromjson($json){
+    public static function extractlocationfromjson($json, $cityname){
         $json=json_decode($json, true);
+
+        $city=City::where('name', $cityname)->first();
+        if(!$city)
+            return null;
         if($json && count($json)>=4){
             $json=array_reverse($json);
             $locality1=$json[3]['value']??'';
@@ -26,6 +30,7 @@ class WorkLocations extends Model
                 $query->where('name', $locality1)
                     ->orWhere('name',$locality2);
             })
+                ->where('city_id', $city->id)
                 ->first();
             if($location){
                 return $location;
