@@ -24,7 +24,7 @@ class HomeController extends Controller
 
         $shopprs=Shoppr::active()
             ->whereHas('locations', function($query)use($location) {
-                $query->where('shoppr_work_locations.id', $location->id??0);
+                $query->where('work_locations.id', $location->id??0);
             })->count();
 
         $shopper[0]=[
