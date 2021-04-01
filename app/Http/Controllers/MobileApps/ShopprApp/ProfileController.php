@@ -140,11 +140,22 @@ class ProfileController extends Controller
             ->where('seen_at', null)
             ->count();
 
-        $orders=Chat::where('shoppr_id', 0)
-            ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
-                $rejectedby->where('rejected_chats.shoppr_id', $user->id);
-            })
-            ->count();
+        $work_locationsobj=$user->locations;
+        $work_locations=[];
+        foreach ($work_locationsobj as $wl){
+            $work_locations[]=$wl->id;
+        }
+
+        $orders=0;
+        if($work_locations){
+            $orders=Chat::where('shoppr_id', 0)
+                ->whereIn('location_id', $work_locations)
+                ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
+                    $rejectedby->where('rejected_chats.shoppr_id', $user->id);
+                })
+                ->count();
+        }
+
 
         return [
             'status'=>'success',
