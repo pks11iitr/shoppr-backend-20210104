@@ -140,7 +140,7 @@ class ChatMessageController extends Controller
         $message->refresh();
 
 
-        $displaymessage=$message??(in_array($message->type, ['audio', 'image'])?('['.$message->type.']'):($message->type=='address'?'Address shared by customer':'New Message'));
+        $displaymessage=($message->type=='text')?$message->message :(in_array($message->type, ['audio', 'image'])?('['.$message->type.']'):($message->type=='address'?'Address shared by customer':'New Message'));
 
         $chat->shoppr->notify(new FCMNotification('New Message', $displaymessage, array_merge(['message'=>$displaymessage], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
 
