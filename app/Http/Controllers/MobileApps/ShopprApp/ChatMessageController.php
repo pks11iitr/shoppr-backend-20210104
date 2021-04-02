@@ -106,7 +106,7 @@ class ChatMessageController extends Controller
         //send notification
         $message->refresh();
 
-        $displaymessage=$message??(in_array($message->type, ['audio', 'image', 'product'])?('['.$message->type.']'):($message->type=='add-money'?'Add Money To Wallet':($message->type=='payment'?'Please make payment for your order':'New Message')));
+        $displaymessage=($message->type=='text')?$message->message:(in_array($message->type, ['audio', 'image', 'product'])?('['.$message->type.']'):($message->type=='add-money'?'Add Money To Wallet':($message->type=='payment'?'Please make payment for your order':'New Message')));
 
         $chat->customer->notify(new FCMNotification('New Message from Shopr', $displaymessage??'', array_merge(['message'=>$displaymessage], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
