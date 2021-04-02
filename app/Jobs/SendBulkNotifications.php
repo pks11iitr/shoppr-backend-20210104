@@ -62,7 +62,7 @@ class SendBulkNotifications implements ShouldQueue
             if(in_array($user->notification_token, $tokens_arr))
                 continue;
 
-            $user->notify(new FCMNotification($this->title, $this->message, [],'notification_screen'));
+            $user->notify(new FCMNotification($this->title, $this->message, ['title'=>$this->title, 'message'=>$this->message],'notification_screen'));
 
             $tokens_arr[]=$user->notification_token;
 

@@ -189,7 +189,7 @@ class ChatController extends Controller
 //            'description'=>'Shoppr Assigned',
 //            'user_type'=>'CUSTOMER'
 //        ]);
-        $chat->customer->notify(new FCMNotification('Shoppr Assigned', 'Shoppr Assigned', array_merge(['message'=>'Shoppr Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
+        $chat->customer->notify(new FCMNotification('ShopR Assigned', 'ShopR Assigned', array_merge(['message'=>'ShopR Assigned', 'title'=>'ShopR Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
 
         Notification::create([
             'user_id'=>$shoppr->id,
@@ -198,7 +198,7 @@ class ChatController extends Controller
             'description'=>'Order Assigned',
             'user_type'=>'SHOPPR'
         ]);
-        $shoppr->notify(new FCMNotification('Order Assigned', 'Order Assigned', array_merge(['message'=>'New Order'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
+        $shoppr->notify(new FCMNotification('Order Assigned', 'Order Assigned', array_merge(['message'=>'New Order', 'title'=>'Order Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
 
         return [
             'status'=>'success',

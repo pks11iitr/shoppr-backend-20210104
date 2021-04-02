@@ -51,7 +51,7 @@ class SendNewOrderNotification implements ShouldQueue
                     'user_type'=>'SHOPPR'
                 ]);
 
-                $shoppr->notify(new FCMNotification('New Order', 'New Order', array_merge(['message'=>'New Order'], ['type'=>'pending_order', 'chat_id'=>''.$this->chat_id]),'pending_order'));
+                $shoppr->notify(new FCMNotification('New Order', 'A new order has been raised. Please accept to start working', array_merge(['message'=>'New Order', 'title'=>'A new order has been raised. Please accept to start working'], ['type'=>'pending_order', 'chat_id'=>''.$this->chat_id]),'pending_order'));
             }
         }
     }

@@ -201,7 +201,7 @@ class PaymentController extends Controller
                 'order_id'=>$order->id
             ]);
 
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$order->chat_id])));
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for Order ID:'.$order->refid, ['title'=>'Payment Done', 'message'=>'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for Order ID:'.$order->refid, 'type'=>'chat', 'chat_id'=>''.$order->chat_id], 'chat_screen'));
 
             return [
                 'status'=>'success',
@@ -287,7 +287,7 @@ class PaymentController extends Controller
                 'order_id'=>$order->id
             ]);
 
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed', array_merge($message->only('message'), ['type'=>'chat', 'chat_id'=>''.$order->chat_id])));
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for order id: '.$order->refid, array_merge(['title'=>'Payment Done', 'message'=>'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for order id: '.$order->refid], ['type'=>'chat', 'chat_id'=>''.$order->chat_id]),'chat_screen'));
 
             return [
                 'status'=>'success',
@@ -318,6 +318,6 @@ class PaymentController extends Controller
             'order_id'=>$order->id
         ]);
 
-        $order->customer->notify(new FCMNotification('Track location', 'Track our delivery boy location', ['message'=>'Track our delivery boy location', 'chat', 'chat_id'=>''.$message->chat_id],'chat_screen'));
+        $order->customer->notify(new FCMNotification('Track location', 'Track our delivery boy location', ['title'=>'Track Location', 'message'=>'Track our delivery boy location', 'type'=>'chat', 'chat_id'=>''.$message->chat_id],'chat_screen'));
     }
 }

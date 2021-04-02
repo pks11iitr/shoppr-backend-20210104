@@ -68,12 +68,12 @@ class OrderConfirmListner
         ]);
 
         $user->notify(new FCMNotification($title, $message . $user->name, [
-            'type'=>'order'
+            'type'=>'order', 'title'=>$title, 'message'=>$message
         ]));
 
         //shoppr notification
 
-        $shopper_message='Order ID:'.$order->refid.' has been confirmed with total amount of Rs. '.$order->grandTotal().' at Shopr is successfull.';
+        $shopper_message='Order ID:'.$order->refid.' has been confirmed with total amount of Rs. '.$order->grandTotal().' at ShopR is successful.';
 
         Notification::create([
             'user_id'=>$order->shoppr_id,
@@ -85,7 +85,7 @@ class OrderConfirmListner
         ]);
 
         $order->shoppr->notify(new FCMNotification($title, $shopper_message , [
-            'type'=>'order'
+            'type'=>'order', 'title'=>$title, 'message'=>$shopper_message
         ]));
 
     }

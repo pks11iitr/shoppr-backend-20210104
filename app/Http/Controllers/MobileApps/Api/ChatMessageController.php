@@ -142,7 +142,7 @@ class ChatMessageController extends Controller
 
         $displaymessage=($message->type=='text')?$message->message :(in_array($message->type, ['audio', 'image'])?('['.$message->type.']'):($message->type=='address'?'Address shared by customer':'New Message'));
 
-        $chat->shoppr->notify(new FCMNotification('New Message', $displaymessage, array_merge(['message'=>$displaymessage], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
+        $chat->shoppr->notify(new FCMNotification('New Message', $displaymessage, array_merge(['title'=>'New Message', 'message'=>$displaymessage], ['type'=>'chat', 'chat_id'=>''.$message->chat_id ]), 'chat_screen'));
 
         return [
             'status'=>'success',
@@ -164,7 +164,7 @@ class ChatMessageController extends Controller
         $message->status='accepted';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Item Accepted', ($message->message??'Product').' has been accepted by customer', array_merge(['message'=>($message->message??'Product').' has been accepted by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Item Accepted', ($message->message??'Product').' has been accepted by customer', array_merge(['title'=>'Item Accepted', 'message'=>($message->message??'Product').' has been accepted by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]), 'chat_screen'));
 
         return [
             'status'=>'success',
@@ -183,7 +183,7 @@ class ChatMessageController extends Controller
         $message->status='rejected';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Item Rejected', ($message->message??'Product').' has been rejected by customer', array_merge(['message'=>($message->message??'Product').' has been rejected by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Item Rejected', ($message->message??'Product').' has been rejected by customer', array_merge(['title'=>'Item Rejected', 'message'=>($message->message??'Product').' has been rejected by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
         return [
             'status'=>'success',
             'message'=>'Product has been rejected'
@@ -206,7 +206,7 @@ class ChatMessageController extends Controller
         $message->status='cancelled';
         $message->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Product Cancelled', ($message->message??'Product').' has been cancelled by customer', array_merge(['message'=>($message->message??'Product').' has been cancelled by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Product Cancelled', ($message->message??'Product').' has been cancelled by customer', array_merge(['title'=>'Item Cancelled', 'message'=>($message->message??'Product').' has been cancelled by customer'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',
@@ -235,7 +235,7 @@ class ChatMessageController extends Controller
         $message->order->ratings=$request->ratings;
         $message->order->save();
 
-        $message->chat->shoppr->notify(new FCMNotification('Ratings Given', 'Customer rated your service', array_merge(['message'=>'Customer rated your service'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
+        $message->chat->shoppr->notify(new FCMNotification('Ratings Given', 'Customer rated your service', array_merge(['title'=>'Ratings Given', 'message'=>'Customer rated your service'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',
