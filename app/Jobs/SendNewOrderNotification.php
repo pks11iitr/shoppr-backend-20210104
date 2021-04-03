@@ -38,6 +38,7 @@ class SendNewOrderNotification implements ShouldQueue
         $shopprs=Shoppr::whereHas('locations', function($query) {
             $query->where('work_locations.id', $this->location->id??0);
         })
+            ->where('isactive', true)
             ->select('id', 'notification_token')
             ->get();
 
