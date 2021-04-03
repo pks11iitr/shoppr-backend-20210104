@@ -147,7 +147,7 @@ class ProfileController extends Controller
         }
 
         $orders=0;
-        if($work_locations){
+        if($user->isactive && $work_locations){
             $orders=Chat::where('shoppr_id', 0)
                 ->whereIn('location_id', $work_locations)
                 ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
