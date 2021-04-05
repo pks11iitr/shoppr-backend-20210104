@@ -169,7 +169,7 @@ class ChatController extends Controller
             ];
 
         $shoppr=Shoppr::active()->whereHas('locations', function($query)use($location) {
-            $query->where('name', $location->name);
+            $query->where('work_locations.id', $location->id);
         })->inRandomOrder()->first();
 
         if(!$shoppr)
