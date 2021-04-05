@@ -58,7 +58,7 @@ class ChatController extends Controller
                 'name'=>$userchat->shoppr->name,
                 'image'=>$userchat->shoppr->image,
                 'chat'=>$messagelist[$userchat->id]->message??('['.$messagelist[$userchat->id]->type.']'),
-                'date'=>date('d M', strtotime($messagelist[$userchat->id]->getRawOriginal('created_at'))),
+                'date'=>$messagelist[$userchat->id]->created_at,
             ];
         }
 
@@ -175,7 +175,7 @@ class ChatController extends Controller
         if(!$shoppr)
             return [
                 'status'=>'failed',
-                'message'=>'Currently no shoppr is available'
+                'message'=>'Sorry! Currently no ShopR is available at this location'
             ];
 
         $chat->shoppr_id=$shoppr->id;
