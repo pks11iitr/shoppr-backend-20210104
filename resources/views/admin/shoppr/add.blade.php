@@ -80,7 +80,7 @@
                                 <label>Select Location</label>
                                 <select class="form-control" name="location_id[]" required multiple>
                                     @foreach($worklocations as $location)
-                                    <option value="{{$location->id}}">{{$location->name}}</option>
+                                    <option value="{{$location->id}}">{{$location->name}}-{{$location->city->name??''}}</option>
                                     @endforeach
                                 </select>
                             </div>

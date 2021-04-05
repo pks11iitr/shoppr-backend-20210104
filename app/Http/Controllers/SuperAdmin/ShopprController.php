@@ -41,7 +41,7 @@ class ShopprController extends Controller
 
 
     public function create(Request $request){
-        $worklocations=WorkLocation::active()->get();
+        $worklocations=WorkLocation::active()->with('cityname')->get();
         return view('admin.shoppr.add', compact('worklocations'));
     }
 

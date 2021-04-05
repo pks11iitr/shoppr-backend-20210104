@@ -147,7 +147,7 @@
                                     <option value="">Please Select Location</option>
                                     @foreach($locations as $location)
                                         <option value="{{$location->id}}" @foreach($data->locations as $l){{($l->id??'')==$location->id?'selected':''}}@endforeach>
-                                            {{$location->name}}</option>
+                                            {{$location->name}}--{{$location->city->name??''}}</option>
                                     @endforeach
                                 </select>
                             </div>
