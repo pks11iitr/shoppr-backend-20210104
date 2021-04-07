@@ -73,7 +73,7 @@ class OrderConfirmListner
 
         //shoppr notification
 
-        $shopper_message='Order ID:'.$order->refid.' has been confirmed with total amount of Rs. '.$order->grandTotal().' at ShopR is successful.';
+        $shopper_message='Order ID:'.$order->refid.' has been confirmed with total amount of Rs. '.$order->grandTotal().' at ShopR.';
 
         Notification::create([
             'user_id'=>$order->shoppr_id,
