@@ -34,11 +34,12 @@ class FCMNotification extends Notification
                 ->setTitle($this->title)
                 ->setBody($this->body)
             //    ->setImage('https://images.freekaamaal.com/common-images/fkm-logo.png')
+
             )
             ->setAndroid(
                 AndroidConfig::create()
                     ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
-                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A')->setClickAction($this->action))
+                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A')->setClickAction($this->action)->setSound('default'))
             )->setApns(
                 ApnsConfig::create()
                     ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios')));
