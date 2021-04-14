@@ -180,6 +180,23 @@ class ChatController extends Controller
     }
 
 
+    public function terminateChat(Request $request, $id){
+
+        $user=$request->user;
+
+        $chat=Chat::where('shoppr_id', $user->id)->findOrFail($id);
+
+        $chat->is_terminated=true;
+        $chat->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Chat has been terminated'
+        ];
+
+    }
+
+
 
 
 }

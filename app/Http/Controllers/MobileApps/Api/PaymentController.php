@@ -312,7 +312,7 @@ class PaymentController extends Controller
     private function sendTrackNotification($order){
 
         $message=ChatMessage::create([
-            'message'=>'Track My Location',
+            'message'=>'Track Your Order',
             'type'=>'track',
             'chat_id'=>$order->chat_id,
             'order_id'=>$order->id
