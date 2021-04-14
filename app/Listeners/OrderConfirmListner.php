@@ -60,7 +60,7 @@ class OrderConfirmListner
         $message=ChatMessage::create([
             'chat_id'=>$order->chat_id,
             'message'=>$message,
-            'type'=>'text',
+            'type'=>'order_confirmed',
             //'price'=>$request->price,
             'quantity'=>0,
             'direction'=>1,
