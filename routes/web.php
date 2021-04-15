@@ -170,7 +170,10 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function() {
 
     });
 
+    Route::group(['prefix'=>'merchant'], function(){
+        Route::get('/','SuperAdmin\MerchantApplicationController@index')->name('merchant.list');
 
+    });
 
 
 

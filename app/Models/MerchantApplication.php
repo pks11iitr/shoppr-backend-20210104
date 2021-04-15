@@ -23,4 +23,8 @@ class MerchantApplication extends Model
         return Storage::url('customers/default.jpeg');
     }
 
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer','customer_id');
+    }
+
 }
