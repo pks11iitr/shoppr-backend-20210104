@@ -63,6 +63,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Available to accept orders?</label>
+                                <select class="form-control" name="is_available" required>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-6" style="display:none">
                             <div class="form-group">
                                <label for="exampleInputEmail1">Latitude</label><br>

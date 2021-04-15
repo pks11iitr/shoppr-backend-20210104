@@ -161,6 +161,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Available to accept orders?</label>
+                                <select class="form-control" name="is_available" required>
+                                    <option value="1" {{$data->is_available==1?'selected':''}}>Yes</option>
+                                    <option value="0" {{$data->is_available==0?'selected':''}}>No</option>
+                                </select>
+                            </div>
+                        </div>
 
 {{--                        <div class="col-md-6">--}}
 {{--                            <div class="form-group">--}}
