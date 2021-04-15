@@ -149,7 +149,7 @@ class ChatMessageController extends Controller
         return [
 
             'status'=>'success',
-            'message'=>[],
+            'message'=>'',
             'data'=>compact('chats', 'chat_id', 'customer')
 
         ];
