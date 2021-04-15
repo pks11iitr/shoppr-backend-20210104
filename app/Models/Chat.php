@@ -27,7 +27,7 @@ class Chat extends Model
     }
 
     public function getCreatedAtAttribute($value){
-        return date('d/m/Y h:iA', strtotime($value));
+        return date('h:iA', strtotime($value));
     }
 
     public function rejectedby(){
