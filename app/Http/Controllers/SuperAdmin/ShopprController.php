@@ -57,7 +57,7 @@ class ShopprController extends Controller
             'image'=>'required|image',
         ]);
 
-        if($data=Shoppr::create($request->only('name','lat','lang','isactive','mobile','location','status')))
+        if($data=Shoppr::create($request->only('name','lat','lang','isactive','mobile','location','status', 'is_available')))
         {
             if($request->image){
                 $data->saveImage($request->image, 'customers');
@@ -95,7 +95,7 @@ class ShopprController extends Controller
         //var_dump($request->pay_per_km);
         //var_dump($request->pay_commission);die();
 
-        if($data->update($request->only('name','isactive','status','permanent_address', 'permanent_pin','permanent_city','permanent_state', 'secondary_mobile','emergency_mobile','work_type','account_no','ifsc_code','account_holder','bank_name','address','state','city','email')))
+        if($data->update($request->only('name','isactive','status','permanent_address', 'permanent_pin','permanent_city','permanent_state', 'secondary_mobile','emergency_mobile','work_type','account_no','ifsc_code','account_holder','bank_name','address','state','city','email', 'is_available')))
         {
             if($request->image){
                 $data->saveImage($request->image, 'customers');
