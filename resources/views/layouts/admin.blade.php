@@ -227,6 +227,12 @@
                             <p>Work Location</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('merchant.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Merchant Application</p>
+                        </a>
+                    </li>
                    {{-- <li class="nav-item">
                         <a href="{{route('news.list')}}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
