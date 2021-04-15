@@ -49,7 +49,7 @@ class ChatController extends Controller
             return Excel::download(new ChatExport($chats), 'chats.xlsx');
         }
 
-        $chats=$chats->paginate(20);
+        $chats=$chats->orderBy('id', 'desc')->paginate(20);
         $riders = Shoppr::active()->get();
 
         return view('admin.chat.view', compact('chats','riders'));
