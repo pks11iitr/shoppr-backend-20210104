@@ -124,7 +124,8 @@ class OrderController extends Controller
 
         $order->shoppr->notify(new FCMNotification('Order Delivered', 'Good Job! Order ID: '.$order->refid.' has been delivered.', array_merge(['message'=>'Good Job! Order ID: '.$order->refid.' has been delivered.', 'title'=>'Order Delivered'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
-
+        $user->is_available=true;
+        $user->save();
 
         return [
             'status'=>'success',

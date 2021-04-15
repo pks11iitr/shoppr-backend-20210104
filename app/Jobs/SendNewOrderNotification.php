@@ -39,6 +39,7 @@ class SendNewOrderNotification implements ShouldQueue
             $query->where('work_locations.id', $this->location->id??0);
         })
             ->where('isactive', true)
+            ->where('is_available', true)
             ->select('id', 'notification_token')
             ->get();
 

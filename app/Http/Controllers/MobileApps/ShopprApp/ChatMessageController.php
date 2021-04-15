@@ -26,6 +26,13 @@ class ChatMessageController extends Controller
             ->where('id', $chat_id)
             ->firstOrFail();
 
+        if($chat->is_terminated){
+            return [
+                'status'=>'Failed',
+                'message'=>'This chat has been terminated. No more communication can be done on this order'
+            ];
+        }
+
         switch($request->type){
 
             case 'text':

@@ -49,6 +49,10 @@ class Order extends Model
         return $this->belongsTo('App\Models\Shoppr', 'shoppr_id');
     }
 
+    public function chat(){
+        return $this->belongsTo('App\Models\Chat', 'chat_id');
+    }
+
     public function getCreatedAtAttribute($value){
         return date('d/m/Y h:iA', strtotime($value));
     }

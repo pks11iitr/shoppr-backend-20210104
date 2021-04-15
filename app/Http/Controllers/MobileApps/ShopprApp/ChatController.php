@@ -189,6 +189,9 @@ class ChatController extends Controller
         $chat->is_terminated=true;
         $chat->save();
 
+        $user->is_available=true;
+        $user->save();
+
         return [
             'status'=>'success',
             'message'=>'Chat has been terminated'

@@ -168,7 +168,9 @@ class ChatController extends Controller
                 'message'=>'Location is not servicable'
             ];
 
-        $shoppr=Shoppr::active()->whereHas('locations', function($query)use($location) {
+        $shoppr=Shoppr::active()
+            ->where('is_available', true)
+            ->whereHas('locations', function($query)use($location) {
             $query->where('work_locations.id', $location->id);
         })->inRandomOrder()->first();
 
@@ -181,6 +183,8 @@ class ChatController extends Controller
         $chat->shoppr_id=$shoppr->id;
         $chat->save();
 
+        $shoppr->is_available=false;
+        $shoppr->save();
 
 //        Notification::create([
 //            'user_id'=>$chat->customer->id,
@@ -189,7 +193,7 @@ class ChatController extends Controller
 //            'description'=>'Shoppr Assigned',
 //            'user_type'=>'CUSTOMER'
 //        ]);
-        $chat->customer->notify(new FCMNotification('ShopR Assigned', 'ShopR Assigned', array_merge(['message'=>'ShopR Assigned', 'title'=>'ShopR Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
+        $chat->customer->notify(new FCMNotification('ShopR Assigned', 'ShopR Has Been Assigned. Please upload shopping list', array_merge(['message'=>'ShopR Has Been Assigned. Please upload shopping list', 'title'=>'ShopR Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
 
         Notification::create([
             'user_id'=>$shoppr->id,

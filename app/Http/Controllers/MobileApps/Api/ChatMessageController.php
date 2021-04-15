@@ -42,7 +42,7 @@ class ChatMessageController extends Controller
         return [
 
             'status'=>'success',
-            'message'=>[],
+            'message'=>'',
             'data'=>compact('chats', 'chat_id', 'shoppr', 'items_count')
 
         ];
@@ -63,6 +63,13 @@ class ChatMessageController extends Controller
             ->where('customer_id', $user->id)
             ->where('id', $chat_id)
             ->firstOrFail();
+
+        if($chat->is_terminated){
+            return [
+                'status'=>'failed',
+                'message'=>'No more communication can be done on this order. Please start new order.'
+            ];
+        }
 
         switch($request->type){
 
@@ -161,6 +168,13 @@ class ChatMessageController extends Controller
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
 
+        if($message->chat->is_terminated){
+            return [
+                'status'=>'failed',
+                'message'=>'This chat has been terminated. Please start new order.'
+            ];
+        }
+
         $message->status='accepted';
         $message->save();
 
@@ -179,6 +193,13 @@ class ChatMessageController extends Controller
         ->whereHas('chat', function($chat)use($user){
             $chat->where('customer_id', $user->id);
         })->findOrFail($message_id);
+
+        if($message->chat->is_terminated){
+            return [
+                'status'=>'Failed',
+                'message'=>'This chat has been terminated. Please start new order.'
+            ];
+        }
 
         $message->status='rejected';
         $message->save();
@@ -203,6 +224,14 @@ class ChatMessageController extends Controller
                 'status'=>'failed',
                 'message'=>'Item Cannot Be Cancelled Now'
             ];
+
+        if($message->chat->is_terminated){
+            return [
+                'status'=>'failed',
+                'message'=>'This chat has been terminated. Please start new order.'
+            ];
+        }
+
         $message->status='cancelled';
         $message->save();
 
