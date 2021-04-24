@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\LocationLog;
 use App\Models\WorkLocations;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,10 @@ class AvailableLocationController extends Controller
     {
         $location = $request->location;
         $city = City::active()->where('name', $request->city)->first();
+
+        LocationLog::create([
+            'data'=>$request->complete??null
+        ]);
 
         if (!$city)
             return [

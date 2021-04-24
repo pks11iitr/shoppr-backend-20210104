@@ -23,10 +23,6 @@ class HomeController extends Controller
 
 //       $shopper= Shoppr::groupBy('location')->select(DB::raw('count(*) as shoppr_count, location'))->where('isactive',1)->get();
 
-        LocationLog::create([
-            'data'=>$request->complete??null
-        ]);
-
         $shopprs=Shoppr::active()
             ->where('is_available', true)
             ->whereHas('locations', function($query)use($location) {
