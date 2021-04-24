@@ -41,7 +41,7 @@ class TerminateChat extends Command
     {
         $date=date('Y-m-d', strtotime('-1 days'));
         Chat::where('is_terminated', false)
-            ->where(DB::raw('DATE(created_at)'), $date)
+            ->where(DB::raw('DATE(created_at)'), '<=', $date)
             ->update(['is_terminated'=>true]);
     }
 }
