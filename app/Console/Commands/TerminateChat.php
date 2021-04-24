@@ -40,8 +40,17 @@ class TerminateChat extends Command
     public function handle()
     {
         $date=date('Y-m-d', strtotime('-1 days'));
-        Chat::where('is_terminated', false)
+        $chats=Chat::with('shoppr')->where('is_terminated', false)
             ->where(DB::raw('DATE(created_at)'), '<=', $date)
-            ->update(['is_terminated'=>true]);
+            ->get();
+        foreach($chats as $c){
+            $c->update(['is_terminated'=>true]);
+            if($c->shoppr){
+                $c->shoppr->is_available=true;
+                $c->save();
+            }
+
+
+        }
     }
 }

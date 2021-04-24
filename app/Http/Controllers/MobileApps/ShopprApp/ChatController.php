@@ -142,6 +142,7 @@ class ChatController extends Controller
                     ->where('shoppr_id', 0) // unassigned chats
                     ->orderBy('id', 'desc')
                     ->whereIn('location_id', $shopper_locations)
+                    ->where('is_terminated', false)
                     ->get();
 
 
