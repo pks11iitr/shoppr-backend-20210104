@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\LocationLog;
 use App\Models\Notification;
 use App\Models\Shoppr;
 use App\Models\WorkLocations;
@@ -22,6 +23,10 @@ class HomeController extends Controller
 
 //       $shopper= Shoppr::groupBy('location')->select(DB::raw('count(*) as shoppr_count, location'))->where('isactive',1)->get();
 
+        LocationLog::create([
+            'data'=>$request->complete??null
+        ]);
+
         $shopprs=Shoppr::active()
             ->where('is_available', true)
             ->whereHas('locations', function($query)use($location) {
@@ -37,6 +42,9 @@ class HomeController extends Controller
             ->where('user_id', $user->id)
             ->where('seen_at', null)
             ->count();
+
+
+
 
 
        return [
