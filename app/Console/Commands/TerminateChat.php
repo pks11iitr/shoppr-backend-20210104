@@ -13,7 +13,7 @@ class TerminateChat extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'terminate:chats';
 
     /**
      * The console command description.
