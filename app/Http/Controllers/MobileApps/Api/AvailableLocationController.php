@@ -31,7 +31,9 @@ class AvailableLocationController extends Controller
         $city = City::active()->where('name', $request->city)->first();
 
         LocationLog::create([
-            'data'=>$request->complete??null
+            'data'=>$request->complete??null,
+            'location'=>$location,
+            'city'=>$city
         ]);
 
         if (!$city)

@@ -11,5 +11,5 @@ class LocationLog extends Model
 
     protected $table='location_json';
 
-    protected $fillable=['data'];
+    protected $fillable=['data', 'location', 'city'];
 }
