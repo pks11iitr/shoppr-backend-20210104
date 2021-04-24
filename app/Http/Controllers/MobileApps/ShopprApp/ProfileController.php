@@ -153,6 +153,7 @@ class ProfileController extends Controller
                 ->whereDoesntHave('rejectedby', function ($rejectedby) use ($user) {
                     $rejectedby->where('rejected_chats.shoppr_id', $user->id);
                 })
+                ->where('is_terminated', false)
                 ->count();
         }
 
