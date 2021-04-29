@@ -122,7 +122,7 @@ class ChatController extends Controller
     {
         $user = $request->user;
 
-        if ($user->isactive) {
+        if ($user->isactive && $user->is_available) {
 
             $shopper_locations_obj=$user->locations;
             $shopper_locations=[];
