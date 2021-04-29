@@ -74,8 +74,14 @@ class ChatController extends Controller
     public function acceptChat(Request $request, $chat_id){
         $user=$request->user;
 
+        if(!$user->is_available)
+            return [
+                'status'=>'failed',
+                'message'=>'Please complete your last order before accepting this'
+            ];
         $chat=Chat::where('shoppr_id', 0)
             ->find($chat_id);
+
         if(!$chat)
             return [
                 'status'=>'failed',
@@ -96,6 +102,12 @@ class ChatController extends Controller
 
     public function rejectChat(Request $request, $chat_id){
         $user=$request->user;
+
+        if(!$user->is_available)
+            return [
+                'status'=>'failed',
+                'message'=>'Please complete your last order before this'
+            ];
 
         $chat=Chat::where('shoppr_id', 0)
             ->find($chat_id);
