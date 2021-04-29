@@ -91,6 +91,9 @@ class ChatController extends Controller
         $chat->shoppr_id=$user->id;
         $chat->save();
 
+        $user->is_available=false;
+        $user->save();
+
         $chat->customer->notify(new FCMNotification('Shoppr Assigned', 'A ShopR has been assigned to you. Please upload your list', array_merge(['message'=>'A ShopR has been assigned to you. Please upload your list', 'title'=>'ShopR Assigned'], ['type'=>'chat-assigned', 'chat_id'=>''.$chat->id]),'chat_screen'));
 
         return [
