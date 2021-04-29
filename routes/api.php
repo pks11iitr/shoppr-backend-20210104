@@ -91,7 +91,7 @@ $api->post('check-availability', 'MobileApps\Api\AvailableLocationController@che
 $api->group(['prefix' => 'shoppr'], function ($api) {
 
     //$api->post('login', 'MobileApps\Auth\LoginController@login');
-
+    $api->get('app-version', 'MobileApps\Api\VersionController@version');
     $api->post('login-with-otp', 'MobileApps\ShopprApp\Auth\LoginController@loginWithOtp');
     $api->post('register', 'MobileApps\ShopprApp\Auth\RegisterController@register');
 //$api->post('forgot', 'MobileApps\Auth\ForgotPasswordController@forgot');
