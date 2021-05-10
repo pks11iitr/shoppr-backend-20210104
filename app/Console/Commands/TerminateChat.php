@@ -45,10 +45,10 @@ class TerminateChat extends Command
             ->get();
         foreach($chats as $c){
             $c->update(['is_terminated'=>true]);
-//            if($c->shoppr){
-//                $c->shoppr->is_available=true;
-//                $c->shoppr->save();
-//            }
+            if($c->shoppr){
+                $c->shoppr->is_available=true;
+                $c->shoppr->save();
+            }
         }
     }
 }
