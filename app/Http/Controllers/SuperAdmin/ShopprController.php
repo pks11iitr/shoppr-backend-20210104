@@ -67,6 +67,16 @@ class ShopprController extends Controller
                 $data->locations()->sync($request->location_id);
             }
 
+            //register on sendbird app
+            $sendbird=app('App\Services\SendBird\SendBird');
+            $response=$sendbird->createUser($data);
+
+            if(isset($response['user_id'])){
+                $data->sendbird_token=$response['access_token']??null;
+                $data->save();
+            }
+
+
             return redirect()->route('shoppr.list')->with('success', 'Data has been created');
         }
         return redirect()->back()->with('error', 'Data create failed');
@@ -114,6 +124,18 @@ class ShopprController extends Controller
             $data->pay_delivery=$delivery;
             $data->form_step=5;
             $data->save();
+
+            //register on sendbird app
+            if(empty($data->sendbird_token)){
+                $sendbird=app('App\Services\SendBird\SendBird');
+                $response=$sendbird->createUser($data);
+
+                if(isset($response['user_id'])){
+                    $data->sendbird_token=$response['access_token']??null;
+                    $data->save();
+                }
+            }
+
 
             return redirect()->route('shoppr.list')->with('success', 'Data has been updated');
         }
