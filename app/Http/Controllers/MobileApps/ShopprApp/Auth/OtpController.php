@@ -51,16 +51,6 @@ class OtpController extends Controller
                 $user->form_step=1;
                 $user->save();
 
-                if(empty($user->sendbird_token)){
-                    $sendbird=app('App\Services\SendBird\SendBird');
-                    $response=$sendbird->createUser($user);
-
-                    if(isset($response['user_id'])){
-                        $user->sendbird_token=$response['access_token']??null;
-                        $user->save();
-                    }
-                }
-
                 return [
                     'status'=>'success',
                     'form_step'=>$user->form_step??0,
@@ -97,6 +87,16 @@ class OtpController extends Controller
                 $user->status=1;
                 $user->form_step=($user->form_step>0?$user->form_step:1);
                 $user->save();
+
+                if(empty($user->sendbird_token)){
+                    $sendbird=app('App\Services\SendBird\SendBird');
+                    $response=$sendbird->createUser($user);
+
+                    if(isset($response['user_id'])){
+                        $user->sendbird_token=$response['access_token']??null;
+                        $user->save();
+                    }
+                }
 
                 return [
                     'status'=>'success',
