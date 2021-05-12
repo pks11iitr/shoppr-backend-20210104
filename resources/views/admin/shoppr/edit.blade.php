@@ -123,7 +123,7 @@
                                 <select class="form-control" name="city" required>
                                     <option value="0" >Select</option>
                                     @foreach($cities as $city)
-                                    <option value="{{$city->id}}" {{$city->id==$data->city?'selected':''}}>{{$city->name}}</option>
+                                    <option value="{{$city->id}}" {{$city->id==$data->city->id?'selected':''}}>{{$city->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -135,7 +135,7 @@
                                 <select class="form-control" name="city" required>
                                     <option value="0" >Select</option>
                                     @foreach($States as $state)
-                                        <option value="{{$state->id}}" {{$state->id==$data->state?'selected':''}}>{{$state->name}}</option>
+                                        <option value="{{$state->id}}" {{$state->id==$data->state->id?'selected':''}}>{{$state->name}}</option>
                                         @endforeach
                                 </select>
                             </div>
