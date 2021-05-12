@@ -6,6 +6,7 @@ use App\Events\CustomerRegistered;
 use App\Models\OTPModel;
 use App\Services\SendBird;
 use App\Services\SMS\Msg91;
+use App\Services\SMS\Nimbusit;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -33,7 +34,7 @@ class CustomerRegisterListner implements ShouldQueue
 
         $otp=OTPModel::createOTP('customer', $event->user->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
-        Msg91::send($event->user->mobile,$msg);
+        Nimbusit::send($event->user->mobile,$msg);
 
         //register on sendbird app
         $sendbird=app('App\Services\SendBird\SendBird');

@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\ShopprRegistered;
 use App\Models\OTPModel;
 use App\Services\SMS\Msg91;
+use App\Services\SMS\Nimbusit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -30,7 +31,7 @@ class ShopprRegisterListner
     {
         $otp=OTPModel::createOTP('shopper', $event->shoppr->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
-        Msg91::send($event->shoppr->mobile,$msg);
+        Nimbusit::send($event->shoppr->mobile,$msg);
 
         //register on sendbird app
         $sendbird=app('App\Services\SendBird\SendBird');

@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\SendOtp;
 use App\Services\SMS\Msg91;
+use App\Services\SMS\Nimbusit;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -27,6 +28,6 @@ class SendOtpListner implements ShouldQueue
      */
     public function handle(SendOtp $event)
     {
-        Msg91::send($event->mobile,$event->message);
+        Nimbusit::send($event->mobile,$event->message);
     }
 }

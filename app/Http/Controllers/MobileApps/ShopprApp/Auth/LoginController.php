@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\OTPModel;
 use App\Models\Shoppr;
 use App\Services\SMS\Msg91;
+use App\Services\SMS\Nimbusit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -86,7 +87,7 @@ class LoginController extends Controller
         if($user->status==0){
             $otp=OTPModel::createOTP('shopper', $user->id, 'login');
             $msg=str_replace('{{otp}}', $otp, config('sms-templates.login'));
-            Msg91::send($user->mobile,$msg);
+            Nimbusit::send($user->mobile,$msg);
             return ['status'=>'success','form_step'=>$user->form_step, 'message'=>'otp verify', 'token'=>''];
         }
         else if($user->status==1)

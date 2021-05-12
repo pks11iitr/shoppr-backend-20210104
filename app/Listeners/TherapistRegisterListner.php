@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\TherapistRegistered;
 use App\Models\OTPModel;
 use App\Services\SMS\Msg91;
+use App\Services\SMS\Nimbusit;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -30,6 +31,6 @@ class TherapistRegisterListner
     {
         $otp=OTPModel::createOTP('therapist', $event->user->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
-        Msg91::send($event->user->mobile,$msg);
+        Nimbusit::send($event->user->mobile,$msg);
     }
 }

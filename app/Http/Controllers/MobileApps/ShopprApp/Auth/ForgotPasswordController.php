@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp\Auth;
 use App\Models\Customer;
 use App\Models\OTPModel;
 use App\Services\SMS\Msg91;
+use App\Services\SMS\Nimbusit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +23,7 @@ class ForgotPasswordController extends Controller
         }
         $otp=OTPModel::createOTP('customer', $customer->id, 'reset');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.reset'));
-        Msg91::send($customer->mobile,$msg);
+        Nimbusit::send($customer->mobile,$msg);
         return ['status'=>'success', 'message'=>'otp verify', 'token'=>''];
     }
 
