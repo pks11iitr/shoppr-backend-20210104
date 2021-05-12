@@ -263,6 +263,9 @@ class ProfileController extends Controller
             'address'=>$request->address
         ]);
 
+        $user->is_available=false;
+        $user->save();
+
         return [
             'status'=>'success',
         ];
