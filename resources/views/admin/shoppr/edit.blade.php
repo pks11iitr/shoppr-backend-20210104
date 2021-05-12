@@ -132,7 +132,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Current State</label>
 
-                                <select class="form-control" name="city" required>
+                                <select class="form-control" name="state" required>
                                     <option value="0" >Select</option>
                                     @foreach($States as $state)
                                         <option value="{{$state->id}}" {{$state->id==$data->state?'selected':''}}>{{$state->name}}</option>
