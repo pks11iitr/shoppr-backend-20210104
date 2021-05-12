@@ -46,6 +46,8 @@ class OrderController extends Controller
             ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
             ->findOrFail($order_id);
 
+        $payment_text=($order->payment_status=='Paid')?'Total Paid':'To Be Paid';
+
         if($order->status=='Confirmed')
             $order->show_deliver_button=1;
         else
@@ -53,7 +55,7 @@ class OrderController extends Controller
 
         return [
             'status'=>'success',
-            'data'=>compact('order')
+            'data'=>compact('order', 'payment_text')
         ];
 
     }

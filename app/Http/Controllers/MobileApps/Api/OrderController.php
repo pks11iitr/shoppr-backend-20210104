@@ -113,10 +113,12 @@ class OrderController extends Controller
         }else
             $show_invoice_link=0;
 
+        $payment_text=($order->payment_status=='Paid')?'Total Paid':'To Be Paid';
+
 
         return [
                 'status'=>'success',
-                'data'=>compact('order', 'show_invoice_link')
+                'data'=>compact('order', 'show_invoice_link', 'payment_text')
             ];
 
     }
