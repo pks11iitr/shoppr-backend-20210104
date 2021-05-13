@@ -125,50 +125,50 @@ class OtpController extends Controller
     }
 
 
-    protected function verifyResetPassword(Request $request){
-        $user=Customer::where('mobile', $request->mobile)->first();
-        if(in_array($user->status, [0,1])){
-            if(OTPModel::verifyOTP('customer',$user->id,$request->type,$request->otp)){
-
-                $user->status=1;
-                $user->save();
-
-                return [
-                    'status'=>'success',
-                    'form_step'=>$user->form_step??0,
-                    'message'=>'OTP Has Been Verified',
-                    'token'=>Auth::guard('customerapi')->fromUser($user),
-                    'user_id'=>'Shoppr-'.$user->id,
-                    'sendbird_token'=>$user->sendbird_token
-                ];
-            }
-
-            return [
-                'status'=>'failed',
-                'form_step'=>'',
-                'message'=>'OTP is not correct',
-                'token'=>''
-            ];
-
-        }
-        return [
-            'status'=>'failed',
-            'form_step'=>'',
-            'message'=>'Account has been blocked',
-            'token'=>''
-        ];
-    }
+//    protected function verifyResetPassword(Request $request){
+//        $user=Customer::where('mobile', $request->mobile)->first();
+//        if(in_array($user->status, [0,1])){
+//            if(OTPModel::verifyOTP('customer',$user->id,$request->type,$request->otp)){
+//
+//                $user->status=1;
+//                $user->save();
+//
+//                return [
+//                    'status'=>'success',
+//                    'form_step'=>$user->form_step??0,
+//                    'message'=>'OTP Has Been Verified',
+//                    'token'=>Auth::guard('customerapi')->fromUser($user),
+//                    'user_id'=>'Shoppr-'.$user->id,
+//                    'sendbird_token'=>$user->sendbird_token
+//                ];
+//            }
+//
+//            return [
+//                'status'=>'failed',
+//                'form_step'=>'',
+//                'message'=>'OTP is not correct',
+//                'token'=>''
+//            ];
+//
+//        }
+//        return [
+//            'status'=>'failed',
+//            'form_step'=>'',
+//            'message'=>'Account has been blocked',
+//            'token'=>''
+//        ];
+//    }
 
 
     public function resend(Request $request){
         $request->validate([
             'type'=>'required|string|max:15',
-            'mobile'=>'required|string|digits:10|exists:customers',
+            'mobile'=>'required|string|digits:10|exists:shoppers',
         ]);
 
-        $user=Customer::where('mobile', $request->mobile)->first();
+        $user=Shoppr::where('mobile', $request->mobile)->first();
         if(in_array($user->status, [0,1])){
-                $otp=OTPModel::createOTP('customer', $user->id, $request->type);
+                $otp=OTPModel::createOTP('shopper', $user->id, $request->type);
                 $msg=str_replace('{{otp}}', $otp, config('sms-templates.'.$request->type));
                 event(new SendOtp($user->mobile, $msg));
                 return [
