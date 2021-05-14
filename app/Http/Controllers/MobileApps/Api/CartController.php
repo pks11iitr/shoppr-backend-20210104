@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MobileApps\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\Settings;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,8 @@ class CartController extends Controller
         foreach($items as $i){
             $total=$total+$i->price;
         }
-        $service_charge=100;
+        $settings=Settings::where('name', 'Service Fee')->first();
+        $service_charge=$settings->value??0;
 
         $grand_total=$total+$service_charge;
 
