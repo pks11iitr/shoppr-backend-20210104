@@ -17,7 +17,7 @@ class ShopperLocationController extends Controller
 
         $user->save();
 
-        CurrentLocation::created([
+        CurrentLocation::create([
             'lat'=>$request->lat,
             'lang'=>$request->lang,
             'shoppr_id'=>$user->id
