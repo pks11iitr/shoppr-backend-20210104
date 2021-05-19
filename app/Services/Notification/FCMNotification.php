@@ -10,6 +10,7 @@ use NotificationChannels\Fcm\Resources\AndroidFcmOptions;
 use NotificationChannels\Fcm\Resources\AndroidNotification;
 use NotificationChannels\Fcm\Resources\ApnsConfig;
 use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
+use phpDocumentor\Reflection\Types\Self_;
 
 
 class FCMNotification extends Notification
@@ -39,7 +40,12 @@ class FCMNotification extends Notification
             ->setAndroid(
                 AndroidConfig::create()
                     ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
-                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A')->setClickAction($this->action)->setSound('ringing.mp3'))
+                    ->setNotification(AndroidNotification::create()
+                        ->setColor('#0A0A0A')
+                        ->setClickAction($this->action)
+                        ->setSound('ringing.mp3')
+                        ->setNotificationPriority('high')
+                    )
             )->setApns(
                 ApnsConfig::create()
                     ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios')));
