@@ -10,6 +10,7 @@ use NotificationChannels\Fcm\Resources\AndroidFcmOptions;
 use NotificationChannels\Fcm\Resources\AndroidNotification;
 use NotificationChannels\Fcm\Resources\ApnsConfig;
 use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
+use NotificationChannels\Fcm\Resources\NotificationPriority;
 use phpDocumentor\Reflection\Types\Self_;
 
 
@@ -44,7 +45,7 @@ class FCMNotification extends Notification
                         ->setColor('#0A0A0A')
                         ->setClickAction($this->action)
                         ->setSound('ringing.mp3')
-                        ->setNotificationPriority('high')
+                        ->setNotificationPriority(NotificationPriority::PRIORITY_HIGH())
                     )
             )->setApns(
                 ApnsConfig::create()
