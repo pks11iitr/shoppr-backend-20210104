@@ -79,17 +79,21 @@ class ChatController extends Controller
                 'status'=>'failed',
                 'message'=>'Please complete your last order before accepting this'
             ];
-        $chat=Chat::where('shoppr_id', 0)
-            ->find($chat_id);
+        DB::beginTransaction();
+            $chat=Chat::where('shoppr_id', 0)
+                ->lockForUpdate()
+                ->find($chat_id);
 
-        if(!$chat)
-            return [
-                'status'=>'failed',
-                'message'=>"This booking is no longer available"
-            ];
-
-        $chat->shoppr_id=$user->id;
-        $chat->save();
+            if(!$chat){
+                DB::commit();
+                return [
+                    'status'=>'failed',
+                    'message'=>"This booking is no longer available"
+                ];
+            }
+            $chat->shoppr_id=$user->id;
+            $chat->save();
+        DB::commit();
 
         $user->is_available=false;
         $user->save();
