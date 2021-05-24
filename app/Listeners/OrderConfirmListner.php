@@ -68,7 +68,7 @@ class OrderConfirmListner
         ]);
 
         $user->notify(new FCMNotification($title, $message . $user->name, [
-            'type'=>'order', 'title'=>$title, 'message'=>$message
+            'type'=>'order', 'title'=>$title, 'message'=>$message, 'chat_id'=>''.$order->chat_id
         ]));
 
         //shoppr notification
@@ -85,7 +85,7 @@ class OrderConfirmListner
         ]);
 
         $order->shoppr->notify(new FCMNotification($title, $shopper_message , [
-            'type'=>'order', 'title'=>$title, 'message'=>$shopper_message
+            'type'=>'order', 'title'=>$title, 'message'=>$shopper_message, 'chat_id'=>''.$order->chat_id
         ]));
 
     }
