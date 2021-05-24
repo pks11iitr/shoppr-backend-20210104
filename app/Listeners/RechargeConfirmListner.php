@@ -66,6 +66,7 @@ class RechargeConfirmListner
                     'type'=>'recharge',
                     'title'=>'Recharge Done',
                     'message'=>$wallet->customer->name.' has made a recharge of Rs.'.$wallet->amount,
+                    'chat_id'=>''.$wallet->chat_id
                 ], 'notification_screen'));
 
                 ChatMessage::create([
