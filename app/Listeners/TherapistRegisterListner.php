@@ -31,6 +31,6 @@ class TherapistRegisterListner
     {
         $otp=OTPModel::createOTP('therapist', $event->user->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
-        Nimbusit::send($event->user->mobile,$msg);
+        Nimbusit::send($event->user->mobile,$msg, env('OTP_TEMPLATE_ID'));
     }
 }

@@ -23,7 +23,7 @@ class ForgotPasswordController extends Controller
         }
         $otp=OTPModel::createOTP('customer', $customer->id, 'reset');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.reset'));
-        Nimbusit::send($customer->mobile,$msg);
+        Nimbusit::send($customer->mobile,$msg, env('OTP_TEMPLATE_ID'));
         return ['status'=>'success', 'message'=>'otp verify', 'token'=>''];
     }
 

@@ -31,7 +31,7 @@ class ShopprRegisterListner
     {
         $otp=OTPModel::createOTP('shopper', $event->shoppr->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
-        Nimbusit::send($event->shoppr->mobile,$msg);
+        Nimbusit::send($event->shoppr->mobile,$msg, env('OTP_TEMPLATE_ID'));
 
         //register on sendbird app
         $sendbird=app('App\Services\SendBird\SendBird');

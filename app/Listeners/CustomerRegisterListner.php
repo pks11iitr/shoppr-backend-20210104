@@ -34,7 +34,7 @@ class CustomerRegisterListner implements ShouldQueue
 
         $otp=OTPModel::createOTP('customer', $event->user->id, 'register');
         $msg=str_replace('{{otp}}', $otp, config('sms-templates.register'));
-        Nimbusit::send($event->user->mobile,$msg);
+        Nimbusit::send($event->user->mobile,$msg, env('OTP_TEMPLATE_ID'));
 
         //register on sendbird app
         $sendbird=app('App\Services\SendBird\SendBird');

@@ -85,7 +85,7 @@ class LoginController extends Controller
         if($user->status==0){
             $otp=OTPModel::createOTP('customer', $user->id, 'login');
             $msg=str_replace('{{otp}}', $otp, config('sms-templates.login'));
-            Nimbusit::send($user->mobile,$msg);
+            Nimbusit::send($user->mobile,$msg, env('OTP_TEMPLATE_ID'));
             return ['status'=>'success', 'message'=>'otp verify', 'token'=>''];
         }
         else if($user->status==1)

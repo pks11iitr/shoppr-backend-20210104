@@ -28,6 +28,6 @@ class SendOtpListner implements ShouldQueue
      */
     public function handle(SendOtp $event)
     {
-        Nimbusit::send($event->mobile,$event->message);
+        Nimbusit::send($event->mobile,$event->message, env('OTP_TEMPLATE_ID'));
     }
 }
