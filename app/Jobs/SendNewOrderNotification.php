@@ -41,7 +41,7 @@ class SendNewOrderNotification implements ShouldQueue
         })
             ->where('isactive', true)
             ->where('is_available', true)
-            ->select('id', 'notification_token')
+            ->select('id', 'notification_token', 'mobile')
             ->get();
 
         foreach($shopprs as $shoppr){
