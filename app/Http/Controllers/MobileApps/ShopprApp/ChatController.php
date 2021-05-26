@@ -204,13 +204,29 @@ class ChatController extends Controller
 
         $user=$request->user;
 
-        $chat=Chat::where('shoppr_id', $user->id)->findOrFail($id);
+        $chat=Chat::with('customer')
+            ->where('shoppr_id', $user->id)->findOrFail($id);
 
         $chat->is_terminated=true;
         $chat->save();
 
         $user->is_available=true;
         $user->save();
+
+        $message=ChatMessage::create([
+            'chat_id'=>$chat->id,
+            'message'=>'The chat/ order with the shopper has been terminated.
+You may again raise a new order with another shopper.',
+            'type'=>'text',
+            'price'=>0,
+            'quantity'=>0,
+            'direction'=>1,
+        ]);
+
+
+        $chat->customer->notify(new FCMNotification('New Message from ShopR', 'The chat/ order with the shopper has been terminated.
+You may again raise a new order with another shopper.', array_merge(['title'=>'New Message from ShopR','message'=>'The chat/ order with the shopper has been terminated.
+You may again raise a new order with another shopper.'], ['type'=>'chat', 'chat_id'=>''.$message->chat_id]),'chat_screen'));
 
         return [
             'status'=>'success',
