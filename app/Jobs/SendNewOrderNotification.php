@@ -56,8 +56,7 @@ class SendNewOrderNotification implements ShouldQueue
 
                 $shoppr->notify(new FCMNotification('New Order', 'A new order has been raised. Please accept to start working', array_merge(['message'=>'New Order', 'title'=>'A new order has been raised. Please accept to start working'], ['type'=>'pending_order', 'chat_id'=>''.$this->chat_id]),'pending_order'));
 
-                Nimbusit::send($shoppr->mobile, 'A new order has been raised!
-Quickly accept it now.', env('ORDER_TEMPLATE_ID'));
+                Nimbusit::send($shoppr->mobile, 'A new order has been raised! Quickly accept it now. By KESHAV', env('ORDER_TEMPLATE_ID'));
 
             }
         }
