@@ -235,6 +235,11 @@ class ProfileController extends Controller
             'address'=>$request->address
         ]);
 
+        if(!Chat::where('shoppr_id', $user->id)->where('is_terminated', 0)->first()){
+            $user->is_available=1;
+            $user->save();
+        }
+
         return [
             'status'=>'success',
         ];

@@ -46,8 +46,13 @@ class TerminateChat extends Command
         foreach($chats as $c){
             $c->update(['is_terminated'=>true]);
             if($c->shoppr){
-                $c->shoppr->is_available=true;
-                $c->shoppr->save();
+
+                if(!Chat::where('shoppr_id', $c->shoppr_id)->where('is_terminated', 0)->first()){
+                    $c->shoppr->is_available=true;
+                    $c->shoppr->save();
+                }
+
+
             }
         }
     }
