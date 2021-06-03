@@ -109,10 +109,8 @@ class PaymentController extends Controller
                     'product'=>$data['product'],
                     'name'=>$data['name'],
                     'refid'=>$data['refid'],
-                    //'currency'=>'INR',
                     'hashdata'=>$response,
                     'order_id'=>$order->id
-                    //'merchantid'=>$this->pay->merchantkey,
                 ],
             ];
         }else{
