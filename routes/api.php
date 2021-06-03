@@ -166,3 +166,5 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 });
 
 $api->get('available-locations', 'MobileApps\Api\AvailableLocationController@locations');
+
+$api->get('success-url', 'MobileApps\Api\PaymentController@success');

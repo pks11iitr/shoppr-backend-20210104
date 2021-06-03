@@ -335,4 +335,11 @@ class PaymentController extends Controller
 
         $order->customer->notify(new FCMNotification('Track location', 'Track our delivery boy location', ['title'=>'Track Location', 'message'=>'Track our delivery boy location', 'type'=>'chat', 'chat_id'=>''.$message->chat_id],'chat_screen'));
     }
+
+    public function success(Request $request){
+        return [
+            'status'=>'success'
+        ];
+    }
+
 }
