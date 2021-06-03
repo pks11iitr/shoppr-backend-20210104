@@ -9,12 +9,13 @@ use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\Wallet;
 use App\Services\Notification\FCMNotification;
+use App\Services\Payment\Payu;
 use App\Services\Payment\RazorPayService;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function __construct(RazorPayService $pay){
+    public function __construct(Payu $pay){
         $this->pay=$pay;
     }
 
@@ -76,35 +77,41 @@ class PaymentController extends Controller
     private function initiateGatewayPayment($order){
         $data=[
             "amount"=>$order->grandTotalForPayment()*100,
-            "currency"=>"INR",
-            "receipt"=>$order->refid,
+            //"currency"=>"INR",
+            "refid"=>$order->refid,
+            "product"=>"Shoprs Service Payment",
+            "email"=>$order->customer->email,
+            "name"=>$order->customer->name
         ];
 
-        $response=$this->pay->generateorderid($data);
+        $response=$this->pay->generateHash($data);
 
 //        LogData::create([
 //            'data'=>($response.' orderid:'.$order->id. ' '.json_encode($data)),
 //            'type'=>'order'
 //        ]);
 
-        $responsearr=json_decode($response);
+        //$responsearr=json_decode($response);
         //var_dump($responsearr);die;
-        if(isset($responsearr->id)){
-            $order->pg_order_id=$responsearr->id;
-            $order->pg_order_response=$response;
-            $order->save();
+        if($response){
+//            $order->pg_order_id=$responsearr->id;
+//            $order->pg_order_response=$response;
+//            $order->save();
             return [
                 'status'=>'success',
                 'message'=>'success',
                 'data'=>[
                     'payment_done'=>'no',
-                    'razorpay_order_id'=> $order->pg_order_id,
-                    'total'=>$order->grandTotalForPayment()*100,
-                    'email'=>$user->email??'',
-                    'mobile'=>$user->mobile??'',
-                    'description'=>'Product Purchase at Shopr',
-                    'name'=>$user->name??'',
-                    'currency'=>'INR',
+                    //'razorpay_order_id'=> $order->pg_order_id,
+                    'total'=>$data['amount'],
+                    'email'=>$data['email'],
+                    //'mobile'=>$user->mobile??'',
+                    'product'=>$data['product'],
+                    'name'=>$data['name'],
+                    'refid'=>$data['refid'],
+                    //'currency'=>'INR',
+                    'hash'=>$response,
+                    'order_id'=>$order->id
                     //'merchantid'=>$this->pay->merchantkey,
                 ],
             ];
@@ -222,10 +229,10 @@ class PaymentController extends Controller
     public function verifyPayment(Request $request){
 
         $request->validate([
-            'razorpay_order_id'=>'required',
-            'razorpay_signature'=>'required',
-            'razorpay_payment_id'=>'required'
-
+            'order_id'=>'required|integer',
+            'hash'=>'required',
+            'status'=>'required'
+           // 'razorpay_payment_id'=>'required'
         ]);
 
 
@@ -234,16 +241,26 @@ class PaymentController extends Controller
 //            'type'=>'verify'
 //        ]);
 
-        $order=Order::with('details')->where('pg_order_id', $request->razorpay_order_id)->first();
+        $order=Order::with('details')->findOrFail($request->order_id);
 
         if(!$order || $order->status!='Pending')
             return [
                 'status'=>'failed',
-                'message'=>'Invalid Operation Performed'
+                'message'=>'Invalid Operation Performed',
             ];
 
-        $paymentresult=$this->pay->verifypayment($request->all());
-        if($paymentresult) {
+        $data=[
+            "amount"=>$order->grandTotalForPayment()*100,
+            //"currency"=>"INR",
+            "refid"=>$order->refid,
+            "product"=>"Shoprs Service Payment",
+            "email"=>$order->customer->email,
+            "name"=>$order->customer->name,
+            "status"=>$request->status
+        ];
+
+        $paymentresult=$this->pay->verifypayment($data);
+        if($paymentresult==$request->hash) {
             if ($order->use_balance == true) {
                 $balance = Wallet::balance($order->user_id);
                 if ($balance < $order->balance_used) {
@@ -257,8 +274,8 @@ class PaymentController extends Controller
                 }
             }
             $order->status = 'confirmed';
-            $order->pg_payment_id = $request->razorpay_payment_id;
-            $order->pg_payment_response = $request->razorpay_signature;
+            //$order->pg_payment_id = $request->razorpay_payment_id;
+            //$order->pg_payment_response = $request->razorpay_signature;
             $order->payment_status = 'Paid';
             $order->payment_mode = 'Online';
             $order->save();
