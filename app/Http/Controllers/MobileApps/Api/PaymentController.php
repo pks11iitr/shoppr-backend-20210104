@@ -105,7 +105,7 @@ class PaymentController extends Controller
                     //'razorpay_order_id'=> $order->pg_order_id,
                     'total'=>$data['amount'],
                     'email'=>$data['email'],
-                    //'mobile'=>$user->mobile??'',
+                    'mobile'=>$order->user->mobile??'',
                     'product'=>$data['product'],
                     'name'=>$data['name'],
                     'refid'=>$data['refid'],
