@@ -376,7 +376,8 @@ class PaymentController extends Controller
 //
 //                ],
                 'calculatedhash'=>$paymentresult,
-                'responsehash'=>$hash
+                'responsehash'=>$hash,
+                'data'=>$data
             ];
         }
 
