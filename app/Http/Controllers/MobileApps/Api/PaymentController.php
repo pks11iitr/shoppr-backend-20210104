@@ -6,6 +6,7 @@ use App\Events\OrderConfirmed;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\LogData;
 use App\Models\Order;
 use App\Models\Wallet;
 use App\Services\Notification\FCMNotification;
@@ -238,7 +239,7 @@ class PaymentController extends Controller
 
     public function verifyPayment(Request $request){
 
-        $content=Request::createFromGlobals()->getContent();
+        $originalcontent=Request::createFromGlobals()->getContent();
 
         //$content=json_encode($content, true);
         $refid='';
@@ -248,7 +249,7 @@ class PaymentController extends Controller
         $firstname='';
         $productinfo='';
         $amount='';
-        $content=explode('&', $content);
+        $content=explode('&', $originalcontent);
         foreach($content as $c){
             $c1=explode('=', $c);
             if(isset($c1[0]) && $c1[0]=='txnid'){
@@ -281,10 +282,10 @@ class PaymentController extends Controller
             ];
         }
 
-//        LogData::create([
-//            'data'=>(json_encode($request->all())??'No Payment Verify Data Found'),
-//            'type'=>'verify'
-//        ]);
+        LogData::create([
+            'data'=>$originalcontent,
+            'type'=>'verify'
+        ]);
 
         $order=Order::with('details')
             ->where('refid', $refid)
@@ -315,6 +316,11 @@ class PaymentController extends Controller
             "name"=>$firstname,
             "status"=>$status
         ];
+
+        LogData::create([
+            'data'=>json_encode($data),
+            'type'=>'verify'
+        ]);
 
         $paymentresult=$this->pay->verifyhash($data);
         if(strtolower($paymentresult)==strtolower($hash)) {
@@ -379,9 +385,9 @@ class PaymentController extends Controller
 //                'data'=>[
 //
 //                ],
-                'calculatedhash'=>$paymentresult,
-                'responsehash'=>$hash,
-                'data'=>$data
+//                'calculatedhash'=>$paymentresult,
+//                'responsehash'=>$hash,
+//                'data'=>$data
             ];
         }
 
