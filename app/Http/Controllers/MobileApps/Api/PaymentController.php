@@ -311,9 +311,9 @@ class PaymentController extends Controller
             "amount"=>$amount,
             //"currency"=>"INR",
             "refid"=>$refid,
-            "product"=>$productinfo,
-            "email"=>$email,
-            "name"=>$firstname,
+            "product"=>urldecode($productinfo),
+            "email"=>urldecode($email),
+            "name"=>urldecode($firstname),
             "status"=>$status
         ];
 
