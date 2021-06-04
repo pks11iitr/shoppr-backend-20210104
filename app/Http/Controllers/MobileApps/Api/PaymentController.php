@@ -244,6 +244,9 @@ class PaymentController extends Controller
         $refid='';
         $status='';
         $hash='';
+        $email='';
+        $firstname='';
+        $productinfo='';
         $content=explode('&', $content);
         foreach($content as $c){
             $c1=explode('=', $c);
@@ -255,6 +258,15 @@ class PaymentController extends Controller
             }
             if(isset($c1[0]) && $c1[0]=='hash'){
                 $hash=$c1[1]??'';
+            }
+            if(isset($c1[0]) && $c1[0]=='email'){
+                $email=$c1[1]??'';
+            }
+            if(isset($c1[0]) && $c1[0]=='productinfo'){
+                $productinfo=$c1[1]??'';
+            }
+            if(isset($c1[0]) && $c1[0]=='firstname'){
+                $firstname=$c1[1]??'';
             }
         }
 
@@ -293,10 +305,10 @@ class PaymentController extends Controller
         $data=[
             "amount"=>$order->grandTotalForPayment(),
             //"currency"=>"INR",
-            "refid"=>$order->refid,
-            "product"=>"Shoprs Service Payment",
-            "email"=>'lnkt56@gmail.com',
-            "name"=>$order->customer->name,
+            "refid"=>$refid,
+            "product"=>$productinfo,
+            "email"=>$email,
+            "name"=>$firstname,
             "status"=>$status
         ];
 
