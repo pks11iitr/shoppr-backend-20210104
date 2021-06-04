@@ -80,8 +80,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
 $api->get('download-invoice/{order_refid}', ['as'=>'download.invoice', 'uses'=>'MobileApps\Api\OrderController@downloadInvoice']);
 
 
-$api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
-
+//$api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
+$api->post('success-url', 'MobileApps\Api\PaymentController@verifyPayment');
 
 $api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
 $api->get('notifications', 'MobileApps\Api\NotificationController@index');
@@ -167,4 +167,4 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
 $api->get('available-locations', 'MobileApps\Api\AvailableLocationController@locations');
 
-$api->post('success-url', 'MobileApps\Api\PaymentController@success');
+

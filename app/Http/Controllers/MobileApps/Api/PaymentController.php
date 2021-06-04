@@ -224,107 +224,6 @@ class PaymentController extends Controller
         ];
     }
 
-
-    public function verifyPayment(Request $request){
-
-        $request->validate([
-            'order_id'=>'required|integer',
-            'hash'=>'required',
-            'status'=>'required'
-           // 'razorpay_payment_id'=>'required'
-        ]);
-
-
-//        LogData::create([
-//            'data'=>(json_encode($request->all())??'No Payment Verify Data Found'),
-//            'type'=>'verify'
-//        ]);
-
-        $order=Order::with('details')->findOrFail($request->order_id);
-
-        if(!$order || $order->status!='Pending')
-            return [
-                'status'=>'failed',
-                'message'=>'Invalid Operation Performed',
-            ];
-
-        $data=[
-            "amount"=>$order->grandTotalForPayment()*100,
-            //"currency"=>"INR",
-            "refid"=>$order->refid,
-            "product"=>"Shoprs Service Payment",
-            "email"=>$order->customer->email,
-            "name"=>$order->customer->name,
-            "status"=>$request->status
-        ];
-
-        $paymentresult=$this->pay->verifypayment($data);
-        if($paymentresult==$request->hash) {
-            if ($order->use_balance == true) {
-                $balance = Wallet::balance($order->user_id);
-                if ($balance < $order->balance_used) {
-                    return response()->json([
-                        'status' => 'failed',
-                        'message' => 'We apologize, Your order is not successful due to low wallet balance',
-                        'errors' => [
-
-                        ],
-                    ], 200);
-                }
-            }
-            $order->status = 'confirmed';
-            //$order->pg_payment_id = $request->razorpay_payment_id;
-            //$order->pg_payment_response = $request->razorpay_signature;
-            $order->payment_status = 'Paid';
-            $order->payment_mode = 'Online';
-            $order->save();
-
-            ChatMessage::where('chat_id', $order->chat_id)
-                ->where('order_id', null)
-                ->update(['order_id'=>$order->id]);
-
-//            OrderStatus::create([
-//                'order_id'=>$order->id,
-//                'current_status'=>$order->status
-//            ]);
-
-            if($order->balance_used > 0)
-                Wallet::updatewallet($order->user_id, 'Paid For Order ID: '.$order->refid, 'DEBIT',$order->balance_used, 'CASH', $order->id);
-
-            //event(new OrderSuccessfull($order));
-            event(new OrderConfirmed($order));
-            $this->sendTrackNotification($order);
-
-            //payment done chat
-            $message=ChatMessage::create([
-                'chat_id'=>$order->chat_id,
-                'message'=>'Payment Received',
-                'type'=>'paid',
-                'order_id'=>$order->id
-            ]);
-
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for order id: '.$order->refid, array_merge(['title'=>'Payment Done', 'message'=>'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for order id: '.$order->refid], ['type'=>'chat', 'chat_id'=>''.$order->chat_id]),'chat_screen'));
-
-            return [
-                'status'=>'success',
-                'message'=> 'Congratulations! Your order at Shopr is successful',
-                'data'=>[
-                    'ref_id'=>$order->refid,
-                    'order_id'=>$order->id,
-                    'refid'=>$order->refid,
-                ]
-            ];
-        }else{
-            return [
-                'status'=>'failed',
-                'message'=>'We apologize, Your payment cannot be verified',
-                'data'=>[
-
-                ],
-            ];
-        }
-    }
-
     private function sendTrackNotification($order){
 
         $message=ChatMessage::create([
@@ -337,7 +236,7 @@ class PaymentController extends Controller
         $order->customer->notify(new FCMNotification('Track location', 'Track our delivery boy location', ['title'=>'Track Location', 'message'=>'Track our delivery boy location', 'type'=>'chat', 'chat_id'=>''.$message->chat_id],'chat_screen'));
     }
 
-    public function success(Request $request){
+    public function verifyPayment(Request $request){
 
         $content=Request::createFromGlobals()->getContent();
 
@@ -386,13 +285,23 @@ class PaymentController extends Controller
             //"currency"=>"INR",
             "refid"=>$order->refid,
             "product"=>"Shoprs Service Payment",
+            //"email"=>$order->customer->email,
+            "email"=>'lnkt56@gmail.com',
+            "name"=>$order->customer->name
+        ];
+
+        $data=[
+            "amount"=>$order->grandTotalForPayment(),
+            //"currency"=>"INR",
+            "refid"=>$order->refid,
+            "product"=>"Shoprs Service Payment",
             "email"=>'lnkt56@gmail.com',
             "name"=>$order->customer->name,
             "status"=>$status
         ];
 
         $paymentresult=$this->pay->verifyhash($data);
-        if($paymentresult==$hash) {
+        if(strtolower($paymentresult)==strtolower($hash)) {
             if ($order->use_balance == true) {
                 $balance = Wallet::balance($order->user_id);
                 if ($balance < $order->balance_used) {
