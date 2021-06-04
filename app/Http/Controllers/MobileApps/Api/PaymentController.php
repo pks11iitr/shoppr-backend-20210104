@@ -247,6 +247,7 @@ class PaymentController extends Controller
         $email='';
         $firstname='';
         $productinfo='';
+        $amount='';
         $content=explode('&', $content);
         foreach($content as $c){
             $c1=explode('=', $c);
@@ -267,6 +268,9 @@ class PaymentController extends Controller
             }
             if(isset($c1[0]) && $c1[0]=='firstname'){
                 $firstname=$c1[1]??'';
+            }
+            if(isset($c1[0]) && $c1[0]=='amount'){
+                $amount=$c1[1]??'';
             }
         }
 
@@ -303,7 +307,7 @@ class PaymentController extends Controller
 //        ];
 
         $data=[
-            "amount"=>$order->grandTotalForPayment(),
+            "amount"=>$amount,
             //"currency"=>"INR",
             "refid"=>$refid,
             "product"=>$productinfo,
