@@ -341,13 +341,23 @@ class PaymentController extends Controller
 
         $content=Request::createFromGlobals()->getContent();
 
-        $content=json_encode($content, true);
-
-        $refid=$content['txnid']??'';
-
-        $status=$content['status']??'';
-
-        $hash=$content['hash']??'';
+        //$content=json_encode($content, true);
+        $refid='';
+        $status='';
+        $hash='';
+        $content=explode('&', $content);
+        foreach($content as $c){
+            $c1=explode('=', $c);
+            if(isset($c1[0]) && $c1[0]=='txnid'){
+                $refid=$c1[1]??'';
+            }
+            if(isset($c1[0]) && $c1[0]=='status'){
+                $status=$c1[1]??'';
+            }
+            if(isset($c1[0]) && $c1[0]=='hash'){
+                $hash=$c1[1]??'';
+            }
+        }
 
         if($status!='success'){
             return [
