@@ -391,7 +391,7 @@ class PaymentController extends Controller
             "status"=>$status
         ];
 
-        $paymentresult=$this->pay->verifypayment($data);
+        $paymentresult=$this->pay->verifyhash($data);
         if($paymentresult==$hash) {
             if ($order->use_balance == true) {
                 $balance = Wallet::balance($order->user_id);
