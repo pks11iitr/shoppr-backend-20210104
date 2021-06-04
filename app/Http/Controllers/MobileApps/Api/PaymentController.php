@@ -337,8 +337,12 @@ class PaymentController extends Controller
     }
 
     public function success(Request $request){
+
+        $content=Request::createFromGlobals()->getContent();
+
         return [
-            'status'=>'success'
+            'status'=>'success',
+            'data'=>$content
         ];
     }
 
