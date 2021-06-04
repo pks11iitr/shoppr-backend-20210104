@@ -280,15 +280,15 @@ class PaymentController extends Controller
                 'message'=>'Invalid Operation Performed',
             ];
 
-        $data=[
-            "amount"=>$order->grandTotalForPayment(),
-            //"currency"=>"INR",
-            "refid"=>$order->refid,
-            "product"=>"Shoprs Service Payment",
-            //"email"=>$order->customer->email,
-            "email"=>'lnkt56@gmail.com',
-            "name"=>$order->customer->name
-        ];
+//        $data=[
+//            "amount"=>$order->grandTotalForPayment(),
+//            //"currency"=>"INR",
+//            "refid"=>$order->refid,
+//            "product"=>"Shoprs Service Payment",
+//            //"email"=>$order->customer->email,
+//            "email"=>'lnkt56@gmail.com',
+//            "name"=>$order->customer->name
+//        ];
 
         $data=[
             "amount"=>$order->grandTotalForPayment(),
@@ -363,6 +363,8 @@ class PaymentController extends Controller
 //                'data'=>[
 //
 //                ],
+                'calculatedhash'=>$paymentresult,
+                'responsehash'=>$hash
             ];
         }
 
