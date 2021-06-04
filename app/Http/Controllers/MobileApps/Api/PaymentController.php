@@ -80,7 +80,8 @@ class PaymentController extends Controller
             //"currency"=>"INR",
             "refid"=>$order->refid,
             "product"=>"Shoprs Service Payment",
-            "email"=>$order->customer->email,
+            //"email"=>$order->customer->email,
+            "email"=>'lnkt56@gmail.com',
             "name"=>$order->customer->name
         ];
 
