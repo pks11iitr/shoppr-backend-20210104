@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\ShopprApp\Auth;
 
 use App\Events\SendOtp;
 use App\Models\Customer;
+use App\Models\NotificationToken;
 use App\Models\OTPModel;
 use App\Models\Shoppr;
 use Illuminate\Http\Request;
@@ -51,6 +52,14 @@ class OtpController extends Controller
                 $user->form_step=1;
                 $user->save();
 
+                if($request->notification_token){
+                    Shoppr::where('notification_token', $request->notification_token)
+                        ->where('id', '!=', $user->id)
+                        ->update(['notification_token'=>null]);
+
+                    NotificationToken::updateOrCreate(['notification_token'=>$request->notification_token, 'entity_type'=>'App\Models\Shoppr'], ['entity_id'=> $user->id]);
+                }
+
                 return [
                     'status'=>'success',
                     'form_step'=>$user->form_step??0,
@@ -87,6 +96,14 @@ class OtpController extends Controller
                 $user->status=1;
                 $user->form_step=($user->form_step>0?$user->form_step:1);
                 $user->save();
+
+                if($request->notification_token){
+                    Shoppr::where('notification_token', $request->notification_token)
+                        ->where('id', '!=', $user->id)
+                        ->update(['notification_token'=>null]);
+
+                    NotificationToken::updateOrCreate(['notification_token'=>$request->notification_token, 'entity_type'=>'App\Models\Shoppr'], ['entity_id'=> $user->id]);
+                }
 
                 if(empty($user->sendbird_token)){
                     $sendbird=app('App\Services\SendBird\SendBird');

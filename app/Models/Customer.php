@@ -54,7 +54,19 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function routeNotificationForFcm()
     {
-        return $this->notification_token;
+        //return $this->notification_token;
+        $tokens=$this->mytokens->map(function($element){
+            return $element->notification_token;
+        })->toArray();
+
+        if($this->notification_token && !in_array($this->notification_token, $tokens))
+            return array_merge($tokens, [$this->notification_token]);
+        return $tokens;
+
+    }
+
+    public function mytokens(){
+        return $this->morphMany('App\Models\NotificationToken', 'entity');
     }
 
     public function notify($instance)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\Auth;
 
 use App\Events\SendOtp;
 use App\Models\Customer;
+use App\Models\NotificationToken;
 use App\Models\OTPModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -49,6 +50,14 @@ class OtpController extends Controller
                 $user->status=1;
                 $user->save();
 
+                if($request->notification_token){
+                    Customer::where('notification_token', $request->notification_token)
+                        ->where('id', '!=', $user->id)
+                        ->update(['notification_token'=>null]);
+
+                    NotificationToken::updateOrCreate(['notification_token'=>$request->notification_token, 'entity_type'=>'App\Models\Customer'], ['entity_id'=> $user->id]);
+                }
+
                 return [
                     'status'=>'success',
                     'message'=>'OTP has been verified successfully',
@@ -80,6 +89,14 @@ class OtpController extends Controller
                 $user->notification_token=$request->notification_token;
                 $user->status=1;
                 $user->save();
+
+                if($request->notification_token){
+                    Customer::where('notification_token', $request->notification_token)
+                        ->where('id', '!=', $user->id)
+                        ->update(['notification_token'=>null]);
+
+                    NotificationToken::updateOrCreate(['notification_token'=>$request->notification_token, 'entity_type'=>'App\Models\Customer'], ['entity_id'=> $user->id]);
+                }
 
                 if(empty($user->sendbird_token)){
                     $sendbird=app('App\Services\SendBird\SendBird');
