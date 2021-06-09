@@ -178,7 +178,7 @@ class ChatController extends Controller
                 ];
             }
 
-            $shoppr=Shoppr::active()
+            $shoppr=Shoppr::where('shopprs.isactive', true)
                 ->where('is_available', true)
                 ->whereHas('locations', function($query)use($location) {
                 $query->where('work_locations.id', $location->id);

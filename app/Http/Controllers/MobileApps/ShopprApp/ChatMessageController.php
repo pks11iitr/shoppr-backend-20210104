@@ -21,6 +21,12 @@ class ChatMessageController extends Controller
 
         $user=$request->user;
 
+        if(!$user->isactive)
+            return [
+                'status'=>'failed',
+                'message'=>'You account has been deactivated'
+            ];
+
         $chat=Chat::with('customer')
             ->where('shoppr_id', $user->id)
             ->where('id', $chat_id)

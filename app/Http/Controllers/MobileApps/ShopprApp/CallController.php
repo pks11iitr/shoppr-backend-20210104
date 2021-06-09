@@ -59,6 +59,12 @@ class CallController extends Controller
     public function initiateVideoCall(Request $request, $chat_id){
         $user=$request->user;
 
+        if(!$user->isactive)
+            return [
+                'status'=>'failed',
+                'message'=>'You account has been deactivated'
+            ];
+
         $chat=Chat::with('shoppr')
             ->where('shoppr_id', $user->id)
             ->findOrFail($chat_id);

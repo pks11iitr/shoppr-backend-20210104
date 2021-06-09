@@ -74,6 +74,12 @@ class ChatController extends Controller
     public function acceptChat(Request $request, $chat_id){
         $user=$request->user;
 
+        if(!$user->isactive)
+            return [
+                'status'=>'failed',
+                'message'=>'You account has been deactivated'
+            ];
+
         if(!$user->is_available)
             return [
                 'status'=>'failed',
@@ -109,6 +115,12 @@ class ChatController extends Controller
 
     public function rejectChat(Request $request, $chat_id){
         $user=$request->user;
+
+        if(!$user->isactive)
+            return [
+                'status'=>'failed',
+                'message'=>'You account has been deactivated'
+            ];
 
         if(!$user->is_available)
             return [
@@ -203,6 +215,12 @@ class ChatController extends Controller
     public function terminateChat(Request $request, $id){
 
         $user=$request->user;
+
+        if(!$user->isactive)
+            return [
+                'status'=>'failed',
+                'message'=>'You account has been deactivated'
+            ];
 
         $chat=Chat::with('customer')
             ->where('shoppr_id', $user->id)->findOrFail($id);
