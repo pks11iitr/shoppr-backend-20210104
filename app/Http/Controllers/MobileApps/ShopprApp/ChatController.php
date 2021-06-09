@@ -143,7 +143,7 @@ class ChatController extends Controller
 
         return [
             'status'=>'success',
-            'message'=>'Please start discussion with customer'
+            'message'=>'Order has been rejected'
         ];
 
     }
