@@ -74,7 +74,7 @@ class CallController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-        if($order->status=='Delivered')
+        if($order && $order->status=='Delivered')
             return [
                 'status'=>'failed',
                 'message'=>'You cannot make a call as this order has been delivered'
