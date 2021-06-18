@@ -117,6 +117,9 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
         $api->post('send-message/{id}', 'MobileApps\ShopprApp\ChatMessageController@send');
         $api->get('terminate-chat/{id}', 'MobileApps\ShopprApp\ChatController@terminateChat');
 
+        $api->get('delete-product/{message_id}', 'MobileApps\ShopprApp\ChatMessageController@delete');
+
+
         $api->post('update-location', 'MobileApps\ShopprApp\ShopperLocationController@update');
 
         $api->get('initiate-video-call/{chat_id}', 'MobileApps\ShopprApp\CallController@initiateVideocall');

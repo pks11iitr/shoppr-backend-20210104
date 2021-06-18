@@ -47,6 +47,16 @@ class OrderController extends Controller
             ->where('order_id', null)
             ->get();
 
+        $discount=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
+            $chat->where('customer_id', $user->id);
+        })
+            ->where('chat_id', $chat_id)
+            ->where('type', 'discount')
+            ->where('order_id', null)
+            ->first();
+
+        $discount_amount=$discount->price??0;
+
         $total=0;
         foreach($items as $i){
             $total=$total+$i->price;
@@ -86,7 +96,8 @@ class OrderController extends Controller
             'chat_id'=>$chat_id,
             'refid'=>$refid,
             'total'=>$total,
-            'service_charge'=>$service_charge
+            'service_charge'=>$service_charge,
+            'discount'=>$discount_amount
         ]);
 
         return [
@@ -105,7 +116,7 @@ class OrderController extends Controller
 
         $order=Order::with(['details', 'reviews'])
             ->where('user_id', $user->id)
-            ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
+            ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used', 'discount')
             ->findOrFail($order_id);
 
         if($order->status=='Delivered'){

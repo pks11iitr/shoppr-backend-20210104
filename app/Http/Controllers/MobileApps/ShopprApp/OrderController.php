@@ -43,7 +43,7 @@ class OrderController extends Controller
 
         $order=Order::with(['details','reviews'])
             ->where('shoppr_id', $user->id)
-            ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used')
+            ->select('id', 'refid', 'total','service_charge', 'status', 'payment_status', 'balance_used', 'discount')
             ->findOrFail($order_id);
 
         $payment_text=($order->payment_status=='Paid')?'Total Paid':'To Be Paid';

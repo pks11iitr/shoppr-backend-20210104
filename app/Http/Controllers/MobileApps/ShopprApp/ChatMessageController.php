@@ -14,7 +14,7 @@ class ChatMessageController extends Controller
     public function send(Request $request, $chat_id){
 
         $request->validate([
-            'type'=>'required|in:text,audio,image,product,payment,address-request,address,review,add-money,payment',
+            'type'=>'required|in:text,audio,image,product,payment,address-request,address,review,add-money,payment,discount',
             'message'=>'string',
             'file'=>'file'
         ]);
@@ -81,17 +81,6 @@ class ChatMessageController extends Controller
                 ]);
                 $message->saveFile($request->file, 'chats');
                 break;
-//            case 'rating':
-//                $message=ChatMessage::create([
-//                    'chat_id'=>$chat_id,
-//                    'message'=>'',
-//                    'type'=>'rating',
-//                    //'price'=>$request->price,
-//                    'quantity'=>0,
-//                    'direction'=>1,
-//                ]);
-//                //$message->saveFile($request->file, 'chats');
-//                break;
             case 'payment':
                 $message=ChatMessage::create([
                     'chat_id'=>$chat_id,
@@ -114,6 +103,15 @@ class ChatMessageController extends Controller
                 ]);
                 //$message->saveFile($request->file, 'chats');
                 break;
+            case 'discount':
+                $message=ChatMessage::create([
+                    'chat_id'=>$chat_id,
+                    'message'=>'You have received discount of Rs.'.$request->amount.' on this order',
+                    'type'=>'discount',
+                    'price'=>$request->amount,
+                    //'quantity'=>0,
+                    'direction'=>1,
+                ]);
         }
 
         //send notification
@@ -161,5 +159,22 @@ class ChatMessageController extends Controller
         ];
 
     }
+
+    public function delete(Request $request, $message_id){
+        $user=$request->user;
+
+        $message=ChatMessage::whereHas('chat', function($chat) use($user){
+            $chat->where('shoppr_id', $user->id);
+        })
+            ->where('type', 'product')
+            ->findOrFail($message_id);
+
+        if(!(empty($message->order_id) || $message->order->status=='pending'))
+            return [
+                'status'=>'failed',
+                'message'=>'Product cannot be deleted after order confirmation'
+            ];
+    }
+
 
 }

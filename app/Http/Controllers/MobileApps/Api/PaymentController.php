@@ -208,7 +208,7 @@ class PaymentController extends Controller
                 'order_id'=>$order->id
             ]);
 
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for Order ID:'.$order->refid, ['title'=>'Payment Done', 'message'=>'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for Order ID:'.$order->refid, 'type'=>'chat', 'chat_id'=>''.$order->chat_id], 'chat_screen'));
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->grandTotal()).'has been completed for Order ID:'.$order->refid, ['title'=>'Payment Done', 'message'=>'Payment of Rs.'.($order->grandTotal()).'has been completed for Order ID:'.$order->refid, 'type'=>'chat', 'chat_id'=>''.$order->chat_id], 'chat_screen'));
 
             return [
                 'status'=>'success',
@@ -367,7 +367,7 @@ class PaymentController extends Controller
                 'order_id'=>$order->id
             ]);
 
-            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for order id: '.$order->refid, array_merge(['title'=>'Payment Done', 'message'=>'Payment of Rs.'.($order->total+$order->service_charge).'has been completed for order id: '.$order->refid], ['type'=>'chat', 'chat_id'=>''.$order->chat_id]),'chat_screen'));
+            $order->shoppr->notify(new FCMNotification('Payment Done', 'Payment of Rs.'.($order->grandTotal()).'has been completed for order id: '.$order->refid, array_merge(['title'=>'Payment Done', 'message'=>'Payment of Rs.'.($order->grandTotal()).'has been completed for order id: '.$order->refid], ['type'=>'chat', 'chat_id'=>''.$order->chat_id]),'chat_screen'));
 
             return [
                 'status'=>'success',

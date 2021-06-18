@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $table='orders';
 
-    protected $fillable=['user_id','shoppr_id', 'chat_id', 'refid', 'total', 'service_charge', 'status', 'payment_status', 'payment_mode','rider_delivery_charge', 'rider_commission'];
+    protected $fillable=['user_id','shoppr_id', 'chat_id', 'refid', 'total', 'service_charge', 'status', 'payment_status', 'payment_mode','rider_delivery_charge', 'rider_commission', 'discount'];
 
     public function details(){
         return $this->hasMany('App\Models\ChatMessage', 'order_id')
@@ -34,11 +34,11 @@ class Order extends Model
 
 
     public function grandTotal(){
-        return $this->total+$this->service_charge;
+        return $this->total+$this->service_charge-$this->discount;
     }
 
     public function grandTotalForPayment(){
-        return $this->total+$this->service_charge-$this->balance_used;
+        return $this->total+$this->service_charge-$this->discount-$this->balance_used;
     }
 
     public function customer(){
