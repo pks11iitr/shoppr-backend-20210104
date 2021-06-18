@@ -34,10 +34,20 @@ class CartController extends Controller
 
         $wallet_balance = Wallet::balance($user->id);
 
+        $items=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
+            $chat->where('customer_id', $user->id);
+        })
+            ->where('chat_id', $chat_id)
+            ->where('type', 'discount')
+            ->where('order_id', null)
+            ->first();
+
+        $discount_amount=$discount->price??0;
+
         return [
             'status'=>'success',
             'message'=>'',
-            'data'=>compact('items', 'total', 'service_charge', 'grand_total', 'wallet_balance')
+            'data'=>compact('items', 'total', 'service_charge', 'grand_total', 'wallet_balance', 'discount_amount')
         ];
 
     }
