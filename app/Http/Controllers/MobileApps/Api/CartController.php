@@ -30,8 +30,6 @@ class CartController extends Controller
         $settings=Settings::where('name', 'Service Fee')->first();
         $service_charge=$settings->value??0;
 
-        $grand_total=$total+$service_charge;
-
         $wallet_balance = Wallet::balance($user->id);
 
         $discount=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
@@ -43,6 +41,8 @@ class CartController extends Controller
             ->first();
 
         $discount_amount=$discount->price??0;
+
+        $grand_total=$total+$service_charge-$discount;
 
         return [
             'status'=>'success',
