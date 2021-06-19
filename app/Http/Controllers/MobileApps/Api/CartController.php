@@ -34,7 +34,7 @@ class CartController extends Controller
 
         $wallet_balance = Wallet::balance($user->id);
 
-        $items=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
+        $discount=ChatMessage::whereHas('chat', function($chat)use($user,$chat_id){
             $chat->where('customer_id', $user->id);
         })
             ->where('chat_id', $chat_id)
