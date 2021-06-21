@@ -174,6 +174,11 @@ class ChatMessageController extends Controller
                 'status'=>'failed',
                 'message'=>'Product cannot be deleted after order confirmation'
             ];
+
+        return [
+            'status'=>'success',
+            'message'=>'Product has been deleted'
+        ];
     }
 
 
