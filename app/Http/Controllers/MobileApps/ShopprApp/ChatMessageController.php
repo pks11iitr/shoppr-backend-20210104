@@ -175,6 +175,8 @@ class ChatMessageController extends Controller
                 'message'=>'Product cannot be deleted after order confirmation'
             ];
 
+        $message->delete();
+
         return [
             'status'=>'success',
             'message'=>'Product has been deleted'
