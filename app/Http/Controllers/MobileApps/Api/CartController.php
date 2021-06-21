@@ -42,7 +42,7 @@ class CartController extends Controller
 
         $discount_amount=$discount->price??0;
 
-        $grand_total=$total+$service_charge-$discount;
+        $grand_total=$total+$service_charge-($discount->price??0);
 
         return [
             'status'=>'success',
