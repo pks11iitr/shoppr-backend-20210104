@@ -158,6 +158,8 @@ $api->group(['prefix' => 'shoppr'], function ($api) {
 
         $api->get('reviews', 'MobileApps\ShopprApp\ReviewController@index');
 
+        $api->get('cart/{chat_id}', 'MobileApps\ShopprApp\CartController@index');
+
 
 
 
