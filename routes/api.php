@@ -74,7 +74,6 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
     $api->post('recharge','MobileApps\Api\WalletController@addMoney');
 
-
 });
 
 $api->get('download-invoice/{order_refid}', ['as'=>'download.invoice', 'uses'=>'MobileApps\Api\OrderController@downloadInvoice']);
@@ -83,7 +82,7 @@ $api->get('download-invoice/{order_refid}', ['as'=>'download.invoice', 'uses'=>'
 //$api->post('verify-payment', 'MobileApps\Api\PaymentController@verifyPayment');
 $api->post('success-url', 'MobileApps\Api\PaymentController@verifyPayment');
 
-$api->post('verify-recharge','MobileApps\Api\WalletController@verifyRecharge');
+$api->post('success-recharge','MobileApps\Api\WalletController@verifyRecharge');
 $api->get('notifications', 'MobileApps\Api\NotificationController@index');
 $api->post('check-availability', 'MobileApps\Api\AvailableLocationController@checkServiceAvailability');
 
