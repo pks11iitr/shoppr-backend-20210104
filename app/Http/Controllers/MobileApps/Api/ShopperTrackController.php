@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MobileApps\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
+use App\Models\ChatMessage;
 use Illuminate\Http\Request;
 
 class ShopperTrackController extends Controller
@@ -32,5 +33,24 @@ class ShopperTrackController extends Controller
 
         ];
 
+    }
+
+    public function checkOrderStatus(Request $request, $message_id){
+        $message=ChatMessage::with('order')->findOrFail($message_id);
+        if($message->order->status=='Delivered')
+            return [
+                'status'=>'failed',
+                'message'=>'This order has been delivered'
+            ];
+
+        if($message->order->status=='Cancelled')
+            return [
+                'status'=>'failed',
+                'message'=>'This order has been cancelled'
+            ];
+
+        return [
+            'status'=>'success'
+        ];
     }
 }

@@ -74,6 +74,8 @@ $api->group(['middleware' => ['customer-api-auth']], function ($api) {
     $api->get('wallet-history', 'MobileApps\Api\WalletController@index');
     $api->post('recharge','MobileApps\Api\WalletController@addMoney');
 
+    $api->get('check-track-status/{message_id}','MobileApps\Api\ShopperTrackController@checkOrderStatus');
+
 });
 
 $api->get('download-invoice/{order_refid}', ['as'=>'download.invoice', 'uses'=>'MobileApps\Api\OrderController@downloadInvoice']);
